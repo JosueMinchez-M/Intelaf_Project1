@@ -5,6 +5,9 @@
  */
 package com.mycompany.intelaf_project1.UI;
 
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author joshua
@@ -36,6 +39,7 @@ public class VentanaInicial extends javax.swing.JFrame {
         cbo_tipo = new javax.swing.JComboBox<>();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
+        btn_Empleado = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -92,6 +96,18 @@ public class VentanaInicial extends javax.swing.JFrame {
             .addGap(0, 90, Short.MAX_VALUE)
         );
 
+        btn_Empleado.setText("Empleado");
+        btn_Empleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EmpleadoActionPerformed(evt);
+            }
+        });
+        btn_Empleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btn_EmpleadoKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -111,6 +127,10 @@ public class VentanaInicial extends javax.swing.JFrame {
                 .addGap(57, 57, 57)
                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(25, 25, 25))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_Empleado)
+                .addGap(22, 22, 22))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,7 +150,8 @@ public class VentanaInicial extends javax.swing.JFrame {
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_Ingresar))
-                .addGap(34, 34, 34))
+                .addGap(3, 3, 3)
+                .addComponent(btn_Empleado))
         );
 
         jLabel1.setFont(new java.awt.Font("Dyuthi", 1, 36)); // NOI18N
@@ -225,6 +246,19 @@ public class VentanaInicial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_EmpleadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_EmpleadoKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_E){
+            InterfazEmpleadoPrincipal interfazEmpleado = new InterfazEmpleadoPrincipal();
+            interfazEmpleado.setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_btn_EmpleadoKeyPressed
+
+    private void btn_EmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EmpleadoActionPerformed
+        JOptionPane.showMessageDialog(null, "¡EMPLEADO INGRESE LA CLAVE DE ACCESO!\n"
+                + "     -LUEGO DE CERRAR ESTE MENSAJE-");
+    }//GEN-LAST:event_btn_EmpleadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -261,6 +295,7 @@ public class VentanaInicial extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_Empleado;
     private javax.swing.JButton btn_Ingresar;
     private javax.swing.JComboBox<String> cbo_tipo;
     private javax.swing.JLabel jLabel1;
