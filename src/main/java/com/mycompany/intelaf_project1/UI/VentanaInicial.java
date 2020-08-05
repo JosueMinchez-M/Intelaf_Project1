@@ -20,6 +20,7 @@ public class VentanaInicial extends javax.swing.JFrame {
     public VentanaInicial() {
         initComponents();
         setLocationRelativeTo(null);
+        setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
