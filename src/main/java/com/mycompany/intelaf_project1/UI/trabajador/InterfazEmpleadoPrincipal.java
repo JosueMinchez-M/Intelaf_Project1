@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.intelaf_project1.UI;
+package com.mycompany.intelaf_project1.UI.trabajador;
+
+import com.mycompany.intelaf_project1.UI.VentanaInicial;
 
 /**
  *

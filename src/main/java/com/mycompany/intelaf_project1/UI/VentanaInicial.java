@@ -5,6 +5,7 @@
  */
 package com.mycompany.intelaf_project1.UI;
 
+import com.mycompany.intelaf_project1.UI.trabajador.InterfazEmpleadoPrincipal;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
