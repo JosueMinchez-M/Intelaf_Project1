@@ -19,7 +19,7 @@ public class InterfazEmpleadoPrincipal extends javax.swing.JFrame {
     public InterfazEmpleadoPrincipal() {
         initComponents();
         setLocationRelativeTo(null);
-        setExtendedState(MAXIMIZED_BOTH);
+        //setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
