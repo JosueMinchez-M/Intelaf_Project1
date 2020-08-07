@@ -5,6 +5,10 @@
  */
 package com.mycompany.intelaf_project1.UI;
 
+import com.mycompany.intelaf_project1.UI.trabajador.IngresarDatos;
+import com.mycompany.intelaf_project1.UI.trabajador.LoginTrabajador;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author joshua
@@ -37,7 +41,7 @@ public class VentanaInicial extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cb_Persona = new javax.swing.JComboBox<>();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -60,6 +64,11 @@ public class VentanaInicial extends javax.swing.JFrame {
         );
 
         btn_Ingresar.setText("INGRESAR");
+        btn_Ingresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_IngresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -97,7 +106,7 @@ public class VentanaInicial extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dyuthi", 1, 24)); // NOI18N
         jLabel2.setText("BIENVENIDO A NUESTRA TIENDA ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "¿QUIEN ERES?", "Cliente", "Empleado" }));
+        cb_Persona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "¿QUIEN ERES?", "Cliente", "Trabajador" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -115,7 +124,7 @@ public class VentanaInicial extends javax.swing.JFrame {
                                 .addGap(18, 18, 18))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cb_Persona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(147, 147, 147)))
                         .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(4, 4, 4))
@@ -140,7 +149,7 @@ public class VentanaInicial extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cb_Persona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -243,6 +252,19 @@ public class VentanaInicial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_IngresarActionPerformed
+        String persona = (String) cb_Persona.getSelectedItem();
+        if(persona.equalsIgnoreCase("cliente")){
+            
+        }else if(persona.equalsIgnoreCase("trabajador")){
+            LoginTrabajador lt = new LoginTrabajador();
+            lt.setVisible(true);
+            //dispose();
+        }else{
+            JOptionPane.showMessageDialog(this, "AUN NO HAS SELECCIONADO LO QUE ERES");
+        }
+    }//GEN-LAST:event_btn_IngresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -280,7 +302,7 @@ public class VentanaInicial extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Ingresar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cb_Persona;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

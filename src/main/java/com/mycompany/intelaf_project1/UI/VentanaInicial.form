@@ -107,7 +107,7 @@
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cb_Persona" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -141,7 +141,7 @@
                               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" pref="54" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                              <Component id="cb_Persona" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
@@ -178,6 +178,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="INGRESAR"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_IngresarActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel5">
 
@@ -232,13 +235,13 @@
                 <Property name="text" type="java.lang.String" value="BIENVENIDO A NUESTRA TIENDA "/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox1">
+            <Component class="javax.swing.JComboBox" name="cb_Persona">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
                     <StringItem index="0" value="&#xbf;QUIEN ERES?"/>
                     <StringItem index="1" value="Cliente"/>
-                    <StringItem index="2" value="Empleado"/>
+                    <StringItem index="2" value="Trabajador"/>
                   </StringArray>
                 </Property>
               </Properties>
