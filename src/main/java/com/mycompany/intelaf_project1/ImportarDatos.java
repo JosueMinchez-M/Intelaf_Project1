@@ -39,19 +39,30 @@ public class ImportarDatos {
             
             for (int i = 0; i < lineaArray.length; i++) {
                 System.out.print(lineaArray[i] + "  ");
-                if(lineaArray[0].equals("EMPLEADO")){
+            }
+            if(lineaArray[0].equals("EMPLEADO")){
                     //---------
-                    if(!isNumeric(lineaArray[2]) && i == 4){
-                        cuadroTexto.append("--> El empleado con el DPI No. " + lineaArray[4] + ""
-                                + "\nfue ignorado debido a que su CÓDIGO: "+ lineaArray[2] +"\n"
-                                + "NO CONTIENE SOLAMENTE NUMEROS.\n\n");
+                    if(!(lineaArray[2].matches("[0-9]+"))){//++++++++++++++++++++++
+                        cuadroTexto.append("--> El EMPLEADO con el DPI No. " + lineaArray[4] + ""
+                                + "\nfue ignorado debido a ERROR en el CODIGO: \n"
+                                + ""+ lineaArray[2]+" por no contener solo numeros\n\n");
+                        
+                    }
+                    if(!(lineaArray[3].matches("[0-9]+"))){
+                        cuadroTexto.append("--> El EMPLEADO con el DPI No. " + lineaArray[4] + ""
+                                + "\nfue ignorado debido a ERROR en el TELEFONO: \n"
+                                + ""+ lineaArray[3]+" por no contener solo numeros\n\n");
+                    }
+                    if(!(lineaArray[4].matches("[0-9]+"))){
+                        cuadroTexto.append("--> El EMPLEADO con el DPI No. " + lineaArray[4] + ""
+                                + "\nfue ignorado debido a ERROR en el DPI: \n"
+                                + ""+ lineaArray[4]+" por no contener solo numeros\n\n");
                     }else{
                         insertarEmpleado();
                     }
                      //------
                     //insertarEmpleado();
                 }
-            }
             System.out.print("\n");
             }
         } catch (Exception e) {
