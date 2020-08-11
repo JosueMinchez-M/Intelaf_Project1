@@ -5,6 +5,7 @@
  */
 package com.mycompany.intelaf_project1.UI.trabajador;
 
+import com.mycompany.intelaf_project1.ImportarDatos;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -19,6 +20,7 @@ public class LoginTrabajador extends javax.swing.JFrame {
      */
     public LoginTrabajador() {
         initComponents();
+        txt_MostrarRuta.setEditable(false);
         setLocationRelativeTo(null);
     }
 
@@ -56,7 +58,7 @@ public class LoginTrabajador extends javax.swing.JFrame {
         txt_MostrarRuta = new javax.swing.JTextField();
         btn_Importar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtA_vistaRegistros = new javax.swing.JTextArea();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -283,9 +285,9 @@ public class LoginTrabajador extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtA_vistaRegistros.setColumns(20);
+        txtA_vistaRegistros.setRows(5);
+        jScrollPane1.setViewportView(txtA_vistaRegistros);
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -416,7 +418,10 @@ public class LoginTrabajador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btn_ImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ImportarActionPerformed
-        // TODO add your handling code here:
+        ImportarDatos importarDatos = new ImportarDatos();
+        importarDatos.Importar(txt_MostrarRuta, txtA_vistaRegistros);
+        txt_MostrarRuta.setText("");
+        //importarDatos.insertarEmpleado();
     }//GEN-LAST:event_btn_ImportarActionPerformed
 
     /**
@@ -481,7 +486,7 @@ public class LoginTrabajador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea txtA_vistaRegistros;
     private javax.swing.JTextField txt_MostrarRuta;
     private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_usuario;
