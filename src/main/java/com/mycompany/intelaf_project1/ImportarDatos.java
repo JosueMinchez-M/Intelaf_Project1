@@ -9,7 +9,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.plaf.BorderUIResource;
 
 
 /**
@@ -105,6 +104,33 @@ public class ImportarDatos {
             //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
         }
     }
+    public void insertarProducto(){
+        String sql = "INSERT INTO "+ lineaArray[0] +" (nombre, fabricante, codigo, cantidad_disponible, precio, descripcion, garantia, Tienda_codigo) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, lineaArray[1]);
+            ps.setString(2, lineaArray[2]);
+            ps.setString(3, lineaArray[3]);
+            ps.setString(4, lineaArray[4]);
+            ps.setString(5, lineaArray[5]);
+            ps.setString(6, "N/E");
+            ps.setString(7, "N/E");
+            ps.setString(8, lineaArray[6]);
+            
+            int res = ps.executeUpdate();
+            if(res > 0){
+                //JOptionPane.showMessageDialog(null, "GUARDADO CON EXITO");
+                System.out.println("GUARDANDO DATOS");
+            }else{
+                //JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR");
+                System.out.println("ERROR AL GUARDAR");
+            }
+            //acceso.close();
+        } catch (Exception e) {
+            //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
+        }
+    }
     
     public void errorIngresarDatos(JTextArea cuadroTexto){
         if(lineaArray[0].equals("EMPLEADO")){
@@ -112,19 +138,19 @@ public class ImportarDatos {
             if(!(lineaArray[2].matches("[0-9]+"))){//++++++++++++++++++++++
                 cuadroTexto.append("--> El EMPLEADO con el DPI No. " + lineaArray[4] + ""
                     + "\nfue ignorado debido a ERROR en el CODIGO: \n"
-                    + ""+ lineaArray[2]+" por no contener solo numeros\n\n");
+                    + ""+ lineaArray[2]+" por no seguir el patron del codigo.\n\n");
             }else{
                 insertarEmpleado();
             }if(!(lineaArray[3].matches("[0-9]+"))){
                 cuadroTexto.append("--> El EMPLEADO con el DPI No. " + lineaArray[4] + ""
                     + "\nfue ignorado debido a ERROR en el TELEFONO: \n"
-                    + ""+ lineaArray[3]+" por no contener solo numeros\n\n");
+                    + ""+ lineaArray[3]+" por no contener solo numeros.\n\n");
             }else{
                 insertarEmpleado();
             }if(!(lineaArray[4].matches("[0-9]+"))){
                 cuadroTexto.append("--> El EMPLEADO con el DPI No. " + lineaArray[4] + ""
                 + "\nfue ignorado debido a ERROR en el DPI: \n"
-                + ""+ lineaArray[4]+" por no contener solo numeros\n\n");
+                + ""+ lineaArray[4]+" por no contener solo numeros.\n\n");
             }else{
                 insertarEmpleado();
             }
@@ -134,6 +160,16 @@ public class ImportarDatos {
                 + "\nfue ignorada debido a INCOPATIBILIDAD en sus datos.\n\n");
             }else{
                 insertarTienda();
+            }
+        }else if(lineaArray[0].equals("PRODUCTO")){
+            Pattern patP3 = Pattern.compile("[A-Z]{3,3}"+"-"+"[0-9]{3,4}");
+            Matcher matP3 = patP3.matcher(lineaArray[3]);
+            if(!(matP3.matches())){
+                cuadroTexto.append("--> El PRODUCTO con el CODIGO: " + lineaArray[3] + "\n"
+                + "para la TIENDA: " + lineaArray[6] + " fue ignorado debido a"
+                + "\nINCOPATIBILIDAD en sus datos.\n\n");
+            }else{
+                insertarProducto();
             }
         }
     }

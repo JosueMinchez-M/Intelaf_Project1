@@ -11,7 +11,7 @@ public class Conexion {
     
     Connection con;
     String driver = "com.mysql.jdbc.Driver";
-    String url = "jdbc:mysql://localhost:3306/Intelaf";
+    String url = "jdbc:mysql://localhost:3306/Intelaf_BD";
     String user = "root";
     String pass = "root";
     

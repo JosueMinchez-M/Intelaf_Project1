@@ -281,11 +281,6 @@ public class LoginCliente extends javax.swing.JFrame {
         });
 
         btn_Importar.setText("IMPORTAR");
-        btn_Importar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_ImportarActionPerformed(evt);
-            }
-        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -418,10 +413,6 @@ public class LoginCliente extends javax.swing.JFrame {
             txt_MostrarRuta.setText(ruta);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void btn_ImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ImportarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_ImportarActionPerformed
 
     /**
      * @param args the command line arguments
