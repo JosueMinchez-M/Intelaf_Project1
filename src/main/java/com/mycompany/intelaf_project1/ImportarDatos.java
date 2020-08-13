@@ -158,6 +158,34 @@ public class ImportarDatos {
             //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
         }
     }
+    public void insertarPedido(){
+        String sql = "INSERT INTO "+ lineaArray[0] +" (codigo, tienda_origen, tienda_destino, fecha, Cliente_nit, Producto_codigo, cantidad_articulos, total_pagar, anticipo) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, lineaArray[1]);
+            ps.setString(2, lineaArray[2]);
+            ps.setString(3, lineaArray[3]);
+            ps.setString(4, lineaArray[4]);
+            ps.setString(5, lineaArray[5]);
+            ps.setString(6, lineaArray[6]);
+            ps.setString(7, lineaArray[7]);
+            ps.setString(8, lineaArray[8]);
+            ps.setString(9, lineaArray[9]);
+            
+            int res = ps.executeUpdate();
+            if(res > 0){
+                //JOptionPane.showMessageDialog(null, "GUARDADO CON EXITO");
+                System.out.println("GUARDANDO DATOS");
+            }else{
+                //JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR");
+                System.out.println("ERROR AL GUARDAR");
+            }
+            //acceso.close();
+        } catch (Exception e) {
+            //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
+        }
+    }
     public void errorIngresarDatos(JTextArea cuadroTexto){
         if(lineaArray[0].equals("EMPLEADO")){
             //---------
@@ -206,6 +234,8 @@ public class ImportarDatos {
             }else{
                 insertarCliente();
             }
+        }else if(lineaArray[0].equals("PEDIDO")){
+            insertarPedido();
         }
     }
 }
