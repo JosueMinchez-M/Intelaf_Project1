@@ -132,6 +132,32 @@ public class ImportarDatos {
         }
     }
     
+    public void insertarCliente(){
+        String sql = "INSERT INTO "+ lineaArray[0] +" (nombre, nit, telefono, credito_compra, dpi, correo_electronico, direccion) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        try {
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, lineaArray[1]);
+            ps.setString(2, lineaArray[2]);
+            ps.setString(3, lineaArray[3]);
+            ps.setString(4, lineaArray[4]);
+            ps.setString(5, "N/E");
+            ps.setString(6, "N/E");
+            ps.setString(7, "N/E");
+            
+            int res = ps.executeUpdate();
+            if(res > 0){
+                //JOptionPane.showMessageDialog(null, "GUARDADO CON EXITO");
+                System.out.println("GUARDANDO DATOS");
+            }else{
+                //JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR");
+                System.out.println("ERROR AL GUARDAR");
+            }
+            //acceso.close();
+        } catch (Exception e) {
+            //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
+        }
+    }
     public void errorIngresarDatos(JTextArea cuadroTexto){
         if(lineaArray[0].equals("EMPLEADO")){
             //---------
@@ -170,6 +196,15 @@ public class ImportarDatos {
                 + "\nINCOPATIBILIDAD en sus datos.\n\n");
             }else{
                 insertarProducto();
+            }
+        }else if(lineaArray[0].equals("CLIENTE")){
+            Pattern patC3 = Pattern.compile("[A-Z]{1,1}"+"-"+"[0-9]{4,4}");
+            Matcher matC3 = patC3.matcher(lineaArray[2]);
+            if(!(matC3.matches()) || !(lineaArray[3].matches("[0-9]+"))){
+                cuadroTexto.append("--> El CLIENTE con el NIT: " + lineaArray[2] + " fue ignorado\n"
+                + "debido a INCOPATIBILIDAD en sus datos.\n\n");
+            }else{
+                insertarCliente();
             }
         }
     }
