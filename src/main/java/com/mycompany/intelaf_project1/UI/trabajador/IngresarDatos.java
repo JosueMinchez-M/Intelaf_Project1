@@ -13,9 +13,8 @@ import com.mycompany.intelaf_project1.Empleado;
  */
 public class IngresarDatos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form IngresarDatos
-     */
+    Empleado e = new Empleado();
+    
     public IngresarDatos() {
         initComponents();
     }
@@ -115,6 +114,18 @@ public class IngresarDatos extends javax.swing.JFrame {
         jtEmpleados = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         txt_buscar = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        txt_correoEmpleado = new javax.swing.JTextField();
+        txt_direccionEmpleado = new javax.swing.JTextField();
+        txt_nitEmpleado = new javax.swing.JTextField();
+        txt_nombreEmpleado = new javax.swing.JTextField();
+        txt_telefonoEmpleado = new javax.swing.JTextField();
+        btn_guardarEmpleado = new javax.swing.JButton();
+        btn_modificarEmpleado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INTELAF S.A");
@@ -123,7 +134,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 166, Short.MAX_VALUE)
+            .addGap(0, 180, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,7 +145,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 167, Short.MAX_VALUE)
+            .addGap(0, 180, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,7 +336,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 190, Short.MAX_VALUE)
+            .addGap(0, 203, Short.MAX_VALUE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,7 +445,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 190, Short.MAX_VALUE)
+            .addGap(0, 204, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -724,6 +735,11 @@ public class IngresarDatos extends javax.swing.JFrame {
                 "CODIGO", "NOMBRE", "TELEFONO", "DPI", "NIT", "CORREO ELECTRONICO", "DIRECCION"
             }
         ));
+        jtEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtEmpleadosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtEmpleados);
 
         jButton1.setText("CARGAR DATOS");
@@ -733,6 +749,20 @@ public class IngresarDatos extends javax.swing.JFrame {
             }
         });
 
+        jLabel18.setText("NOMBRE: ");
+
+        jLabel19.setText("TELEFONO: ");
+
+        jLabel20.setText("NIT:");
+
+        jLabel21.setText("CORREO ELECTRONICO: ");
+
+        jLabel22.setText("DIRECCION: ");
+
+        btn_guardarEmpleado.setText("GUARDAR");
+
+        btn_modificarEmpleado.setText("MODIFICAR");
+
         javax.swing.GroupLayout EMPLEADOLayout = new javax.swing.GroupLayout(EMPLEADO);
         EMPLEADO.setLayout(EMPLEADOLayout);
         EMPLEADOLayout.setHorizontalGroup(
@@ -740,7 +770,7 @@ public class IngresarDatos extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADOLayout.createSequentialGroup()
                 .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(EMPLEADOLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(47, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(EMPLEADOLayout.createSequentialGroup()
                         .addGap(192, 192, 192)
@@ -748,6 +778,30 @@ public class IngresarDatos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(17, 17, 17))
+            .addGroup(EMPLEADOLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22)
+                    .addComponent(jLabel21)
+                    .addGroup(EMPLEADOLayout.createSequentialGroup()
+                        .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel18))
+                        .addGap(104, 104, 104)
+                        .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_direccionEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_correoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_nombreEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(EMPLEADOLayout.createSequentialGroup()
+                                .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_nitEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_telefonoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btn_guardarEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btn_modificarEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         EMPLEADOLayout.setVerticalGroup(
             EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -757,7 +811,29 @@ public class IngresarDatos extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nombreEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_telefonoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_guardarEmpleado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nitEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_modificarEmpleado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_correoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_direccionEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -791,7 +867,7 @@ public class IngresarDatos extends javax.swing.JFrame {
                             .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(8, 8, 8))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(EMPLEADO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(EMPLEADO, javax.swing.GroupLayout.PREFERRED_SIZE, 432, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -816,10 +892,13 @@ public class IngresarDatos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Empleado e = new Empleado();
         e.mostrarDatosTabla(jtEmpleados, txt_buscar);
         txt_buscar.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jtEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEmpleadosMouseClicked
+        e.pasarDatosComponentes(jtEmpleados, txt_nombreEmpleado, txt_telefonoEmpleado, txt_nitEmpleado, txt_correoEmpleado, txt_direccionEmpleado);
+    }//GEN-LAST:event_jtEmpleadosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -859,9 +938,11 @@ public class IngresarDatos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel EMPLEADO;
     private javax.swing.JButton btn_buscarProducto;
+    private javax.swing.JButton btn_guardarEmpleado;
     private javax.swing.JButton btn_guardarProducto;
     private javax.swing.JButton btn_limpiarProducto;
     private javax.swing.JButton btn_listadoProducto;
+    private javax.swing.JButton btn_modificarEmpleado;
     private javax.swing.JButton btn_modificarProducto;
     private javax.swing.JComboBox<String> cb_tienda;
     private javax.swing.JButton jButton1;
@@ -879,7 +960,12 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
@@ -931,17 +1017,22 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JTextField txt_cantidadProducto;
     private javax.swing.JTextField txt_codigoProducto;
     private javax.swing.JTextField txt_correoCliente;
+    private javax.swing.JTextField txt_correoEmpleado;
     private javax.swing.JTextField txt_creditoCliente;
     private javax.swing.JTextField txt_descripcionProducto;
     private javax.swing.JTextField txt_direccionCliente;
+    private javax.swing.JTextField txt_direccionEmpleado;
     private javax.swing.JTextField txt_dpiCliente;
     private javax.swing.JTextField txt_fabricanteProducto;
     private javax.swing.JTextField txt_garantiaProducto;
     private javax.swing.JTextField txt_idCliente;
     private javax.swing.JTextField txt_nitCliente;
+    private javax.swing.JTextField txt_nitEmpleado;
     private javax.swing.JTextField txt_nombreCliente;
+    private javax.swing.JTextField txt_nombreEmpleado;
     private javax.swing.JTextField txt_nombreProducto;
     private javax.swing.JTextField txt_precioProducto;
     private javax.swing.JTextField txt_telefonoCliente;
+    private javax.swing.JTextField txt_telefonoEmpleado;
     // End of variables declaration//GEN-END:variables
 }

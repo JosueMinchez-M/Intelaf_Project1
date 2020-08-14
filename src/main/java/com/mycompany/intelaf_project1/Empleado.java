@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.function.ObjIntConsumer;
+import javax.imageio.stream.FileImageInputStream;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -63,6 +65,34 @@ public class Empleado {
         } catch (SQLException e) {
             System.out.println(e.toString());
                 
+        }
+    }
+    /*Permite pasar los datos del empleado a las casillas en donde se pueden modificar
+      solo se agregan los datos que son posible modificar, asi como el codigo y dpi no se agregan
+      porque son datos que no cambiaran*/
+    public void pasarDatosComponentes(JTable empleadosTable, JTextField txt_nombreEmpleado, 
+            JTextField txt_telefonoEmpleado, JTextField txt_nitEmpleado, JTextField txt_correoEmpleado, 
+            JTextField txt_direccionEmpleado){
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            int Fila = empleadosTable.getSelectedRow();//permite pasar los datos de cada trabajador
+            String codigo = empleadosTable.getValueAt(Fila, 0).toString();
+            String sql = "SELECT * FROM EMPLEADO WHERE codigo = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, codigo);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                txt_nombreEmpleado.setText(rs.getString("nombre"));
+                txt_telefonoEmpleado.setText(rs.getString("telefono"));
+                txt_nitEmpleado.setText(rs.getString("nit"));
+                txt_correoEmpleado.setText(rs.getString("correo_electronico"));
+                txt_direccionEmpleado.setText(rs.getString("direccion"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
         }
     }
 }
