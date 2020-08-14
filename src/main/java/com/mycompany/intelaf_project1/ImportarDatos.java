@@ -37,7 +37,7 @@ public class ImportarDatos {
             //Separamos las palabras extras como TIENDA o NOMBRE de las columnas nombres de algunos atributos
             if(palabrasExtras.length == 2){
                 lineaArray[1] = palabrasExtras[1];
-                JOptionPane.showMessageDialog(null, lineaArray[1]);
+                //JOptionPane.showMessageDialog(null, lineaArray[1]);
             }
             
             for (int i = 0; i < lineaArray.length; i++) {

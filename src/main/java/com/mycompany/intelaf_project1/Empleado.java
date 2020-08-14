@@ -12,6 +12,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.function.ObjIntConsumer;
 import javax.imageio.stream.FileImageInputStream;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +25,7 @@ public class Empleado {
     
     PreparedStatement ps = null;
     ResultSet rs = null;
+    
     
     public void mostrarDatosTabla(JTable empleadosTable, JTextField txt_buscar){
         String buscar = txt_buscar.getText();
@@ -91,6 +93,40 @@ public class Empleado {
                 txt_correoEmpleado.setText(rs.getString("correo_electronico"));
                 txt_direccionEmpleado.setText(rs.getString("direccion"));
             }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
+    public void guardarNuevosEmpleados(JTextField txt_codigoEmpleado, JTextField txt_dpiEmpleado, JTextField txt_nombreEmpleado, JTextField txt_telefonoEmpleado, 
+            JTextField txt_nitEmpleado, JTextField txt_correoEmpleado, JTextField txt_direccionEmpleado){
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "INSERT INTO EMPLEADO (codigo, nombre, telefono, dpi, nit, correo_electronico, direccion) VALUES(?, ?, ?, ?, ?, ?, ?)";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(txt_codigoEmpleado.getText()));
+            ps.setString(2, txt_nombreEmpleado.getText());
+            ps.setInt(3, Integer.parseInt(txt_telefonoEmpleado.getText()));
+            ps.setString(4, txt_dpiEmpleado.getText());
+            ps.setString(5, txt_nitEmpleado.getText());
+            ps.setString(6, txt_correoEmpleado.getText());
+            ps.setString(7, txt_direccionEmpleado.getText());
+            
+            ps.execute(); //Pasamos los valores a la Base de Datos
+            
+            JOptionPane.showMessageDialog(null, "EMPLEADO GUARDADO");
+            //Pasamos los valores a la caja de texto
+            Object[] fila = new Object[7];
+            fila[0] = txt_codigoEmpleado.getText();
+            fila[1] = txt_nombreEmpleado.getText();
+            fila[2] = txt_telefonoEmpleado.getText();
+            fila[3] = txt_dpiEmpleado.getText();
+            fila[4] = txt_nitEmpleado.getText();
+            fila[5] = txt_correoEmpleado.getText();
+            fila[6] = txt_direccionEmpleado.getText();
+            modelo.addRow(fila);
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
