@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -22,21 +23,22 @@ public class ImportarDatos {
     Conexion con = new Conexion();
     Connection acceso;
     String lineaArray[];
+    String palabrasExtras[];
     int numLines;
     String lineas[];
     
     public void Importar(JTextField path, JTextArea cuadroTexto){
-        //JTextField clave, JTextField nombre, JTextField domicilio, JTextField telefono, JTextField correo, JTextField nacimiento, JComboBox genero, JTextField id
-//        numeroLineas(path);
         try {
-//            List prueba = Files.readAllLines(Paths.get(path.getText()));
-//            for (int i = 0; i < prueba.size(); i++) {
-//                lineas[i] = (String) prueba.get(i);
-//            }
             for (String line : Files.readAllLines(Paths.get(path.getText()))) {//-------------
             String lineas = line;
             //System.out.println(line);
             lineaArray = lineas.split(",");
+            palabrasExtras = lineaArray[1].split(" ");
+            //Separamos las palabras extras como TIENDA o NOMBRE de las columnas nombres de algunos atributos
+            if(palabrasExtras.length == 2){
+                lineaArray[1] = palabrasExtras[1];
+                JOptionPane.showMessageDialog(null, lineaArray[1]);
+            }
             
             for (int i = 0; i < lineaArray.length; i++) {
                 System.out.print(lineaArray[i] + "  ");
@@ -59,8 +61,8 @@ public class ImportarDatos {
             acceso = con.Conectar();
             ps = acceso.prepareStatement(sql);
             ps.setString(1, lineaArray[1]);
-            ps.setString(2, lineaArray[2]);
-            ps.setString(3, lineaArray[3]);
+            ps.setInt(2, Integer.parseInt(lineaArray[2]));
+            ps.setInt(3, Integer.parseInt(lineaArray[3]));
             ps.setString(4, lineaArray[4]);
             ps.setString(5, "N/E");
             ps.setString(6, "N/E");
