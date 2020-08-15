@@ -478,9 +478,9 @@ public class IngresarDatos extends javax.swing.JFrame {
                             .addComponent(txt_correoTienda)
                             .addComponent(txt_direccionTienda))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(TIENDALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_modificarTienda, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_guardarTienda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(TIENDALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_modificarTienda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_guardarTienda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(31, 31, 31))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, TIENDALayout.createSequentialGroup()
                         .addGroup(TIENDALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1037,12 +1037,15 @@ public class IngresarDatos extends javax.swing.JFrame {
     private void btn_modificarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarEmpleadoActionPerformed
         e.modificarEmpleado(txt_codigoEmpleado, jtEmpleados, txt_nombreEmpleado, txt_telefonoEmpleado, txt_nitEmpleado, txt_correoEmpleado, txt_direccionEmpleado);
         limpiarCasillasEmpleado();
+        ocultarTodasCasillasGuardarEmpleado();
+        ocultarTodasCasillasModificarEmpleado();
     }//GEN-LAST:event_btn_modificarEmpleadoActionPerformed
 
     private void btn_guardarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarEmpleadoActionPerformed
-        JOptionPane.showMessageDialog(null, txt_nombreEmpleado.getText() + " AQUI DEBERIA ESTAR EL VALOR");
         e.guardarNuevosEmpleados(txt_codigoEmpleado, txt_dpiEmpleado, txt_nombreEmpleado, txt_telefonoEmpleado, txt_nitEmpleado, txt_correoEmpleado, txt_direccionEmpleado);
         limpiarCasillasEmpleado();
+        ocultarTodasCasillasModificarEmpleado();
+        ocultarTodasCasillasGuardarEmpleado();
     }//GEN-LAST:event_btn_guardarEmpleadoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

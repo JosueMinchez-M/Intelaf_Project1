@@ -97,31 +97,41 @@ public class Tienda {
             Conexion con = new Conexion();
             Connection acceso = con.Conectar();
             String sql = "INSERT INTO TIENDA (codigo, nombre, direccion, telefono_1, telefono_2, correo_electronico, Horario) VALUES(?, ?, ?, ?, ?, ?, ?)";
+            //Con esta condicion determinamos si los campos obligatorios estan vacios no ingresamos el registro a la DB
+            if(txt_nombreTienda.getText().equals("") || txt_direccionTienda.getText().equals("") || 
+                    txt_codigoTienda.getText().equals("") || txt_telefono1Tienda.getText().equals("")){
+                
+            }else{
+                ps = acceso.prepareStatement(sql);
+                ps.setString(1, txt_codigoTienda.getText());
+                ps.setString(2, txt_nombreTienda.getText());
+                ps.setString(3, txt_direccionTienda.getText());
+                ps.setString(4, txt_telefono1Tienda.getText());
+                ps.setString(5, txt_telefono2Tienda.getText());
+                ps.setString(6, txt_correoTienda.getText());
+                ps.setString(7, txt_horarioTienda.getText());
+            }
             
-            ps = acceso.prepareStatement(sql);
-            ps.setString(1, txt_codigoTienda.getText());
-            ps.setString(2, txt_nombreTienda.getText());
-            ps.setString(3, txt_direccionTienda.getText());
-            ps.setString(4, txt_telefono1Tienda.getText());
-            ps.setString(5, txt_telefono2Tienda.getText());
-            ps.setString(6, txt_correoTienda.getText());
-            ps.setString(7, txt_horarioTienda.getText());
+            int res = ps.executeUpdate();
             
-            ps.execute(); //Pasamos los valores a la Base de Datos
-            
-            JOptionPane.showMessageDialog(null, "TIENDA GUARDADA");
-            //Pasamos los valores a la caja de texto
-            Object[] fila = new Object[7];
-            fila[0] = txt_codigoTienda.getText();
-            fila[1] = txt_nombreTienda.getText();
-            fila[2] = txt_direccionTienda.getText();
-            fila[3] = txt_telefono1Tienda.getText();
-            fila[4] = txt_telefono2Tienda.getText();
-            fila[5] = txt_correoTienda.getText();
-            fila[6] = txt_horarioTienda.getText();
-            modelo.addRow(fila);
-        } catch (SQLException e) {
+            if(res > 0){
+                JOptionPane.showMessageDialog(null, "TIENDA GUARDADA");
+                //Pasamos los valores a la caja de texto
+                Object[] fila = new Object[7];
+                fila[0] = txt_codigoTienda.getText();
+                fila[1] = txt_nombreTienda.getText();
+                fila[2] = txt_direccionTienda.getText();
+                fila[3] = txt_telefono1Tienda.getText();
+                fila[4] = txt_telefono2Tienda.getText();
+                fila[5] = txt_correoTienda.getText();
+                fila[6] = txt_horarioTienda.getText();
+                modelo.addRow(fila);
+            }else{
+                JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR TIENDA");
+            }
+        } catch (Exception e) {
             System.out.println(e.toString());
+            JOptionPane.showMessageDialog(null, "ES OBLIGATORIO LLENAR NOMBRE, DIRECCION, CODIGO Y TELEFONO 1");
         }
     }
 }

@@ -99,31 +99,41 @@ public class Cliente {
             Conexion con = new Conexion();
             Connection acceso = con.Conectar();
             String sql = "INSERT INTO CLIENTE (nit, nombre, telefono, dpi, credito_compra, correo_electronico, direccion) VALUES(?, ?, ?, ?, ?, ?, ?)";
-            
-            ps = acceso.prepareStatement(sql);
-            ps.setString(1, txt_nitCliente.getText());
-            ps.setString(2, txt_nombreCliente.getText());
-            ps.setString(3, txt_telefonoCliente.getText());
-            ps.setString(4, txt_dpiCliente.getText());
-            ps.setString(5, txt_creditoCliente.getText());
-            ps.setString(6, txt_correoCliente.getText());
-            ps.setString(7, txt_direccionCliente.getText());
-            
-            ps.execute(); //Pasamos los valores a la Base de Datos
-            
-            JOptionPane.showMessageDialog(null, "CLIENTE GUARDADO");
-            //Pasamos los valores a la caja de texto
-            Object[] fila = new Object[7];
-            fila[0] = txt_nitCliente.getText();
-            fila[1] = txt_nombreCliente.getText();
-            fila[2] = txt_telefonoCliente.getText();
-            fila[3] = txt_dpiCliente.getText();
-            fila[4] = txt_creditoCliente.getText();
-            fila[5] = txt_correoCliente.getText();
-            fila[6] = txt_direccionCliente.getText();
+            if((txt_nombreCliente.getText().equals("") || txt_telefonoCliente.getText().equals("") || txt_nitCliente.getText().equals(""))){
+
+            }else{
+                if(txt_creditoCliente.getText().equals("")){
+                    txt_creditoCliente.setText("0");
+                }
+                
+                ps = acceso.prepareStatement(sql);
+                ps.setString(1, txt_nitCliente.getText());
+                ps.setString(2, txt_nombreCliente.getText());
+                ps.setString(3, txt_telefonoCliente.getText());
+                ps.setString(4, txt_dpiCliente.getText());
+                ps.setInt(5, Integer.valueOf(txt_creditoCliente.getText()));
+                ps.setString(6, txt_correoCliente.getText());
+                ps.setString(7, txt_direccionCliente.getText());
+            }
+            int res = ps.executeUpdate();
+            if(res > 0){
+                JOptionPane.showMessageDialog(null, "CLIENTE GUARDADO");
+                //Pasamos los valores a la caja de texto
+                Object[] fila = new Object[7];
+                fila[0] = txt_nitCliente.getText();
+                fila[1] = txt_nombreCliente.getText();
+                fila[2] = txt_telefonoCliente.getText();
+                fila[3] = txt_dpiCliente.getText();
+                fila[4] = txt_creditoCliente.getText();
+                fila[5] = txt_correoCliente.getText();
+                fila[6] = txt_direccionCliente.getText();
             modelo.addRow(fila);
-        } catch (SQLException e) {
+            }else{
+                JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR CLIENTE");
+            }
+        } catch (Exception e) {
             System.out.println(e.toString());
+            JOptionPane.showMessageDialog(null, "ES OBLIGATORIO LLENAR NOMBRE, TELEFONO Y NIT");
         }
     }
     public void modificarCliente(JTextField txt_dpiCliente, JTextField txt_nombreCliente, 
