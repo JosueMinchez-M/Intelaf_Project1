@@ -72,7 +72,7 @@ public class Empleado {
     /*Permite pasar los datos del empleado a las casillas en donde se pueden modificar
       solo se agregan los datos que son posible modificar, asi como el codigo y dpi no se agregan
       porque son datos que no cambiaran*/
-    public void pasarDatosComponentes(JTable empleadosTable, JTextField txt_nombreEmpleado, 
+    public void pasarDatosComponentes(JTextField txt_dpiEmpleado, JTextField txt_codigoEmpleado, JTable empleadosTable, JTextField txt_nombreEmpleado, 
             JTextField txt_telefonoEmpleado, JTextField txt_nitEmpleado, JTextField txt_correoEmpleado, 
             JTextField txt_direccionEmpleado){
         try {
@@ -92,6 +92,8 @@ public class Empleado {
                 txt_nitEmpleado.setText(rs.getString("nit"));
                 txt_correoEmpleado.setText(rs.getString("correo_electronico"));
                 txt_direccionEmpleado.setText(rs.getString("direccion"));
+                txt_codigoEmpleado.setText(rs.getString("codigo"));
+                txt_dpiEmpleado.setText(rs.getString("dpi"));
             }
         } catch (SQLException e) {
             System.out.println(e.toString());
@@ -126,6 +128,38 @@ public class Empleado {
             fila[4] = txt_nitEmpleado.getText();
             fila[5] = txt_correoEmpleado.getText();
             fila[6] = txt_direccionEmpleado.getText();
+            modelo.addRow(fila);
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
+    public void modificarEmpleado(JTextField txt_codigoEmpleado, JTable empleadosTable, JTextField txt_nombreEmpleado, 
+            JTextField txt_telefonoEmpleado, JTextField txt_nitEmpleado, JTextField txt_correoEmpleado, 
+            JTextField txt_direccionEmpleado){
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "UPDATE EMPLEADO SET nombre=?, telefono=?, nit=?, correo_electronico=?, direccion=? WHERE codigo=?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, txt_nombreEmpleado.getText());
+            ps.setString(2, txt_telefonoEmpleado.getText());
+            ps.setString(3, txt_nitEmpleado.getText());
+            ps.setString(4, txt_correoEmpleado.getText());
+            ps.setString(5, txt_direccionEmpleado.getText());
+            ps.setInt(6, Integer.parseInt(txt_codigoEmpleado.getText()));
+            
+            ps.executeUpdate(); //Pasamos los valores a la Base de Datos
+            
+            JOptionPane.showMessageDialog(null, "EMPLEADO GUARDADO");
+            //Pasamos los valores a la caja de texto
+            Object[] fila = new Object[5];
+            fila[0] = txt_nombreEmpleado.getText();
+            fila[1] = txt_telefonoEmpleado.getText();
+            fila[2] = txt_nitEmpleado.getText();
+            fila[3] = txt_correoEmpleado.getText();
+            fila[4] = txt_direccionEmpleado.getText();
             modelo.addRow(fila);
         } catch (SQLException e) {
             System.out.println(e.toString());

@@ -772,6 +772,11 @@ public class IngresarDatos extends javax.swing.JFrame {
         });
 
         btn_modificarEmpleado.setText("MODIFICAR");
+        btn_modificarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificarEmpleadoActionPerformed(evt);
+            }
+        });
 
         jLabel23.setText("CODIGO: ");
 
@@ -921,13 +926,17 @@ public class IngresarDatos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jtEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEmpleadosMouseClicked
-        e.pasarDatosComponentes(jtEmpleados, txt_nombreEmpleado, txt_telefonoEmpleado, txt_nitEmpleado, txt_correoEmpleado, txt_direccionEmpleado);
+        e.pasarDatosComponentes(txt_dpiEmpleado, txt_codigoEmpleado, jtEmpleados, txt_nombreEmpleado, txt_telefonoEmpleado, txt_nitEmpleado, txt_correoEmpleado, txt_direccionEmpleado);
     }//GEN-LAST:event_jtEmpleadosMouseClicked
 
     private void btn_guardarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarEmpleadoActionPerformed
         e.guardarNuevosEmpleados(txt_codigoEmpleado, txt_dpiEmpleado, txt_nombreEmpleado, txt_telefonoEmpleado, txt_nitEmpleado, txt_correoEmpleado, txt_direccionEmpleado);
         limpiarCasillas();
     }//GEN-LAST:event_btn_guardarEmpleadoActionPerformed
+
+    private void btn_modificarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarEmpleadoActionPerformed
+        e.modificarEmpleado(txt_codigoEmpleado, jtEmpleados, txt_nombreEmpleado, txt_telefonoEmpleado, txt_nitEmpleado, txt_correoEmpleado, txt_direccionEmpleado);
+    }//GEN-LAST:event_btn_modificarEmpleadoActionPerformed
 
     private void limpiarCasillas(){
         txt_codigoEmpleado.setText("");
