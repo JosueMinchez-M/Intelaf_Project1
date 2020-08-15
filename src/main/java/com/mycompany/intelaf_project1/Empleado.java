@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -167,5 +168,30 @@ public class Empleado {
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
+    }
+    
+    public ValidarEmpleado validarEmpleado(String codigo, String nombre){
+        ValidarEmpleado ev = new ValidarEmpleado();
+        String sql = "SELECT * FROM EMPLEADO WHERE codigo=? and nombre=?";
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, codigo);
+            ps.setString(2, nombre);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                ev.setCodigo(rs.getInt(1));
+                ev.setNombre(rs.getString(2));
+                ev.setTelefono(rs.getString(3));
+                ev.setDpi(rs.getString(4));
+                ev.setCorreoElectronico(rs.getString(5));
+                ev.setDireccion(rs.getString(6));
+            }
+        } catch (Exception e) {
+        }
+        return ev;
+        
     }
 }

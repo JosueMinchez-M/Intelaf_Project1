@@ -5,8 +5,11 @@
  */
 package com.mycompany.intelaf_project1.UI.trabajador;
 
+import com.mycompany.intelaf_project1.Empleado;
 import com.mycompany.intelaf_project1.ImportarDatos;
+import com.mycompany.intelaf_project1.ValidarEmpleado;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -15,9 +18,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class LoginTrabajador extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
+    ValidarEmpleado ve = new ValidarEmpleado();
+    Empleado empleado = new Empleado();
+    
     public LoginTrabajador() {
         initComponents();
         txt_MostrarRuta.setEditable(false);
@@ -44,9 +47,9 @@ public class LoginTrabajador extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txt_usuario = new javax.swing.JTextField();
+        txt_Empleado = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txt_password = new javax.swing.JPasswordField();
+        txt_passwordEmpleado = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -139,9 +142,14 @@ public class LoginTrabajador extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Dyuthi", 1, 18)); // NOI18N
         jLabel4.setText("PASSWORD:  ");
 
-        txt_password.setText("jPasswordField1");
+        txt_passwordEmpleado.setText("jPasswordField1");
 
         jButton1.setText("INGRESAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -159,8 +167,8 @@ public class LoginTrabajador extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_usuario)
-                            .addComponent(txt_password)
+                            .addComponent(txt_Empleado)
+                            .addComponent(txt_passwordEmpleado)
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
@@ -172,11 +180,11 @@ public class LoginTrabajador extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_Empleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_passwordEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap(19, Short.MAX_VALUE))
@@ -424,6 +432,30 @@ public class LoginTrabajador extends javax.swing.JFrame {
         //importarDatos.insertarEmpleado();
     }//GEN-LAST:event_btn_ImportarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        validar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void validar(){
+        //String dni = String.valueOf(txt_password.getPassword());
+        char[] arrayDni = txt_passwordEmpleado.getPassword();
+        String codigo = new String(arrayDni);
+        String nombre = txt_Empleado.getText();
+        if(txt_Empleado.getText().equals("")||txt_passwordEmpleado.getPassword().equals("")){
+            JOptionPane.showMessageDialog(this, "Debe Ingresar Datos");
+            txt_Empleado.requestFocus();
+        }else{
+            ve = empleado.validarEmpleado(codigo, nombre);
+            if(ve.getNombre() != null && String.valueOf(ve.getCodigo()) != null){
+                IngresarDatos ingresarDatos = new IngresarDatos();
+                ingresarDatos.setVisible(true);
+                dispose();
+            }else{
+                JOptionPane.showMessageDialog(this, "Debe Ingresar Usuarios Validos");
+                txt_Empleado.requestFocus();
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -487,8 +519,8 @@ public class LoginTrabajador extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea txtA_vistaRegistros;
+    private javax.swing.JTextField txt_Empleado;
     private javax.swing.JTextField txt_MostrarRuta;
-    private javax.swing.JPasswordField txt_password;
-    private javax.swing.JTextField txt_usuario;
+    private javax.swing.JPasswordField txt_passwordEmpleado;
     // End of variables declaration//GEN-END:variables
 }
