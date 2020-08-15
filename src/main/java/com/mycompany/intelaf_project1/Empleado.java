@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.intelaf_project1;
 
 import java.sql.Connection;
@@ -10,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.function.ObjIntConsumer;
-import javax.imageio.stream.FileImageInputStream;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -153,7 +146,7 @@ public class Empleado {
             ps.executeUpdate(); //Pasamos los valores a la Base de Datos
             
             JOptionPane.showMessageDialog(null, "EMPLEADO GUARDADO");
-            //Pasamos los valores a la caja de texto
+            //Con esto podemos ver nuevamente en la tabla de la lista los datos actualizados
             Object[] fila = new Object[5];
             fila[0] = txt_nombreEmpleado.getText();
             fila[1] = txt_telefonoEmpleado.getText();
