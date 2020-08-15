@@ -62,7 +62,7 @@ public class ImportarDatos {
             ps = acceso.prepareStatement(sql);
             ps.setString(1, lineaArray[1]);
             ps.setInt(2, Integer.parseInt(lineaArray[2]));
-            ps.setInt(3, Integer.parseInt(lineaArray[3]));
+            ps.setString(3, lineaArray[3]);
             ps.setString(4, lineaArray[4]);
             ps.setString(5, "N/E");
             ps.setString(6, "N/E");
@@ -142,7 +142,7 @@ public class ImportarDatos {
             ps.setString(1, lineaArray[1]);
             ps.setString(2, lineaArray[2]);
             ps.setString(3, lineaArray[3]);
-            ps.setString(4, lineaArray[4]);
+            ps.setInt(4, Integer.parseInt(lineaArray[4]));
             ps.setString(5, "N/E");
             ps.setString(6, "N/E");
             ps.setString(7, "N/E");

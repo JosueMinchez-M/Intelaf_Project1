@@ -99,31 +99,41 @@ public class Empleado {
             Conexion con = new Conexion();
             Connection acceso = con.Conectar();
             String sql = "INSERT INTO EMPLEADO (codigo, nombre, telefono, dpi, nit, correo_electronico, direccion) VALUES(?, ?, ?, ?, ?, ?, ?)";
+            //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
+            if(txt_codigoEmpleado.getText().equals("") || txt_dpiEmpleado.getText().equals("") || txt_nombreEmpleado.getText().equals("")
+                || txt_telefonoEmpleado.getText().equals("")||
+                 txt_correoEmpleado.getText().equals("") || txt_direccionEmpleado.getText().equals("")){
+            }else{
+                
+                ps = acceso.prepareStatement(sql);
+                ps.setInt(1, Integer.parseInt(txt_codigoEmpleado.getText()));
+                ps.setString(2, txt_nombreEmpleado.getText());
+                ps.setString(3, txt_telefonoEmpleado.getText());
+                ps.setString(4, txt_dpiEmpleado.getText());
+                ps.setString(5, txt_nitEmpleado.getText());
+                ps.setString(6, txt_correoEmpleado.getText());
+                ps.setString(7, txt_direccionEmpleado.getText());
+            }
             
-            ps = acceso.prepareStatement(sql);
-            ps.setInt(1, Integer.parseInt(txt_codigoEmpleado.getText()));
-            ps.setString(2, txt_nombreEmpleado.getText());
-            ps.setInt(3, Integer.parseInt(txt_telefonoEmpleado.getText()));
-            ps.setString(4, txt_dpiEmpleado.getText());
-            ps.setString(5, txt_nitEmpleado.getText());
-            ps.setString(6, txt_correoEmpleado.getText());
-            ps.setString(7, txt_direccionEmpleado.getText());
-            
-            ps.execute(); //Pasamos los valores a la Base de Datos
-            
-            JOptionPane.showMessageDialog(null, "EMPLEADO GUARDADO");
-            //Pasamos los valores a la caja de texto
-            Object[] fila = new Object[7];
-            fila[0] = txt_codigoEmpleado.getText();
-            fila[1] = txt_nombreEmpleado.getText();
-            fila[2] = txt_telefonoEmpleado.getText();
-            fila[3] = txt_dpiEmpleado.getText();
-            fila[4] = txt_nitEmpleado.getText();
-            fila[5] = txt_correoEmpleado.getText();
-            fila[6] = txt_direccionEmpleado.getText();
-            modelo.addRow(fila);
-        } catch (SQLException e) {
+            int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
+            if(res > 0){
+                JOptionPane.showMessageDialog(null, "EMPLEADO GUARDADO");
+                //Pasamos los valores a la caja de texto
+                Object[] fila = new Object[7];
+                fila[0] = txt_codigoEmpleado.getText();
+                fila[1] = txt_nombreEmpleado.getText();
+                fila[2] = txt_telefonoEmpleado.getText();
+                fila[3] = txt_dpiEmpleado.getText();
+                fila[4] = txt_nitEmpleado.getText();
+                fila[5] = txt_correoEmpleado.getText();
+                fila[6] = txt_direccionEmpleado.getText();
+                modelo.addRow(fila);
+            }else{
+                JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR EMPLEADO");
+            }
+        } catch (Exception e) {
             System.out.println(e.toString());
+            JOptionPane.showMessageDialog(null, "ES OBLIGATORIO LLENAR TODOS LOS CAMPOS MENOS EL NIT");
         }
     }
     public void modificarEmpleado(JTextField txt_codigoEmpleado, JTable empleadosTable, JTextField txt_nombreEmpleado, 
