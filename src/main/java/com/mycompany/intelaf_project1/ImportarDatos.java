@@ -1,5 +1,6 @@
 package com.mycompany.intelaf_project1;
 
+import com.mycompany.intelaf_project1.UI.trabajador.IngresarDatos;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -26,7 +27,6 @@ public class ImportarDatos {
     String lineaArray[];
     String palabrasExtras1[];
     String palabrasExtras2[];
-    //String codigoTienda[];
     int numLines;
     int contTienda = 0;
     String lineas[];
@@ -117,7 +117,6 @@ public class ImportarDatos {
     public void insertarProducto(){
         //Con este metodo se insertan los productos en la tabla que le pertenece a cada tienda
         //Se hace por medio de la columna Tienda_codigo comparandola con la tabla TIENDA
-        String codigoTienda = null;
         String nombreTienda = null;
         try {
             Conexion con = new Conexion();
@@ -134,6 +133,7 @@ public class ImportarDatos {
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
+        //Agregamos las tiendas creadas en el combobox para hacer uso de ellas
         String sql = "INSERT INTO PRODUCTO"+ nombreTienda +" (nombre, fabricante, codigo, cantidad_disponible, precio, descripcion, garantia, Tienda_codigo) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             acceso = con.Conectar();
@@ -142,7 +142,7 @@ public class ImportarDatos {
             ps.setString(2, lineaArray[2]);
             ps.setString(3, lineaArray[3]);
             ps.setString(4, lineaArray[4]);
-            ps.setString(5, lineaArray[5]);
+            ps.setDouble(5, Double.parseDouble(lineaArray[5]));
             ps.setString(6, "N/E");
             ps.setString(7, "N/E");
             ps.setString(8, lineaArray[6]);
@@ -271,7 +271,7 @@ public class ImportarDatos {
     }
     public void crearTablaProductoTienda(){
         String sql = "CREATE TABLE PRODUCTO" + lineaArray[1] + " (codigo VARCHAR(10) NOT NULL, nombre VARCHAR(30) NOT NULL, fabricante VARCHAR(30) NOT NULL,"
-                + "cantidad_disponible VARCHAR(6) NOT NULL, precio INT(11) NOT NULL, descripcion VARCHAR(200), garantia VARCHAR(3), Tienda_codigo VARCHAR(10) NOT NULL,"
+                + "cantidad_disponible VARCHAR(6) NOT NULL, precio DOUBLE NOT NULL, descripcion VARCHAR(200), garantia VARCHAR(3), Tienda_codigo VARCHAR(10) NOT NULL,"
                 + "PRIMARY KEY(codigo), FOREIGN KEY(Tienda_codigo) REFERENCES TIENDA(codigo))";
         try {
             acceso = con.Conectar();
