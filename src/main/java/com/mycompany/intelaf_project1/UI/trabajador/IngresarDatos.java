@@ -13,7 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -34,6 +35,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         ocultarTodasCasillasModificarCliente();
         ocultarTodasCasillasGuardarEmpleado();
         ocultarTodasCasillasModificarEmpleado();
+         cargarTablasBD();
     }
 
 
@@ -1283,6 +1285,24 @@ public class IngresarDatos extends javax.swing.JFrame {
         txt_direccionCliente.setEditable(true);
         txt_telefonoCliente.setEditable(true);
         btn_modificarCliente.setEnabled(true);
+    }
+    public void cargarTablasBD(){
+        Conexion con = new Conexion();
+        Connection acceso = con.Conectar();
+        String query = "SHOW TABLES";
+        try {
+            ps = acceso.prepareStatement(query);
+            rs = ps.executeQuery();
+            cb_productoTienda.removeAllItems();
+            while(rs.next()){
+                if(rs.getString(1).matches("PRODUCTO.*")){
+                    cb_productoTienda.addItem(rs.getString(1));
+                }
+                //cb_productoTienda.addItem(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     /**
      * @param args the command line arguments
