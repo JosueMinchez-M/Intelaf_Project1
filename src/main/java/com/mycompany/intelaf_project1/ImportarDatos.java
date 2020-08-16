@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -23,8 +24,11 @@ public class ImportarDatos {
     Conexion con = new Conexion();
     Connection acceso;
     String lineaArray[];
-    String palabrasExtras[];
+    String palabrasExtras1[];
+    String palabrasExtras2[];
+    //String codigoTienda[];
     int numLines;
+    int contTienda = 0;
     String lineas[];
     
     public void Importar(JTextField path, JTextArea cuadroTexto){
@@ -33,11 +37,15 @@ public class ImportarDatos {
             String lineas = line;
             //System.out.println(line);
             lineaArray = lineas.split(",");
-            palabrasExtras = lineaArray[1].split(" ");
+            palabrasExtras1 = lineaArray[1].split(" ");
             //Separamos las palabras extras como TIENDA o NOMBRE de las columnas nombres de algunos atributos
-            if(palabrasExtras.length == 2){
-                lineaArray[1] = palabrasExtras[1];
+            if(palabrasExtras1.length == 2){
+                lineaArray[1] = palabrasExtras1[1];
                 //JOptionPane.showMessageDialog(null, lineaArray[1]);
+            }
+            palabrasExtras2 = lineaArray[2].split(" ");
+            if(palabrasExtras2.length == 2){
+                lineaArray[2] = palabrasExtras2[1];
             }
             
             for (int i = 0; i < lineaArray.length; i++) {
@@ -53,7 +61,7 @@ public class ImportarDatos {
 //            insertarEmpleado();
 //        }
     }
-    
+    //Insertar empleado está bien
     public void insertarEmpleado(){
         //JOptionPane.showMessageDialog(null, "ESTA ES LA ULTIMA TABLA " + lineaArray[0]);
         String sql = "INSERT INTO "+ lineaArray[0] +" (nombre, codigo, telefono, dpi, nit, correo_electronico, direccion) VALUES(?, ?, ?, ?, ?, ?, ?)";
@@ -80,7 +88,7 @@ public class ImportarDatos {
             //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
         }
     }
-    
+    //Insertar Tienda esta bien
     public void insertarTienda(){
         //JOptionPane.showMessageDialog(null, "ESTA ES LA ULTIMA TABLA " + lineaArray[0]);
         String sql = "INSERT INTO "+ lineaArray[0] +" (nombre, direccion, codigo, telefono_1, telefono_2, correo_electronico) VALUES(?, ?, ?, ?, ?, ?)";
@@ -107,7 +115,26 @@ public class ImportarDatos {
         }
     }
     public void insertarProducto(){
-        String sql = "INSERT INTO "+ lineaArray[0] +" (nombre, fabricante, codigo, cantidad_disponible, precio, descripcion, garantia, Tienda_codigo) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        //Con este metodo se insertan los productos en la tabla que le pertenece a cada tienda
+        //Se hace por medio de la columna Tienda_codigo comparandola con la tabla TIENDA
+        String codigoTienda = null;
+        String nombreTienda = null;
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT nombre FROM TIENDA WHERE codigo = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, lineaArray[6]);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                nombreTienda = rs.getString("nombre");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        String sql = "INSERT INTO PRODUCTO"+ nombreTienda +" (nombre, fabricante, codigo, cantidad_disponible, precio, descripcion, garantia, Tienda_codigo) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             acceso = con.Conectar();
             ps = acceso.prepareStatement(sql);
@@ -133,7 +160,7 @@ public class ImportarDatos {
             //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
         }
     }
-    
+    //Insertar cliente esta bien
     public void insertarCliente(){
         String sql = "INSERT INTO "+ lineaArray[0] +" (nombre, nit, telefono, credito_compra, dpi, correo_electronico, direccion) VALUES(?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -215,7 +242,9 @@ public class ImportarDatos {
                 cuadroTexto.append("--> La TIENDA con el NOMBRE: " + lineaArray[1] + ""
                 + "\nfue ignorada debido a INCOPATIBILIDAD en sus datos.\n\n");
             }else{
+                //Se necesita para comparar el codigo de tienda entre tienda y producto
                 insertarTienda();
+                crearTablaProductoTienda();
             }
         }else if(lineaArray[0].equals("PRODUCTO")){
             Pattern patP3 = Pattern.compile("[A-Z]{3,3}"+"-"+"[0-9]{3,4}");
@@ -238,6 +267,20 @@ public class ImportarDatos {
             }
         }else if(lineaArray[0].equals("PEDIDO")){
             insertarPedido();
+        }
+    }
+    public void crearTablaProductoTienda(){
+        String sql = "CREATE TABLE PRODUCTO" + lineaArray[1] + " (codigo VARCHAR(10) NOT NULL, nombre VARCHAR(30) NOT NULL, fabricante VARCHAR(30) NOT NULL,"
+                + "cantidad_disponible VARCHAR(6) NOT NULL, precio INT(11) NOT NULL, descripcion VARCHAR(200), garantia VARCHAR(3), Tienda_codigo VARCHAR(10) NOT NULL,"
+                + "PRIMARY KEY(codigo), FOREIGN KEY(Tienda_codigo) REFERENCES TIENDA(codigo))";
+        try {
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.execute();
+            acceso.close();
+            JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
         }
     }
 }
