@@ -271,7 +271,7 @@ public class ImportarDatos {
     }
     public void crearTablaProductoTienda(){
         String sql = "CREATE TABLE PRODUCTO" + lineaArray[1] + " (codigo VARCHAR(10) NOT NULL, nombre VARCHAR(30) NOT NULL, fabricante VARCHAR(30) NOT NULL,"
-                + "cantidad_disponible VARCHAR(6) NOT NULL, precio DOUBLE NOT NULL, descripcion VARCHAR(200), garantia VARCHAR(3), Tienda_codigo VARCHAR(10) NOT NULL,"
+                + "cantidad_disponible INT(6) NOT NULL, precio DOUBLE NOT NULL, descripcion VARCHAR(200), garantia VARCHAR(3), Tienda_codigo VARCHAR(10) NOT NULL,"
                 + "PRIMARY KEY(codigo), FOREIGN KEY(Tienda_codigo) REFERENCES TIENDA(codigo))";
         try {
             acceso = con.Conectar();

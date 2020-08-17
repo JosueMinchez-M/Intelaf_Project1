@@ -8,6 +8,7 @@ package com.mycompany.intelaf_project1.UI.trabajador;
 import com.mycompany.intelaf_project1.Cliente;
 import com.mycompany.intelaf_project1.Conexion;
 import com.mycompany.intelaf_project1.Empleado;
+import com.mycompany.intelaf_project1.Producto;
 import com.mycompany.intelaf_project1.Tienda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,6 +26,7 @@ public class IngresarDatos extends javax.swing.JFrame {
     Empleado e = new Empleado();
     Tienda t = new Tienda();
     Cliente c = new Cliente();
+    Producto p = new Producto();
     PreparedStatement ps = null;
     ResultSet rs = null;
     
@@ -53,6 +55,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         jPanel26 = new javax.swing.JPanel();
         jPanel27 = new javax.swing.JPanel();
         jPanel28 = new javax.swing.JPanel();
+        txt_tiendaCodigo = new javax.swing.JTextField();
         jLabel42 = new javax.swing.JLabel();
         EMPLEADO2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -186,15 +189,23 @@ public class IngresarDatos extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        txt_tiendaCodigo.setEnabled(false);
+
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
         jPanel28Layout.setHorizontalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 748, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
+                .addContainerGap(384, Short.MAX_VALUE)
+                .addComponent(txt_tiendaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(212, 212, 212))
         );
         jPanel28Layout.setVerticalGroup(
             jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 35, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel28Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txt_tiendaCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jLabel42.setFont(new java.awt.Font("Dyuthi", 1, 14)); // NOI18N
@@ -375,7 +386,7 @@ public class IngresarDatos extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
                         .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1171,15 +1182,21 @@ public class IngresarDatos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_activarEmpleadoActionPerformed
 
     private void jtProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtProductoMouseClicked
-        // TODO add your handling code here:
+        p.pasarDatosComponentes(txt_codigoProducto, txt_nombreProducto, jtProducto, txt_fabricanteProducto,
+                txt_cantDisponibleProducto, txt_precioProducto, txt_descripcionProducto, txt_garantiaProducto, 
+                cb_productoTienda, txt_tiendaCodigo);
     }//GEN-LAST:event_jtProductoMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        p.mostrarDatosTabla(jtProducto, txt_buscarProducto, cb_productoTienda);
+        //p.mostrarTxt(jtProducto, cb_productoTienda, txt_tiendaCodigo);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btn_guardarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarProductoActionPerformed
-        // TODO add your handling code here:
+        //if(jtProducto.getSelectedRowCount() > 0){
+            txt_tiendaCodigo.setText(jtProducto.getValueAt(0, 7).toString());
+        //}
+        p.guardarNuevosProducto(txt_codigoProducto, txt_nombreProducto, txt_fabricanteProducto, txt_cantDisponibleProducto, txt_precioProducto, txt_descripcionProducto, txt_garantiaProducto, cb_productoTienda, txt_tiendaCodigo);
     }//GEN-LAST:event_btn_guardarProductoActionPerformed
 
     private void btn_modificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarProductoActionPerformed
@@ -1286,6 +1303,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         txt_telefonoCliente.setEditable(true);
         btn_modificarCliente.setEnabled(true);
     }
+    //Guarda las tablas de productos de cada tienda en el comboBox para seleccionar a conveniencia
     public void cargarTablasBD(){
         Conexion con = new Conexion();
         Connection acceso = con.Conectar();
@@ -1452,5 +1470,6 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JTextField txt_telefono2Tienda;
     private javax.swing.JTextField txt_telefonoCliente;
     private javax.swing.JTextField txt_telefonoEmpleado;
+    private javax.swing.JTextField txt_tiendaCodigo;
     // End of variables declaration//GEN-END:variables
 }
