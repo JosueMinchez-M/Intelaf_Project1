@@ -143,8 +143,47 @@ public class Producto {
             }
         } catch (Exception e) {
             System.out.println(e.toString());
-            JOptionPane.showMessageDialog(null, "                EL CODIGO NO PUEDE ESTAR REPETIDO, \n"
+            JOptionPane.showMessageDialog(null, "                   EL CODIGO NO PUEDE ESTAR REPETIDO \n"
                     + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
+        }
+    }
+    
+    public void modificarProducto( JTextField txt_cantidadProducto, JTextField txt_codigoProducto, 
+            JTextField txt_precioProducto, JComboBox cb_productoTienda,JTextField txt_nuevoProducto,
+            JTextField txt_descripcionProducto, JTextField txt_garantiaProducto){
+        String productosTienda = String.valueOf(cb_productoTienda.getSelectedItem());
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "UPDATE " + productosTienda +" SET cantidad_disponible=?, precio=?, descripcion=?, garantia=? WHERE codigo=?";
+            int sumaProductoExistenteNuevo = Integer.parseInt(txt_cantidadProducto.getText()) + Integer.parseInt(txt_nuevoProducto.getText());
+            txt_cantidadProducto.setText(String.valueOf(sumaProductoExistenteNuevo));
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, txt_cantidadProducto.getText());
+            ps.setString(2, txt_precioProducto.getText());
+            ps.setString(3, txt_descripcionProducto.getText());
+            ps.setString(4, txt_garantiaProducto.getText());
+            ps.setString(5, txt_codigoProducto.getText());
+            
+            ps.executeUpdate(); //Pasamos los valores a la Base de Datos
+            
+            JOptionPane.showMessageDialog(null, "EMPLEADO GUARDADO");
+            //Con esto podemos ver nuevamente en la tabla de la lista los datos actualizados
+            Object[] fila = new Object[4];
+            fila[0] = txt_cantidadProducto.getText();
+            fila[1] = txt_precioProducto.getText();
+            fila[2] = txt_descripcionProducto.getText();
+            fila[3] = txt_garantiaProducto.getText();
+//            fila[0] = txt_codigoProducto.getText();
+//            fila[1] = txt_nombreProducto.getText();
+//            fila[2] = txt_fabricanteProducto.getText();
+//            fila[3] = txt_cantidadProducto.getText();
+//            fila[4] = txt_precioProducto.getText();
+//            fila[5] = 
+            modelo.addRow(fila);
+        } catch (SQLException e) {
+            System.out.println(e.toString());
         }
     }
 }
