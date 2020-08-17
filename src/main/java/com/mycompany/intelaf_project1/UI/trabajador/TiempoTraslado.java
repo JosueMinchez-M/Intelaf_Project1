@@ -34,9 +34,9 @@ public class TiempoTraslado extends javax.swing.JFrame {
         jPanel19 = new javax.swing.JPanel();
         EMPLEADO = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtEmpleados = new javax.swing.JTable();
+        jtTiempo = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        txt_buscar = new javax.swing.JTextField();
+        txt_buscarTiempo = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -78,7 +78,7 @@ public class TiempoTraslado extends javax.swing.JFrame {
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 54, Short.MAX_VALUE)
+            .addGap(0, 65, Short.MAX_VALUE)
         );
 
         jLabel25.setFont(new java.awt.Font("Dyuthi", 1, 14)); // NOI18N
@@ -95,7 +95,7 @@ public class TiempoTraslado extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jtEmpleados.setModel(new javax.swing.table.DefaultTableModel(
+        jtTiempo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -106,12 +106,12 @@ public class TiempoTraslado extends javax.swing.JFrame {
                 "CODIGO", "NOMBRE", "TELEFONO", "DPI", "NIT", "CORREO ELECTRONICO", "DIRECCION"
             }
         ));
-        jtEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtTiempo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtEmpleadosMouseClicked(evt);
+                jtTiempoMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jtEmpleados);
+        jScrollPane1.setViewportView(jtTiempo);
 
         jButton1.setText("CARGAR DATOS");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -165,7 +165,7 @@ public class TiempoTraslado extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(EMPLEADOLayout.createSequentialGroup()
-                        .addComponent(txt_buscar)
+                        .addComponent(txt_buscarTiempo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1)
@@ -210,7 +210,7 @@ public class TiempoTraslado extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(EMPLEADOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_buscarTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
@@ -290,9 +290,9 @@ public class TiempoTraslado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtEmpleadosMouseClicked
+    private void jtTiempoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtTiempoMouseClicked
 //        e.pasarDatosComponentes(txt_dpiEmpleado, txt_codigoEmpleado, jtEmpleados, txt_nombreEmpleado, txt_telefonoEmpleado, txt_nitEmpleado, txt_correoEmpleado, txt_direccionEmpleado);
-    }//GEN-LAST:event_jtEmpleadosMouseClicked
+    }//GEN-LAST:event_jtTiempoMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 //        e.mostrarDatosTabla(jtEmpleados, txt_buscar);
@@ -378,8 +378,8 @@ public class TiempoTraslado extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtEmpleados;
-    private javax.swing.JTextField txt_buscar;
+    private javax.swing.JTable jtTiempo;
+    private javax.swing.JTextField txt_buscarTiempo;
     private javax.swing.JTextField txt_codigoEmpleado;
     private javax.swing.JTextField txt_correoEmpleado;
     private javax.swing.JTextField txt_direccionEmpleado;
