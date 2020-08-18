@@ -130,11 +130,13 @@ public class Empleado {
                 fila[6] = txt_direccionEmpleado.getText();
                 modelo.addRow(fila);
             }else{
-                JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR EMPLEADO");
+                JOptionPane.showMessageDialog(null, "                  ERROR AL GUARDAR EMPLEADO\n"
+                        + "ES OBLIGATORIO LLENAR TODOS LOS CAMPOS MENOS EL NIT");
             }
         } catch (Exception e) {
             System.out.println(e.toString());
-            JOptionPane.showMessageDialog(null, "ES OBLIGATORIO LLENAR TODOS LOS CAMPOS MENOS EL NIT");
+            JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR EMPLEADO, INGRESASTE DATOS NO VALIDOS O VACIOS\n"
+                    + "   ES OBLIGATORIO LLENAR TODOS LOS CAMPOS MENOS EL NIT");
         }
     }
     public void modificarEmpleado(JTextField txt_codigoEmpleado, JTable empleadosTable, JTextField txt_nombreEmpleado, 
@@ -154,17 +156,20 @@ public class Empleado {
             ps.setString(5, txt_direccionEmpleado.getText());
             ps.setInt(6, Integer.parseInt(txt_codigoEmpleado.getText()));
             
-            ps.executeUpdate(); //Pasamos los valores a la Base de Datos
-            
-            JOptionPane.showMessageDialog(null, "EMPLEADO GUARDADO");
-            //Con esto podemos ver nuevamente en la tabla de la lista los datos actualizados
-            Object[] fila = new Object[5];
-            fila[0] = txt_nombreEmpleado.getText();
-            fila[1] = txt_telefonoEmpleado.getText();
-            fila[2] = txt_nitEmpleado.getText();
-            fila[3] = txt_correoEmpleado.getText();
-            fila[4] = txt_direccionEmpleado.getText();
+            int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
+            if(res > 0){
+                JOptionPane.showMessageDialog(null, "EMPLEADO MODIFICADO");
+                //Con esto podemos ver nuevamente en la tabla de la lista los datos actualizados
+                Object[] fila = new Object[5];
+                fila[0] = txt_nombreEmpleado.getText();
+                fila[1] = txt_telefonoEmpleado.getText();
+                fila[2] = txt_nitEmpleado.getText();
+                fila[3] = txt_correoEmpleado.getText();
+                fila[4] = txt_direccionEmpleado.getText();
             modelo.addRow(fila);
+            }else{
+                JOptionPane.showMessageDialog(null, "ERROR, EMPLEADO NO MODIFICADO");
+            }
         } catch (SQLException e) {
             System.out.println(e.toString());
         }

@@ -91,7 +91,7 @@ public class Tienda {
         }
     }
     public void guardarNuevasTiendas(JTextField txt_nombreTienda, JTextField txt_telefono1Tienda, JTextField txt_telefono2Tienda,
-            JTextField txt_codigoTienda, JTextField txt_horarioTienda, JTextField txt_correoTienda, JTextField txt_direccionTienda){
+            JTextField txt_codigoTienda, JTextField txt_horarioTienda, JTextField txt_correoTienda, JTextField txt_direccionTienda){        
         try {
             DefaultTableModel modelo = new DefaultTableModel();
             Conexion con = new Conexion();
@@ -102,6 +102,7 @@ public class Tienda {
                     txt_codigoTienda.getText().equals("") || txt_telefono1Tienda.getText().equals("")){
                 
             }else{
+                //Aqui se coloca el nuevo codigo
                 ps = acceso.prepareStatement(sql);
                 ps.setString(1, txt_codigoTienda.getText());
                 ps.setString(2, txt_nombreTienda.getText());
@@ -113,9 +114,22 @@ public class Tienda {
             }
             
             int res = ps.executeUpdate();
-            
+            //CREA LA TABLA PODUCTOS DE LAS TIENDAS QUE SE CREAN
             if(res > 0){
                 JOptionPane.showMessageDialog(null, "TIENDA GUARDADA");
+                String sql1 = "CREATE TABLE PRODUCTO" + txt_nombreTienda.getText() + " (codigo VARCHAR(10) NOT NULL, nombre VARCHAR(30) NOT NULL, fabricante VARCHAR(30) NOT NULL,"
+                + "cantidad_disponible INT(6) NOT NULL, precio DOUBLE NOT NULL, descripcion VARCHAR(200), garantia VARCHAR(3), Tienda_codigo VARCHAR(10) NOT NULL,"
+                + "PRIMARY KEY(codigo), FOREIGN KEY(Tienda_codigo) REFERENCES TIENDA(codigo))";
+                try {
+                    Conexion con1 = new Conexion();
+                    Connection acceso1 = con1.Conectar();
+                    ps = acceso1.prepareStatement(sql1);
+                    ps.execute();
+                    acceso.close();
+                    JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
+                }
                 //Pasamos los valores a la caja de texto
                 Object[] fila = new Object[7];
                 fila[0] = txt_codigoTienda.getText();

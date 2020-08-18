@@ -143,7 +143,7 @@ public class Producto {
             }
         } catch (Exception e) {
             System.out.println(e.toString());
-            JOptionPane.showMessageDialog(null, "                   EL CODIGO NO PUEDE ESTAR REPETIDO \n"
+            JOptionPane.showMessageDialog(null, "                          EL CODIGO NO PUEDE REPETIRSE \n"
                     + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
         }
     }
@@ -166,24 +166,23 @@ public class Producto {
             ps.setString(4, txt_garantiaProducto.getText());
             ps.setString(5, txt_codigoProducto.getText());
             
-            ps.executeUpdate(); //Pasamos los valores a la Base de Datos
-            
-            JOptionPane.showMessageDialog(null, "EMPLEADO GUARDADO");
-            //Con esto podemos ver nuevamente en la tabla de la lista los datos actualizados
-            Object[] fila = new Object[4];
-            fila[0] = txt_cantidadProducto.getText();
-            fila[1] = txt_precioProducto.getText();
-            fila[2] = txt_descripcionProducto.getText();
-            fila[3] = txt_garantiaProducto.getText();
-//            fila[0] = txt_codigoProducto.getText();
-//            fila[1] = txt_nombreProducto.getText();
-//            fila[2] = txt_fabricanteProducto.getText();
-//            fila[3] = txt_cantidadProducto.getText();
-//            fila[4] = txt_precioProducto.getText();
-//            fila[5] = 
-            modelo.addRow(fila);
+            int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
+            if(res > 0){
+                JOptionPane.showMessageDialog(null, "PRODUCTO MODIFICADO");
+                //Con esto podemos ver nuevamente en la tabla de la lista los datos actualizados
+                Object[] fila = new Object[4];
+                fila[0] = txt_cantidadProducto.getText();
+                fila[1] = txt_precioProducto.getText();
+                fila[2] = txt_descripcionProducto.getText();
+                fila[3] = txt_garantiaProducto.getText();
+                modelo.addRow(fila);
+
+            }else{
+                JOptionPane.showMessageDialog(null, "LAS CASILLAS ESTAN VACIAS");
+            }
         } catch (SQLException e) {
             System.out.println(e.toString());
+            JOptionPane.showMessageDialog(null, "¡NO SE GUARDO!, INGRESASTE UN CARACTER NO VALIDO");
         }
     }
 }

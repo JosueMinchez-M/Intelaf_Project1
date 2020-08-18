@@ -133,7 +133,7 @@ public class Cliente {
             }
         } catch (Exception e) {
             System.out.println(e.toString());
-            JOptionPane.showMessageDialog(null, "ES OBLIGATORIO LLENAR NOMBRE, TELEFONO Y NIT");
+            JOptionPane.showMessageDialog(null, "CLIENTE NO GUARDADO, INGRESASTE CARACTERES NO VALIDOS");//ES OBLIGATORIO LLENAR NOMBRE, TELEFONO Y NIT
         }
     }
     public void modificarCliente(JTextField txt_dpiCliente, JTextField txt_nombreCliente, 
@@ -153,9 +153,9 @@ public class Cliente {
             ps.setString(5, txt_correoCliente.getText());
             ps.setString(6, txt_direccionCliente.getText());
             ps.setString(7, txt_nitCliente.getText());
-            ps.executeUpdate(); //Pasamos los valores a la Base de Datos
-            
-            JOptionPane.showMessageDialog(null, "CLIENTE GUARDADO");
+            int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
+            if(res > 0){
+                JOptionPane.showMessageDialog(null, "CLIENTE MODIFICADO");
             //Con esto podemos ver nuevamente en la tabla de la lista los datos actualizados
             Object[] fila = new Object[6];
             fila[0] = txt_nombreCliente.getText();
@@ -165,8 +165,12 @@ public class Cliente {
             fila[4] = txt_correoCliente.getText();
             fila[5] = txt_direccionCliente.getText();
             modelo.addRow(fila);
+            }else{
+                JOptionPane.showMessageDialog(null, "ERROR, CLIENTE NO MODIFICADO");
+            }
         } catch (SQLException e) {
             System.out.println(e.toString());
+            JOptionPane.showMessageDialog(null, "CLIENTE NO MODIFICADO, INGRESASTE CARACTERES NO VALIDOS");
         }
     }
 }
