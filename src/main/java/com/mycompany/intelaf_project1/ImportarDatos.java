@@ -160,6 +160,44 @@ public class ImportarDatos {
             //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
         }
     }
+    public void insertarTiempo(){
+        //JOptionPane.showMessageDialog(null, "ESTA ES LA ULTIMA TABLA " + lineaArray[0]);
+        String nombreTienda = null;
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT nombre FROM TIENDA WHERE codigo = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, lineaArray[1]);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                nombreTienda = rs.getString("nombre");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        String sql = "INSERT INTO TIEMPO"+ nombreTienda +" (Tienda_codigo, tienda_destino, tiempo) VALUES(?, ?, ?)";
+        try {
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, lineaArray[1]);
+            ps.setString(2, lineaArray[2]);
+            ps.setInt(3, Integer.parseInt(lineaArray[3]));
+            int res = ps.executeUpdate();
+            if(res > 0){
+                //JOptionPane.showMessageDialog(null, "GUARDADO CON EXITO");
+                System.out.println("GUARDANDO TIEMPOS DE TIENDAA");
+            }else{
+                //JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR");
+                System.out.println("ERROR AL GUARDAR TIEMPOS DE TIENDA");
+            }
+            //acceso.close();
+        } catch (Exception e) {
+            //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
+        }
+    }
     //Insertar cliente esta bien
     public void insertarCliente(){
         String sql = "INSERT INTO "+ lineaArray[0] +" (nombre, nit, telefono, credito_compra, dpi, correo_electronico, direccion) VALUES(?, ?, ?, ?, ?, ?, ?)";
@@ -245,6 +283,7 @@ public class ImportarDatos {
                 //Se necesita para comparar el codigo de tienda entre tienda y producto
                 insertarTienda();
                 crearTablaProductoTienda();
+                crearTablaTiempoTienda();
             }
         }else if(lineaArray[0].equals("PRODUCTO")){
             Pattern patP3 = Pattern.compile("[A-Z]{3,3}"+"-"+"[0-9]{3,4}");
@@ -267,12 +306,27 @@ public class ImportarDatos {
             }
         }else if(lineaArray[0].equals("PEDIDO")){
             insertarPedido();
+        }else if(lineaArray[0].equals("TIEMPO")){
+            insertarTiempo();
         }
     }
     public void crearTablaProductoTienda(){
         String sql = "CREATE TABLE PRODUCTO" + lineaArray[1] + " (codigo VARCHAR(10) NOT NULL, nombre VARCHAR(30) NOT NULL, fabricante VARCHAR(30) NOT NULL,"
                 + "cantidad_disponible INT(6) NOT NULL, precio DOUBLE NOT NULL, descripcion VARCHAR(200), garantia VARCHAR(3), Tienda_codigo VARCHAR(10) NOT NULL,"
                 + "PRIMARY KEY(codigo), FOREIGN KEY(Tienda_codigo) REFERENCES TIENDA(codigo))";
+        try {
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.execute();
+            acceso.close();
+            JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
+        }
+    }
+    public void crearTablaTiempoTienda(){
+        String sql = "CREATE TABLE TIEMPO" + lineaArray[1] + " (Tienda_codigo VARCHAR(30), tienda_destino VARCHAR(30) NOT NULL,"
+                + "tiempo INT(10) NOT NULL, PRIMARY KEY(tienda_destino), FOREIGN KEY(Tienda_codigo) REFERENCES TIENDA(codigo))";
         try {
             acceso = con.Conectar();
             ps = acceso.prepareStatement(sql);

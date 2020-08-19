@@ -21,8 +21,9 @@ public class Producto {
     ResultSet rs = null;
     
     
-    public void mostrarDatosTabla(JTable productoTable, JTextField txt_buscarProducto, JComboBox cb_productoTienda){
-        String productoTienda = String.valueOf(cb_productoTienda.getSelectedItem());
+    public void mostrarDatosTabla(JTable productoTable, JTextField txt_buscarProducto, JComboBox cb_tiendaSeleccionada){
+        String productoTienda = "PRODUCTO" + String.valueOf(cb_tiendaSeleccionada.getSelectedItem());
+        //String productoTienda = String.valueOf(cb_productoTienda.getSelectedItem());
         String buscar = txt_buscarProducto.getText();
         String where = "";
          //Me permite buscar en la lista por medio del codigo del empleado al empleado
@@ -71,8 +72,8 @@ public class Producto {
       porque son datos que no cambiaran*/
     public void pasarDatosComponentes(JTextField txt_codigoProducto, JTextField txt_nombreProducto, JTable productoTable, JTextField txt_fabricanteProducto, 
             JTextField txt_cantidadProducto, JTextField txt_precioProducto, JTextField txt_descripcionProducto, 
-            JTextField txt_garantiaProducto, JComboBox cb_productoTienda, JTextField txt_prodTienda){
-        String productoTienda = String.valueOf(cb_productoTienda.getSelectedItem());
+            JTextField txt_garantiaProducto, JComboBox cb_tiendaSeleccion, JTextField txt_prodTienda){
+        String productoTienda = "PRODUCTO" + String.valueOf(cb_tiendaSeleccion.getSelectedItem());
         try {
             Conexion con = new Conexion();
             Connection acceso = con.Conectar();
@@ -101,8 +102,8 @@ public class Producto {
     }
     
     public void guardarNuevosProducto(JTextField txt_codigoProducto, JTextField txt_nombreProducto, JTextField txt_fabricanteProducto, JTextField txt_cantidadProducto, 
-            JTextField txt_precioProducto, JTextField txt_descripcionProducto, JTextField txt_garantiaProducto, JComboBox cb_productoTienda, JTextField txt_tiendaCodigo){
-        String productosTienda = String.valueOf(cb_productoTienda.getSelectedItem());
+            JTextField txt_precioProducto, JTextField txt_descripcionProducto, JTextField txt_garantiaProducto, JComboBox cb_tiendaSeleccion, JTextField txt_tiendaCodigo){
+        String productosTienda = "PRODUCTO" + String.valueOf(cb_tiendaSeleccion.getSelectedItem());
         try {
             DefaultTableModel modelo = new DefaultTableModel();
             Conexion con = new Conexion();
@@ -149,9 +150,9 @@ public class Producto {
     }
     
     public void modificarProducto( JTextField txt_cantidadProducto, JTextField txt_codigoProducto, 
-            JTextField txt_precioProducto, JComboBox cb_productoTienda,JTextField txt_nuevoProducto,
+            JTextField txt_precioProducto, JComboBox cb_tiendaSeleccion,JTextField txt_nuevoProducto,
             JTextField txt_descripcionProducto, JTextField txt_garantiaProducto){
-        String productosTienda = String.valueOf(cb_productoTienda.getSelectedItem());
+        String productosTienda = "PRODUCTO" + String.valueOf(cb_tiendaSeleccion.getSelectedItem());
         try {
             DefaultTableModel modelo = new DefaultTableModel();
             Conexion con = new Conexion();
