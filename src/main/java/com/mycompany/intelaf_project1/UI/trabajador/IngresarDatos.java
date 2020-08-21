@@ -230,7 +230,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 23, Short.MAX_VALUE)
+            .addGap(0, 21, Short.MAX_VALUE)
         );
 
         jLabel50.setFont(new java.awt.Font("Dyuthi", 1, 14)); // NOI18N
@@ -260,6 +260,9 @@ public class IngresarDatos extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Dyuthi", 1, 36)); // NOI18N
         jLabel4.setText("SELECCIONA LA TIENDA QUE DESEAS INGRESAR");
+
+        txt_seleccionarTienda.setFont(new java.awt.Font("Dyuthi", 0, 18)); // NOI18N
+        txt_seleccionarTienda.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -310,7 +313,7 @@ public class IngresarDatos extends javax.swing.JFrame {
                                 .addComponent(txt_ingresarTienda)
                                 .addGap(39, 39, 39)
                                 .addComponent(txt_seleccionarTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)))
                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -623,7 +626,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         );
         jPanel30Layout.setVerticalGroup(
             jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 36, Short.MAX_VALUE)
+            .addGap(0, 39, Short.MAX_VALUE)
         );
 
         jLabel51.setFont(new java.awt.Font("Dyuthi", 1, 14)); // NOI18N
@@ -757,7 +760,6 @@ public class IngresarDatos extends javax.swing.JFrame {
                 .addGroup(EMPLEADO3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cb_Tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_idTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(EMPLEADO3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(EMPLEADO3Layout.createSequentialGroup()
                         .addGroup(EMPLEADO3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -778,7 +780,7 @@ public class IngresarDatos extends javax.swing.JFrame {
                             .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
                             .addComponent(txt_tiendaOrigenTiempoNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);

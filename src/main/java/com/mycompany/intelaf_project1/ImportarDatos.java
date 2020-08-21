@@ -226,19 +226,35 @@ public class ImportarDatos {
         }
     }
     public void insertarPedido(){
-        String sql = "INSERT INTO "+ lineaArray[0] +" (codigo, tienda_origen, tienda_destino, fecha, Cliente_nit, Producto_codigo, cantidad_articulos, total_pagar, anticipo) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String nombreTienda = null;
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT nombre FROM TIENDA WHERE codigo = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, lineaArray[3]);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                nombreTienda = rs.getString("nombre");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        String sql = "INSERT INTO PEDIDO"+ nombreTienda +" (codigo, tienda_origen, tienda_destino, fecha, cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             acceso = con.Conectar();
             ps = acceso.prepareStatement(sql);
-            ps.setString(1, lineaArray[1]);
+            ps.setInt(1, Integer.parseInt(lineaArray[1]));
             ps.setString(2, lineaArray[2]);
             ps.setString(3, lineaArray[3]);
             ps.setString(4, lineaArray[4]);
             ps.setString(5, lineaArray[5]);
             ps.setString(6, lineaArray[6]);
-            ps.setString(7, lineaArray[7]);
-            ps.setString(8, lineaArray[8]);
-            ps.setString(9, lineaArray[9]);
+            ps.setInt(7, Integer.parseInt(lineaArray[7]));
+            ps.setDouble(8, Double.parseDouble(lineaArray[8]));
+            ps.setDouble(9, Double.parseDouble(lineaArray[9]));
             
             int res = ps.executeUpdate();
             if(res > 0){
@@ -284,6 +300,7 @@ public class ImportarDatos {
                 insertarTienda();
                 crearTablaProductoTienda();
                 crearTablaTiempoTienda();
+                crearTablaPedidoTienda();
             }
         }else if(lineaArray[0].equals("PRODUCTO")){
             Pattern patP3 = Pattern.compile("[A-Z]{3,3}"+"-"+"[0-9]{3,4}");
@@ -327,6 +344,22 @@ public class ImportarDatos {
     public void crearTablaTiempoTienda(){
         String sql = "CREATE TABLE TIEMPO" + lineaArray[1] + " (Tienda_codigo VARCHAR(30), tienda_destino VARCHAR(30) NOT NULL,"
                 + "tiempo INT(10) NOT NULL, PRIMARY KEY(tienda_destino), FOREIGN KEY(Tienda_codigo) REFERENCES TIENDA(codigo))";
+        try {
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.execute();
+            acceso.close();
+            JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
+        }
+    }
+    
+    public void crearTablaPedidoTienda(){
+        String sql = "CREATE TABLE PEDIDO" + lineaArray[1] + " (codigo INT(10) NOT NULL, tienda_origen VARCHAR(15) NOT NULL,"
+                + "tienda_destino VARCHAR(15) NOT NULL, fecha DATE NOT NULL, cliente_nit VARCHAR(15) NOT NULL, producto_codigo VARCHAR(10) NOT NULL,"
+                + "cantidad_articulos INT(10) NOT NULL, total_pagar DOUBLE NOT NULL, anticipo DOUBLE NOT NULL,"
+                + "FOREIGN KEY(cliente_nit) REFERENCES CLIENTE(nit))";
         try {
             acceso = con.Conectar();
             ps = acceso.prepareStatement(sql);
