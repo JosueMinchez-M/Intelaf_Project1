@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -130,6 +131,32 @@ public class Tienda {
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
                 }
+                
+                String sqlpedido = "CREATE TABLE PEDIDO" + txt_nombreTienda.getText() + " (codigo INT(10) NOT NULL, tienda_origen VARCHAR(15) NOT NULL,"
+                + "tienda_destino VARCHAR(15) NOT NULL, fecha DATE NOT NULL, cliente_nit VARCHAR(15) NOT NULL, producto_codigo VARCHAR(10) NOT NULL,"
+                + "cantidad_articulos INT(10) NOT NULL, total_pagar DOUBLE NOT NULL, anticipo DOUBLE NOT NULL,"
+                + "FOREIGN KEY(cliente_nit) REFERENCES CLIENTE(nit))";
+        try {
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sqlpedido);
+            ps.execute();
+            acceso.close();
+            JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
+        }
+        
+        String sqltiempo = "CREATE TABLE TIEMPO" + txt_nombreTienda.getText() + " (Tienda_codigo VARCHAR(30), tienda_destino VARCHAR(30) NOT NULL,"
+                + "tiempo INT(10) NOT NULL, PRIMARY KEY(tienda_destino), FOREIGN KEY(Tienda_codigo) REFERENCES TIENDA(codigo))";
+        try {
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sqltiempo);
+            ps.execute();
+            acceso.close();
+            JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
+        }
                 //Pasamos los valores a la caja de texto
                 Object[] fila = new Object[7];
                 fila[0] = txt_codigoTienda.getText();
@@ -146,6 +173,41 @@ public class Tienda {
         } catch (Exception e) {
             System.out.println(e.toString());
             JOptionPane.showMessageDialog(null, "ES OBLIGATORIO LLENAR NOMBRE, DIRECCION, CODIGO Y TELEFONO 1");
+        }
+    }
+    
+    public void obtenerCodigoTienda(JComboBox cb_tiendaSeleccion, JTextField txt_tiendaCodigo){
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT codigo FROM TIENDA WHERE nombre = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, String.valueOf(cb_tiendaSeleccion.getSelectedItem()));
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                txt_tiendaCodigo.setText(rs.getString("codigo"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
+    public void compararCodigosTienda(JComboBox cb_tiendaSeleccion, JTextField text1, JTextField text2){
+        Conexion con = new Conexion();
+        Connection acceso = con.Conectar();
+        String query = "SELECT codigo FROM TIENDA";
+        try {
+            ps = acceso.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                if(text1.getText().equals(rs.getString(1)) && !(rs.getString(1).equals(text2.getText()))){
+                    
+                }
+                //cb_productoTienda.addItem(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            //Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
