@@ -1956,32 +1956,32 @@ public class IngresarDatos extends javax.swing.JFrame {
 
     private void btn_guardarTiempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarTiempoActionPerformed
         t.obtenerCodigoTienda(cb_tiendaSeleccion, txt_tiendaOrigenTiempo);
-        Conexion con = new Conexion();
-        Connection acceso = con.Conectar();
-        String query = "SELECT codigo FROM TIENDA";
-        try {
-            ps = acceso.prepareStatement(query);
-            rs = ps.executeQuery();
-            while(rs.next()){
-                if(txt_tiendaDestinoTiempo.getText().equals(rs.getString(1))){
-                    tiempoTras.guardarNuevosTiempo(jtTiempo, cb_tiendaSeleccion, txt_tiendaOrigenTiempo, txt_tiendaDestinoTiempo, txt_tiempo);
-                    ocultarComponentesTiempo();
-                    //break;
-                }else{
-                    JOptionPane.showMessageDialog(null, "NO PUEDES INGRESAR EL CODIGO DE LA TIENDA EN LA QUE ESTAS");
-                    break;
-                }
-                //cb_productoTienda.addItem(rs.getString(1));
-            }
-        } catch (SQLException ex) {
-            //Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-//        if(txt_tiendaOrigenTiempo.getText().equals(txt_tiendaDestinoTiempo.getText())){
-//            JOptionPane.showMessageDialog(null, "NO PUEDES INGRESAR EL CODIGO DE LA TIENDA EN LA QUE ESTAS");
-//        }else{
-//            tiempoTras.guardarNuevosTiempo(jtTiempo, cb_tiendaSeleccion, txt_tiendaOrigenTiempo, txt_tiendaDestinoTiempo, txt_tiempo);
-//            ocultarComponentesTiempo();
+//        Conexion con = new Conexion();
+//        Connection acceso = con.Conectar();
+//        String query = "SELECT codigo FROM TIENDA";
+//        try {
+//            ps = acceso.prepareStatement(query);
+//            rs = ps.executeQuery();
+//            while(rs.next()){
+//                if(txt_tiendaDestinoTiempo.getText().equals(rs.getString(1)) && !txt_tiendaDestinoTiempo.getText().equals(txt_tiendaOrigenTiempo.getText())){
+//                    tiempoTras.guardarNuevosTiempo(jtTiempo, cb_tiendaSeleccion, txt_tiendaOrigenTiempo, txt_tiendaDestinoTiempo, txt_tiempo);
+//                    ocultarComponentesTiempo();
+//                    //break;
+//                }else{
+//                    JOptionPane.showMessageDialog(null, "NO PUEDES INGRESAR EL CODIGO DE LA TIENDA EN LA QUE ESTAS");
+//                    break;
+//                }
+//                //cb_productoTienda.addItem(rs.getString(1));
+//            }
+//        } catch (SQLException ex) {
+//            //Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
 //        }
+        if(txt_tiendaOrigenTiempo.getText().equals(txt_tiendaDestinoTiempo.getText())){
+            JOptionPane.showMessageDialog(null, "NO PUEDES INGRESAR EL CODIGO DE LA TIENDA EN LA QUE ESTAS");
+        }else{
+            tiempoTras.guardarNuevosTiempo(jtTiempo, cb_tiendaSeleccion, txt_tiendaOrigenTiempo, txt_tiendaDestinoTiempo, txt_tiempo);
+            ocultarComponentesTiempo();
+        }
     }//GEN-LAST:event_btn_guardarTiempoActionPerformed
 
     private void btn_modificarTiempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarTiempoActionPerformed
