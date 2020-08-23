@@ -24,6 +24,7 @@ public class Pedido {
     
     PreparedStatement ps = null;
     ResultSet rs = null;
+    Producto producto = new Producto();
     
     
     public void mostrarDatosTabla(JTable pedidoTable, JTextField txt_buscarPedido, JComboBox cb_tiendaSeleccionada){
@@ -72,8 +73,8 @@ public class Pedido {
                 
         }
     }
-    public void pasarDatosComponentes(JTable pedidoTable, JTextField txt_tiendaOrigenPedido, JTextField txt_fechaPedido, JTextField txt_nitClientePedido,
-            JTextField txt_codigoProductoPedido, JTextField txt_codigoPedido, JTextField txt_cantArticulosPedido,
+    public void pasarDatosComponentes(JTable pedidoTable, JComboBox cb_tiendaOrigenPedido, JTextField txt_fechaPedido, JTextField txt_nitClientePedido,
+            JComboBox cb_codigoProductoPedido, JTextField txt_codigoPedido, JTextField txt_cantArticulosPedido,
             JTextField txt_totalPagarPedido, JTextField txt_anticipoPedido, JComboBox cb_tiendaSeleccion){
         String pedidoTienda = "PEDIDO" + String.valueOf(cb_tiendaSeleccion.getSelectedItem());
         try {
@@ -90,10 +91,10 @@ public class Pedido {
             
             while(rs.next()){
                 txt_codigoPedido.setText(rs.getString("codigo"));
-                txt_tiendaOrigenPedido.setText(rs.getString("tienda_origen"));
+                cb_tiendaOrigenPedido.setSelectedItem(rs.getString("tienda_origen"));
                 txt_fechaPedido.setText(rs.getString("fecha"));
                 txt_nitClientePedido.setText(rs.getString("cliente_nit"));
-                txt_codigoProductoPedido.setText(rs.getString("producto_codigo"));
+                cb_codigoProductoPedido.setSelectedItem(rs.getString("producto_codigo"));
                 txt_cantArticulosPedido.setText(rs.getString("cantidad_articulos"));
                 txt_totalPagarPedido.setText(rs.getString("total_pagar"));
                 txt_anticipoPedido.setText(rs.getString("anticipo"));
@@ -103,9 +104,11 @@ public class Pedido {
         }
     }
     
-    public void guardarNuevosProducto(JTable pedidoTable, JTextField txt_tiendaOrigenPedido, JTextField txt_fechaPedido, JTextField txt_nitClientePedido,
-            JTextField txt_codigoProductoPedido, JTextField txt_codigoPedido, JTextField txt_cantArticulosPedido,
-            JTextField txt_totalPagarPedido, JTextField txt_anticipoPedido, JComboBox cb_tiendaSeleccion, JTextField txt_tiendaDestinoPedido){
+    public void guardarNuevosPedido(JTable pedidoTable, JComboBox cb_tiendaOrigenPedido, JTextField txt_fechaPedido, JTextField txt_nitClientePedido,
+            JComboBox cb_codigoProductoPedido, JTextField txt_codigoPedido, JTextField txt_cantArticulosPedido,
+            JTextField txt_anticipoPedido, JComboBox cb_tiendaSeleccion, JTextField txt_tiendaDestinoPedido){
+        String comboBoxCodigoProductoPedido = String.valueOf(cb_codigoProductoPedido.getSelectedItem());
+        String comboBoxTiendaOrigenPedido = String.valueOf(cb_tiendaOrigenPedido.getSelectedItem());
         String pedidoTienda = "PEDIDO" + String.valueOf(cb_tiendaSeleccion.getSelectedItem());
         try {
             DefaultTableModel modelo = new DefaultTableModel();
@@ -113,21 +116,24 @@ public class Pedido {
             Connection acceso = con.Conectar();
             String sql = "INSERT INTO " + pedidoTienda + " (codigo, tienda_origen, tienda_destino, fecha, "
                     + "cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            //Se toma la cantidad en existencia de articulos de cierto producto y se resta con los productos que se solicitan en el pedido
+            int restaProductoExistenteyPedido = cantidadArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) - Integer.parseInt(txt_cantArticulosPedido.getText());
+            double cantidadTotalPago = precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText());
             //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
-            if(txt_tiendaOrigenPedido.getText().equals("") || txt_fechaPedido.getText().equals("") || txt_nitClientePedido.getText().equals("")
-                || txt_codigoProductoPedido.getText().equals("") || txt_codigoPedido.getText().equals("") 
-                || txt_cantArticulosPedido.getText().equals("") || txt_totalPagarPedido.getText().equals("") || txt_anticipoPedido.getText().equals("")){
+            if(comboBoxCodigoProductoPedido.equals("") || txt_fechaPedido.getText().equals("") || txt_nitClientePedido.getText().equals("")
+                || cb_codigoProductoPedido.getSelectedItem().equals("") || txt_codigoPedido.getText().equals("") 
+                || txt_cantArticulosPedido.getText().equals("") || txt_anticipoPedido.getText().equals("")){
             }else{
-                
+                producto.guardarCantidadExistente(cb_tiendaOrigenPedido, restaProductoExistenteyPedido, cb_codigoProductoPedido);
                 ps = acceso.prepareStatement(sql);
                 ps.setInt(1, Integer.parseInt(txt_codigoPedido.getText()));
-                ps.setString(2, txt_tiendaOrigenPedido.getText());
+                ps.setString(2, comboBoxTiendaOrigenPedido);
                 ps.setString(3, txt_tiendaDestinoPedido.getText());
                 ps.setDate(4, Date.valueOf(txt_fechaPedido.getText()));
                 ps.setString(5, txt_nitClientePedido.getText());
-                ps.setString(6, txt_codigoProductoPedido.getText());
+                ps.setString(6, comboBoxCodigoProductoPedido);
                 ps.setInt(7, Integer.parseInt(txt_cantArticulosPedido.getText()));
-                ps.setDouble(8, Double.parseDouble(txt_totalPagarPedido.getText()));
+                ps.setDouble(8, cantidadTotalPago);
                 ps.setDouble(9, Double.parseDouble(txt_anticipoPedido.getText()));
             }
             
@@ -137,13 +143,13 @@ public class Pedido {
                 //Pasamos los valores a la caja de texto
                 Object[] fila = new Object[9];
                 fila[0] = txt_codigoPedido.getText();
-                fila[1] = txt_tiendaOrigenPedido.getText();
+                fila[1] = comboBoxTiendaOrigenPedido;
                 fila[2] = txt_tiendaDestinoPedido.getText();
                 fila[3] = txt_fechaPedido.getText();
                 fila[4] = txt_nitClientePedido.getText();
-                fila[5] = txt_codigoProductoPedido.getText();
-                fila[6] = txt_cantArticulosPedido.getText();
-                fila[7] = txt_totalPagarPedido.getText();
+                fila[5] = comboBoxCodigoProductoPedido;
+                fila[6] = txt_cantArticulosPedido;
+                fila[7] = cantidadTotalPago;
                 fila[8] = txt_anticipoPedido.getText();
                 modelo.addRow(fila);
             }else{
@@ -155,87 +161,143 @@ public class Pedido {
                     + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
         }
     }
-//    public void multiplicarPedidoProducto(JTable pedidoTable, JTextField txt_buscarPedido, JComboBox cb_tiendaSeleccionada){
-//        String pedido = "PEDIDO" + String.valueOf(cb_tiendaSeleccionada.getSelectedItem());
-//        String producto = "PRODUCTO" + String.valueOf(cb_tiendaSeleccionada.getSelectedItem());
-//        //String productoTienda = String.valueOf(cb_productoTienda.getSelectedItem());
-//        String buscar = txt_buscarPedido.getText();
-//        String where = "";
-//         //Me permite buscar en la lista por medio del codigo del empleado al empleado
-//        if(!"".equals(buscar)){
-//            where = " WHERE codigo = '" + buscar + "' OR cliente_nit = '" + buscar + "'";
-//        }
-//        //El try me permite capturar el error que me sale por conexion
-//        //Tambien nos permite hacer la conexion con la DB para  mostrar los datos de la tabla empleados de
-//        //la DB en la tabla empleadosTable que tenemos en nuestra interfaz grafica
-//        try {
-//            DefaultTableModel modelo = new DefaultTableModel();
-//            pedidoTable.setModel(modelo);
-//            Conexion con = new Conexion();
-//            Connection acceso = con.Conectar();
-//            
-//            String sql = "SELECT * FROM " + pedido + where + " ORDER BY codigo ASC"; // aqui concatenar where
-//            ps = acceso.prepareStatement(sql);
-//            rs = ps.executeQuery();
-//            ResultSetMetaData rsMd = rs.getMetaData();
-//            int cantidadColumnas = rsMd.getColumnCount();
-//            modelo.addColumn("No. PEDIDO");
-//            modelo.addColumn("CODIGO PEDIDO");
-//            modelo.addColumn("CODIGO TIENDA ORIGEN");
-//            modelo.addColumn("CODIGO TIENDA ACTUAL");
-//            modelo.addColumn("FECHA DE PEDIDO");
-//            modelo.addColumn("NIT CLIENTE");
-//            modelo.addColumn("CODIGO PRODUCTO");
-//            modelo.addColumn("CANTIDAD DE ARTICULOS");
-//            modelo.addColumn("TOTAL A PAGAR");
-//            modelo.addColumn("ANTICIPO");
-//            //Capturamos en las columnas que contiene nuestra tabla de interfaz los datos de nuestra DB
-//            while(rs.next()){
-//                Object[] filas = new Object[cantidadColumnas];
-//                for (int i = 0; i < cantidadColumnas; i++) {
-//                    if(i == 8){
-//                        filas[i] = rs.getObject(i + 1);
-//                    }
-//                    filas[i] = rs.getObject(i + 1);
-//                }
-//                modelo.addRow(filas);//agregamos las filas al modelo que en este caso es la tabla Interfaz
-//            }
-//        } catch (SQLException e) {
-//            System.out.println(e.toString());
-//                
-//        }
-//    }
     
-//    public void cargarTiendasBD(JComboBox cb_tiendaSeleccionada){
-//        Conexion con = new Conexion();
-//        Connection acceso = con.Conectar();
-////        String query1 = "";
-////        try {
-////            ps = acceso.prepareStatement(query1);
-////            rs = ps.executeQuery();
-////            //cb_tiendaSeleccion.removeAllItems();
-////            while(rs.next()){
-////                System.out.println(rs.getString(1));
-////                    //cb_tiendaSeleccion.addItem(rs.getString(1));
-////                //cb_productoTienda.addItem(rs.getString(1));
-////            }
-////        } catch (SQLException ex) {
-////            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
-////        }
-//        String pedido = "PEDIDO" + String.valueOf(cb_tiendaSeleccionada.getSelectedItem());
-//        String producto = "PRODUCTO" + String.valueOf(cb_tiendaSeleccionada.getSelectedItem());
-//        String query = "SELECT Pe.cantidad_articulos*Pr.precio FROM PEDIDOB Pe JOIN PRODUCTOA Pr ON Pe.producto_codigo = Pr.codigo";
-//        try {
-//            ps = acceso.prepareStatement(query);
-//            rs = ps.executeQuery();
-//            //cb_tiendaSeleccion.removeAllItems();
-//            while(rs.next()){
-//                System.out.println(rs.getString(1));
-//                    //cb_tiendaSeleccion.addItem(rs.getString(1));
-//                //cb_productoTienda.addItem(rs.getString(1));
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    public void cargarTiendasBD(JComboBox cb_codigoTiendaOrigenPedido, JTextField txt_tiendaDestinoPedido){
+        Conexion con = new Conexion();
+        Connection acceso = con.Conectar();
+        String query = "SELECT codigo FROM TIENDA";
+        try {
+            ps = acceso.prepareStatement(query);
+            rs = ps.executeQuery();
+            cb_codigoTiendaOrigenPedido.removeAllItems();
+            while(rs.next()){
+                if(txt_tiendaDestinoPedido.getText().equals(rs.getString(1))){
+                    //cb_tiendaDestinoTiempo.addItem(rs.getString(1));
+                }else{
+                    cb_codigoTiendaOrigenPedido.addItem(rs.getString(1));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void obtenerCodigoTienda(JComboBox cb_tiendaSeleccion, JTextField txt_tiendaDestinoPedido){
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT codigo FROM TIENDA WHERE nombre = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, String.valueOf(cb_tiendaSeleccion.getSelectedItem()));
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                txt_tiendaDestinoPedido.setText(rs.getString("codigo"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
+    
+    public void obtenerProductoTienda(JComboBox cb_tiendaOrigenPedido, JComboBox cb_codigoProductoPedido){
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT nombre FROM TIENDA WHERE codigo = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, String.valueOf(cb_tiendaOrigenPedido.getSelectedItem()));
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                System.out.println(rs.getString("nombre"));
+                String nombreTienda = rs.getString("nombre");
+                try {
+                    String sql1 = "SELECT codigo FROM PRODUCTO" + nombreTienda;
+                    
+                    ps = acceso.prepareStatement(sql1);
+                    rs = ps.executeQuery();
+                    cb_codigoProductoPedido.removeAllItems();
+                    while (rs.next()) { 
+                        System.out.println(rs.getString(1));
+                        cb_codigoProductoPedido.addItem(rs.getString(1));
+                    }
+                } catch (Exception e) {
+                }
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
+    
+    public int cantidadArticulosDisponibles(JComboBox cb_tiendaOrigenPedido, JComboBox cb_codigoProductoPedido){
+        int cantidadArticulos = 0;
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT nombre FROM TIENDA WHERE codigo = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, String.valueOf(cb_tiendaOrigenPedido.getSelectedItem()));
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                System.out.println(rs.getString("nombre"));
+                String nombreTienda = rs.getString("nombre");
+                try {
+                    String sql1 = "SELECT cantidad_disponible FROM PRODUCTO" + nombreTienda + " WHERE codigo = ?";
+                    
+                    ps = acceso.prepareStatement(sql1);
+                    ps.setString(1, String.valueOf(cb_codigoProductoPedido.getSelectedItem()));
+                    rs = ps.executeQuery();
+                    //cb_codigoProductoPedido.removeAllItems();
+                    while (rs.next()) { 
+                        System.out.println(rs.getString(1));
+                        cantidadArticulos = Integer.parseInt(rs.getString(1));
+                    }
+                } catch (Exception e) {
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return cantidadArticulos;
+    }
+    
+    public double precioDeArticulosDisponibles(JComboBox cb_tiendaOrigenPedido, JComboBox cb_codigoProductoPedido){
+        double precioArticulos = 0;
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT nombre FROM TIENDA WHERE codigo = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, String.valueOf(cb_tiendaOrigenPedido.getSelectedItem()));
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                System.out.println(rs.getString("nombre"));
+                String nombreTienda = rs.getString("nombre");
+                try {
+                    String sql1 = "SELECT precio FROM PRODUCTO" + nombreTienda + " WHERE codigo = ?";
+                    
+                    ps = acceso.prepareStatement(sql1);
+                    ps.setString(1, String.valueOf(cb_codigoProductoPedido.getSelectedItem()));
+                    rs = ps.executeQuery();
+                    //cb_codigoProductoPedido.removeAllItems();
+                    while (rs.next()) { 
+                        System.out.println(rs.getString(1));
+                        JOptionPane.showMessageDialog(null, rs.getString(1));
+                        precioArticulos = Double.parseDouble(rs.getString(1));
+                    }
+                } catch (Exception e) {
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return precioArticulos;
+    }
 }

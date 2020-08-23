@@ -186,4 +186,48 @@ public class Producto {
             JOptionPane.showMessageDialog(null, "¡NO SE GUARDO!, INGRESASTE UN CARACTER NO VALIDO");
         }
     }
+    
+    public void guardarCantidadExistente(JComboBox cb_tiendaOrigenPedido, int cantidadDisponibleProducto, JComboBox cb_codigoProductoPedido){
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT nombre FROM TIENDA WHERE codigo = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, String.valueOf(cb_tiendaOrigenPedido.getSelectedItem()));
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                System.out.println(rs.getString("nombre"));
+                String nombreTienda = rs.getString("nombre");
+                
+                try {
+                    DefaultTableModel modelo = new DefaultTableModel();
+                    String sql1 = "UPDATE PRODUCTO" + nombreTienda +" SET cantidad_disponible=? WHERE codigo=?";
+                    //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
+
+                        ps = acceso.prepareStatement(sql1);
+                        ps.setInt(1, cantidadDisponibleProducto);
+                        ps.setString(2, String.valueOf(cb_codigoProductoPedido.getSelectedItem()));
+
+                    int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
+                    if(res > 0){
+                        JOptionPane.showMessageDialog(null, "PRODUCTO GUARDADO");
+                        //Pasamos los valores a la caja de texto
+                        Object[] fila = new Object[1];
+                        fila[0] = cantidadDisponibleProducto;
+                        modelo.addRow(fila);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR PRODUCTO");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                    JOptionPane.showMessageDialog(null, "                          EL CODIGO NO PUEDE REPETIRSE \n"
+                            + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
 }
