@@ -1254,7 +1254,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="9" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -1273,7 +1273,7 @@
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="txt_mostrarTiendaTiempos" max="32767" attributes="0"/>
+                                  <Component id="txt_mostrarTiendaTiempos" pref="253" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="txt_buscarTiempo" min="-2" pref="639" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -1290,10 +1290,10 @@
                                               <Component id="jLabel57" min="-2" pref="74" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="txt_tiendaDestinoTiempo" min="-2" pref="182" max="-2" attributes="0"/>
-                                              <Component id="txt_tiempo" min="-2" pref="182" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="txt_tiempo" max="32767" attributes="0"/>
                                               <Component id="txt_idTiempo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="cb_tiendaDestinoTiempo" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
                                       </Group>
@@ -1332,8 +1332,8 @@
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="btn_activarTiempo" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txt_tiendaDestinoTiempo" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel53" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                                      <Component id="cb_tiendaDestinoTiempo" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
@@ -1420,8 +1420,6 @@
                     <Property name="text" type="java.lang.String" value="TIENDA DESTINO:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_tiendaDestinoTiempo">
-                </Component>
                 <Component class="javax.swing.JButton" name="btn_guardarTiempo">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="GUARDAR"/>
@@ -1486,6 +1484,18 @@
                       </Border>
                     </Property>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="cb_tiendaDestinoTiempo">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="1">
+                        <StringItem index="0" value="SELECCIONAR CODIGO"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -1663,13 +1673,8 @@
                                               <Component id="txt_direccionTienda" alignment="0" min="-2" pref="493" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="jLabel39" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel38" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="525" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="jLabel39" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel38" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">

@@ -1,10 +1,13 @@
 package com.mycompany.intelaf_project1;
 
+import com.mycompany.intelaf_project1.UI.trabajador.IngresarDatos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -62,7 +65,7 @@ public class TiempoTras {
     }
     
     public void pasarDatosComponentes(JTable tiempoTable, JComboBox cb_tiendaSeleccion, JTextField txt_tiendaOrigenTiempo,
-            JTextField txt_tiendaDestinoTiempo, JTextField txt_tiempo){
+            JComboBox cb_tiendaDestinoTiempo, JTextField txt_tiempo){
         String tiempoTienda = "TIEMPO" + String.valueOf(cb_tiendaSeleccion.getSelectedItem());
         try {
             Conexion con = new Conexion();
@@ -78,7 +81,7 @@ public class TiempoTras {
             
             while(rs.next()){
                 txt_tiendaOrigenTiempo.setText(rs.getString("Tienda_codigo"));
-                txt_tiendaDestinoTiempo.setText(rs.getString("tienda_destino"));
+                cb_tiendaDestinoTiempo.setSelectedItem(rs.getString("tienda_destino"));
                 txt_tiempo.setText(rs.getString("tiempo"));
             }
         } catch (SQLException e) {
@@ -87,7 +90,8 @@ public class TiempoTras {
     }
     
     public void guardarNuevosTiempo(JTable tiempoTable, JComboBox cb_tiendaSeleccion, JTextField txt_tiendaOrigenTiempo,
-            JTextField txt_tiendaDestinoTiempo, JTextField txt_tiempo){
+            JComboBox cb_tiendaDestinoTiempo, JTextField txt_tiempo){
+        String comboBoxTiendaDestino = String.valueOf(cb_tiendaDestinoTiempo.getSelectedItem());
         String tiempoTienda = "TIEMPO" + String.valueOf(cb_tiendaSeleccion.getSelectedItem());
         try {
             DefaultTableModel modelo = new DefaultTableModel();
@@ -95,22 +99,22 @@ public class TiempoTras {
             Connection acceso = con.Conectar();
             String sql = "INSERT INTO " + tiempoTienda + " (Tienda_codigo, tienda_destino, tiempo) VALUES(?, ?, ?)";
             //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
-            if(txt_tiendaDestinoTiempo.getText().equals("") || txt_tiendaOrigenTiempo.getText().equals("") || txt_tiempo.getText().equals("")){
+            if(comboBoxTiendaDestino.equals("") || txt_tiendaOrigenTiempo.getText().equals("") || txt_tiempo.getText().equals("")){
             }else{
                 
                 ps = acceso.prepareStatement(sql);
                 ps.setString(1, txt_tiendaOrigenTiempo.getText());
-                ps.setString(2, txt_tiendaDestinoTiempo.getText());
+                ps.setString(2, comboBoxTiendaDestino);
                 ps.setString(3, txt_tiempo.getText());
             }
             
-            int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
-            if(res > 0){
+            boolean res = ps.execute(); //Pasamos los valores a la Base de Datos
+            if(res == false){
                 JOptionPane.showMessageDialog(null, "TIEMPO GUARDADO");
                 //Pasamos los valores a la caja de texto
                 Object[] fila = new Object[3];
                 fila[0] = txt_tiendaOrigenTiempo.getText();
-                fila[1] = txt_tiendaDestinoTiempo.getText();
+                fila[1] = comboBoxTiendaDestino;
                 fila[2] = txt_tiempo.getText();
                 modelo.addRow(fila);
             }else{
@@ -118,11 +122,14 @@ public class TiempoTras {
             }
         } catch (Exception e) {
             System.out.println(e.toString());
-            JOptionPane.showMessageDialog(null, "ES OBLIGATORIO LLENAR LOS CAMPOS QUE SE TE PIDEN");
+            JOptionPane.showMessageDialog(null, "NO PUEDES VOLVER A INGRESAR UNA TIENDA\n"
+                                              + "                             O\n"
+                                              + "   INGRESASTE CARACTERES NO VALIDOS");
         }
     }
     
-    public void modificarTiempo( JComboBox cb_tiendaSeleccion, JTextField txt_tiendaDestinoTiempo ,JTextField txt_tiempo){
+    public void modificarTiempo( JComboBox cb_tiendaSeleccion, JComboBox cb_tiendaDestinoTiempo ,JTextField txt_tiempo){
+        String comboBoxTiendaDestino = String.valueOf(cb_tiendaDestinoTiempo.getSelectedItem());
         String tiempoTienda = "TIEMPO" + String.valueOf(cb_tiendaSeleccion.getSelectedItem());
         try {
             DefaultTableModel modelo = new DefaultTableModel();
@@ -131,7 +138,7 @@ public class TiempoTras {
             String sql = "UPDATE " + tiempoTienda +" SET tiempo=? WHERE tienda_destino=?";
             ps = acceso.prepareStatement(sql);
             ps.setString(1, txt_tiempo.getText());
-            ps.setString(2, txt_tiendaDestinoTiempo.getText());
+            ps.setString(2, comboBoxTiendaDestino);
             
             int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
             if(res > 0){
@@ -147,6 +154,26 @@ public class TiempoTras {
         } catch (SQLException e) {
             System.out.println(e.toString());
             JOptionPane.showMessageDialog(null, "¡NO SE GUARDO!, INGRESASTE UN CARACTER NO VALIDO");
+        }
+    }
+    
+    public void cargarTiendasBD(JComboBox cb_tiendaDestinoTiempo, JTextField txt_tiendaOrigenTiempo){
+        Conexion con = new Conexion();
+        Connection acceso = con.Conectar();
+        String query = "SELECT codigo FROM TIENDA";
+        try {
+            ps = acceso.prepareStatement(query);
+            rs = ps.executeQuery();
+            cb_tiendaDestinoTiempo.removeAllItems();
+            while(rs.next()){
+                if(txt_tiendaOrigenTiempo.getText().equals(rs.getString(1))){
+                    //cb_tiendaDestinoTiempo.addItem(rs.getString(1));
+                }else{
+                    cb_tiendaDestinoTiempo.addItem(rs.getString(1));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
