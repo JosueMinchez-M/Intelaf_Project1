@@ -12,6 +12,7 @@ import com.mycompany.intelaf_project1.Pedido;
 import com.mycompany.intelaf_project1.Producto;
 import com.mycompany.intelaf_project1.TiempoTras;
 import com.mycompany.intelaf_project1.Tienda;
+import com.mycompany.intelaf_project1.Venta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,6 +31,7 @@ public class IngresarDatos extends javax.swing.JFrame {
     Producto p = new Producto();
     Pedido pedido = new Pedido();
     TiempoTras tiempoTras = new TiempoTras();
+    Venta v = new Venta();
     PreparedStatement ps = null;
     ResultSet rs = null;
     
@@ -116,7 +118,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         cb_Venta = new javax.swing.JComboBox<>();
         btn_activarVenta = new javax.swing.JButton();
         jLabel73 = new javax.swing.JLabel();
-        txt_totalPagarPedido1 = new javax.swing.JTextField();
+        txt_totalPagarVenta = new javax.swing.JTextField();
         txt_mostrarTiendaVenta = new javax.swing.JTextField();
         cb_codigoProductoVenta = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -731,6 +733,11 @@ public class IngresarDatos extends javax.swing.JFrame {
         jLabel2.setText("INGRESA EL CRÉDITO:");
 
         jButton7.setText("VER TOTAL A PAGAR:");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout EMPLEADO5Layout = new javax.swing.GroupLayout(EMPLEADO5);
         EMPLEADO5.setLayout(EMPLEADO5Layout);
@@ -779,7 +786,7 @@ public class IngresarDatos extends javax.swing.JFrame {
                         .addGroup(EMPLEADO5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_cantArticulosVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_creditoClieteVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_totalPagarPedido1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_totalPagarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32)
                         .addGroup(EMPLEADO5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cb_Venta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -823,7 +830,7 @@ public class IngresarDatos extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, EMPLEADO5Layout.createSequentialGroup()
                         .addGroup(EMPLEADO5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_registrarVenta)
-                            .addComponent(txt_totalPagarPedido1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_totalPagarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_modificarVenta))
@@ -2209,6 +2216,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         //JOptionPane.showMessageDialog(null, jtProducto.getRowCount());
             t.obtenerCodigoTienda(cb_tiendaSeleccion, txt_tiendaCodigo);
             p.guardarNuevosProducto(txt_codigoProducto, txt_nombreProducto, txt_fabricanteProducto, txt_cantDisponibleProducto, txt_precioProducto, txt_descripcionProducto, txt_garantiaProducto, cb_tiendaSeleccion, txt_tiendaCodigo);
+            v.mostrarProductoTienda(cb_tiendaSeleccion, cb_codigoProductoVenta);
             ocultarComponentesProducto();
             txt_tiendaCodigo.setText("");
     }//GEN-LAST:event_btn_guardarProductoActionPerformed
@@ -2243,6 +2251,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         txt_mostrarTiendaProducto.setText("TIENDA " + cb_tiendaSeleccion.getSelectedItem() + " PRODUCTOS");
         txt_mostrarTiendaPedido.setText("TIENDA " + cb_tiendaSeleccion.getSelectedItem() + " PEDIDOS");
         txt_mostrarTiendaTiempos.setText("TIENDA " + cb_tiendaSeleccion.getSelectedItem() + " TIEMPOS");
+        txt_mostrarTiendaVenta.setText("TIENDA " + cb_tiendaSeleccion.getSelectedItem() + " VENTAS");
         p.mostrarDatosTabla(jtProducto, txt_buscarProducto, cb_tiendaSeleccion);
         tiempoTras.mostrarDatosTabla(jtTiempo, txt_buscarTiempo, cb_tiendaSeleccion);
         pedido.mostrarDatosTabla(jtPedido, txt_buscarPedido, cb_tiendaSeleccion);
@@ -2253,6 +2262,8 @@ public class IngresarDatos extends javax.swing.JFrame {
         tiempoTras.cargarTiendasBD(cb_tiendaDestinoTiempo, txt_tiendaOrigenTiempo);
         pedido.obtenerCodigoTienda(cb_tiendaSeleccion, txt_tiendaDestinoPedido);
         pedido.cargarTiendasBD(cb_tiendaOrigenPedido, txt_tiendaDestinoPedido);
+        v.mostrarProductoTienda(cb_tiendaSeleccion, cb_codigoProductoVenta);
+        v.mostrarDatosTabla(jtVenta, txt_buscarVenta, cb_tiendaSeleccion);
     }//GEN-LAST:event_txt_ingresarTiendaActionPerformed
 
     private void jtTiempoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtTiempoMouseClicked
@@ -2318,11 +2329,11 @@ public class IngresarDatos extends javax.swing.JFrame {
     }//GEN-LAST:event_jtVentaMouseClicked
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        v.mostrarDatosTabla(jtVenta, txt_buscarVenta, cb_tiendaSeleccion);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btn_registrarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarVentaActionPerformed
-        // TODO add your handling code here:
+        v.registrarVenta(txt_codigoTiendaVenta, txt_fechaVenta, txt_nitClienteVenta, cb_codigoProductoVenta, txt_cantArticulosVenta, txt_creditoClieteVenta, cb_tiendaSeleccion);
     }//GEN-LAST:event_btn_registrarVentaActionPerformed
 
     private void btn_modificarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarVentaActionPerformed
@@ -2332,6 +2343,10 @@ public class IngresarDatos extends javax.swing.JFrame {
     private void btn_activarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_activarVentaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_activarVentaActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        v.previstaTotalPagarVentas(txt_totalPagarVenta, cb_tiendaSeleccion, cb_codigoProductoVenta, txt_cantArticulosVenta);
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     private void ocultarComponentesTiempo(){
         txt_tiempo.setEditable(false);
@@ -2787,6 +2802,6 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JTextField txt_tiendaDestinoPedido;
     private javax.swing.JTextField txt_tiendaOrigenTiempo;
     private javax.swing.JTextField txt_totalPagarPedido;
-    private javax.swing.JTextField txt_totalPagarPedido1;
+    private javax.swing.JTextField txt_totalPagarVenta;
     // End of variables declaration//GEN-END:variables
 }

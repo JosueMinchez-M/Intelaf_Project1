@@ -157,6 +157,18 @@ public class Tienda {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
         }
+        String sqlventa = "CREATE TABLE VENTA" + txt_nombreTienda.getText() + " (id INT NOT NULL AUTO_INCREMENT, fecha DATE NOT NULL,"
+                + "cliente_nit VARCHAR(15) NOT NULL, producto_codigo VARCHAR(15) NOT NULL, cantidad_articulos INT(10) NOT NULL,"
+                + "total_pagar DOUBLE NOT NULL, PRIMARY KEY(id), FOREIGN KEY(cliente_nit) REFERENCES CLIENTE(nit))";
+        try {
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sqlventa);
+            ps.execute();
+            acceso.close();
+            JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
+        }
                 //Pasamos los valores a la caja de texto
                 Object[] fila = new Object[7];
                 fila[0] = txt_codigoTienda.getText();
