@@ -301,6 +301,7 @@ public class ImportarDatos {
                 crearTablaProductoTienda();
                 crearTablaTiempoTienda();
                 crearTablaPedidoTienda();
+                crearTablaVentaTienda();
             }
         }else if(lineaArray[0].equals("PRODUCTO")){
             Pattern patP3 = Pattern.compile("[A-Z]{3,3}"+"-"+"[0-9]{3,4}");
@@ -361,6 +362,21 @@ public class ImportarDatos {
                 + "tienda_destino VARCHAR(15) NOT NULL, fecha DATE NOT NULL, cliente_nit VARCHAR(15) NOT NULL, producto_codigo VARCHAR(10) NOT NULL,"
                 + "cantidad_articulos INT(10) NOT NULL, total_pagar DOUBLE NOT NULL, anticipo DOUBLE NOT NULL,"
                 + "PRIMARY KEY(id), FOREIGN KEY(cliente_nit) REFERENCES CLIENTE(nit))";
+        try {
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.execute();
+            acceso.close();
+            JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
+        }
+    }
+    
+    public void crearTablaVentaTienda(){
+        String sql = "CREATE TABLE VENTA" + lineaArray[1] + " (id INT NOT NULL AUTO_INCREMENT, fecha DATE NOT NULL,"
+                + "cliente_nit VARCHAR(15) NOT NULL, producto_codigo VARCHAR(15) NOT NULL, cantidad_articulos INT(10) NOT NULL,"
+                + "total_pagar DOUBLE NOT NULL, PRIMARY KEY(id), FOREIGN KEY(cliente_nit) REFERENCES CLIENTE(nit))";
         try {
             acceso = con.Conectar();
             ps = acceso.prepareStatement(sql);

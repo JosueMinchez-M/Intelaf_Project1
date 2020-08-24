@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -25,6 +25,8 @@ public class Pedido {
     PreparedStatement ps = null;
     ResultSet rs = null;
     Producto producto = new Producto();
+    DecimalFormat cortarDecimal = new DecimalFormat("#.00");
+    double porcentajeAnticipo = 0;
     
     
     public void mostrarDatosTabla(JTable pedidoTable, JTextField txt_buscarPedido, JComboBox cb_tiendaSeleccionada){
@@ -118,11 +120,12 @@ public class Pedido {
                     + "cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
             //Se toma la cantidad en existencia de articulos de cierto producto y se resta con los productos que se solicitan en el pedido
             int restaProductoExistenteyPedido = cantidadArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) - Integer.parseInt(txt_cantArticulosPedido.getText());
-            double cantidadTotalPago = precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText());
+            double cantidadTotalPago = Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText())));
+            JOptionPane.showMessageDialog(null, cantidadTotalPago);
             //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
             if(comboBoxCodigoProductoPedido.equals("") || txt_fechaPedido.getText().equals("") || txt_nitClientePedido.getText().equals("")
                 || cb_codigoProductoPedido.getSelectedItem().equals("") || txt_codigoPedido.getText().equals("") 
-                || txt_cantArticulosPedido.getText().equals("") || txt_anticipoPedido.getText().equals("")){
+                || txt_cantArticulosPedido.getText().equals("") || txt_anticipoPedido.getText().equals("") || !(Double.parseDouble(txt_anticipoPedido.getText()) >= Double.parseDouble(cortarDecimal.format(porcentajeAnticipo)))){
             }else{
                 producto.guardarCantidadExistente(cb_tiendaOrigenPedido, restaProductoExistenteyPedido, cb_codigoProductoPedido);
                 ps = acceso.prepareStatement(sql);
@@ -299,5 +302,16 @@ public class Pedido {
             System.out.println(e.toString());
         }
         return precioArticulos;
+    }
+    
+    public void porcentajeAnticipo(JTextField txt_anticipoPedido, JComboBox cb_tiendaOrigenPedido, JComboBox cb_codigoProductoPedido, JTextField txt_cantArticulosPedido){
+        JOptionPane.showMessageDialog(null, precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido));
+        if(txt_cantArticulosPedido.equals("")|| cb_codigoProductoPedido.getSelectedItem().equals("CODIGO PRODUCTO")){
+            
+        }else{
+            double cantidadTotalPago = precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText());
+            porcentajeAnticipo = cantidadTotalPago * 0.25;
+            txt_anticipoPedido.setText(String.valueOf(cortarDecimal.format(porcentajeAnticipo)));
+        }
     }
 }
