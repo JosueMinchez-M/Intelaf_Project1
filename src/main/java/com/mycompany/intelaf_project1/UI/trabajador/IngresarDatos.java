@@ -1037,15 +1037,12 @@ public class IngresarDatos extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO4Layout.createSequentialGroup()
                 .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(EMPLEADO4Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane6)
-                            .addGroup(EMPLEADO4Layout.createSequentialGroup()
-                                .addComponent(txt_mostrarTiendaPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_buscarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap()
+                        .addComponent(txt_mostrarTiendaPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_buscarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(EMPLEADO4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1092,6 +1089,10 @@ public class IngresarDatos extends javax.swing.JFrame {
                             .addComponent(btn_activarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(97, 97, 97)))
                 .addGap(17, 17, 17))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6)
+                .addContainerGap())
         );
         EMPLEADO4Layout.setVerticalGroup(
             EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2318,6 +2319,7 @@ public class IngresarDatos extends javax.swing.JFrame {
 
     private void btn_mostrarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_mostrarProductosActionPerformed
         pedido.obtenerProductoTienda(cb_tiendaOrigenPedido, cb_codigoProductoPedido);
+        tiempoTras.saberTiempoEnvioDias(cb_tiendaOrigenPedido, txt_tiendaDestinoPedido);
     }//GEN-LAST:event_btn_mostrarProductosActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

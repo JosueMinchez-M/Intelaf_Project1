@@ -360,7 +360,7 @@ public class ImportarDatos {
         String sql = "CREATE TABLE PEDIDO" + lineaArray[1] + " (id INT NOT NULL AUTO_INCREMENT, "
                 + "codigo INT(10) NOT NULL, tienda_origen VARCHAR(15) NOT NULL,"
                 + "tienda_destino VARCHAR(15) NOT NULL, fecha DATE NOT NULL, cliente_nit VARCHAR(15) NOT NULL, producto_codigo VARCHAR(10) NOT NULL,"
-                + "cantidad_articulos INT(10) NOT NULL, total_pagar DOUBLE NOT NULL, anticipo DOUBLE NOT NULL,"
+                + "cantidad_articulos INT(10) NOT NULL, total_pagar DOUBLE NOT NULL, anticipo DOUBLE NOT NULL, tiempo_envio INT(10) NOT NULL,"
                 + "PRIMARY KEY(id), FOREIGN KEY(cliente_nit) REFERENCES CLIENTE(nit))";
         try {
             acceso = con.Conectar();

@@ -176,4 +176,36 @@ public class TiempoTras {
             Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void saberTiempoEnvioDias(JComboBox cb_tiendaOrigenPedido, JTextField txt_tiendaDestinoPedido){
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT nombre FROM TIENDA WHERE codigo = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, String.valueOf(cb_tiendaOrigenPedido.getSelectedItem()));
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                System.out.println(rs.getString("nombre"));
+                String nombreTienda = rs.getString("nombre");
+                try {
+                    String sqltiempo = "SELECT tiempo FROM TIEMPO" + nombreTienda + " WHERE tienda_codigo = ? AND tienda_destino = ?";
+
+                    ps = acceso.prepareStatement(sqltiempo);
+                    ps.setString(1, String.valueOf(cb_tiendaOrigenPedido.getSelectedItem()));
+                    ps.setString(2, txt_tiendaDestinoPedido.getText());
+                    rs = ps.executeQuery();
+                    
+                    while(rs.next()){
+                        String tiempoEnvio = rs.getString(1);
+                        
+                    }
+                } catch (Exception e) {
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
 }

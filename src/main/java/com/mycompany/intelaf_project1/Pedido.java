@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -27,6 +28,7 @@ public class Pedido {
     Producto producto = new Producto();
     DecimalFormat cortarDecimal = new DecimalFormat("#.00");
     double porcentajeAnticipo = 0;
+    String tiempoEnvio = "";
     
     
     public void mostrarDatosTabla(JTable pedidoTable, JTextField txt_buscarPedido, JComboBox cb_tiendaSeleccionada){
@@ -62,10 +64,14 @@ public class Pedido {
             modelo.addColumn("CANTIDAD DE ARTICULOS");
             modelo.addColumn("TOTAL A PAGAR");
             modelo.addColumn("ANTICIPO");
+            modelo.addColumn("TIEMPO ENVIO");
             //Capturamos en las columnas que contiene nuestra tabla de interfaz los datos de nuestra DB
             while(rs.next()){
                 Object[] filas = new Object[cantidadColumnas];
                 for (int i = 0; i < cantidadColumnas; i++) {
+//                    if(i == 10){
+//                        filas[i] = new JButton("Validar Entrega");
+//                    }
                     filas[i] = rs.getObject(i + 1);
                 }
                 modelo.addRow(filas);//agregamos las filas al modelo que en este caso es la tabla Interfaz
@@ -107,61 +113,97 @@ public class Pedido {
     }
     
     public void guardarNuevosPedido(JTable pedidoTable, JComboBox cb_tiendaOrigenPedido, JTextField txt_fechaPedido, JTextField txt_nitClientePedido,
-            JComboBox cb_codigoProductoPedido, JTextField txt_codigoPedido, JTextField txt_cantArticulosPedido,
-            JTextField txt_anticipoPedido, JComboBox cb_tiendaSeleccion, JTextField txt_tiendaDestinoPedido){
-        String comboBoxCodigoProductoPedido = String.valueOf(cb_codigoProductoPedido.getSelectedItem());
-        String comboBoxTiendaOrigenPedido = String.valueOf(cb_tiendaOrigenPedido.getSelectedItem());
-        String pedidoTienda = "PEDIDO" + String.valueOf(cb_tiendaSeleccion.getSelectedItem());
+        JComboBox cb_codigoProductoPedido, JTextField txt_codigoPedido, JTextField txt_cantArticulosPedido,
+        JTextField txt_anticipoPedido, JComboBox cb_tiendaSeleccion, JTextField txt_tiendaDestinoPedido){
+        
         try {
-            DefaultTableModel modelo = new DefaultTableModel();
             Conexion con = new Conexion();
             Connection acceso = con.Conectar();
-            String sql = "INSERT INTO " + pedidoTienda + " (codigo, tienda_origen, tienda_destino, fecha, "
-                    + "cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            //Se toma la cantidad en existencia de articulos de cierto producto y se resta con los productos que se solicitan en el pedido
-            int restaProductoExistenteyPedido = cantidadArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) - Integer.parseInt(txt_cantArticulosPedido.getText());
-            double cantidadTotalPago = Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText())));
-            JOptionPane.showMessageDialog(null, cantidadTotalPago);
-            //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
-            if(comboBoxCodigoProductoPedido.equals("") || txt_fechaPedido.getText().equals("") || txt_nitClientePedido.getText().equals("")
-                || cb_codigoProductoPedido.getSelectedItem().equals("") || txt_codigoPedido.getText().equals("") 
-                || txt_cantArticulosPedido.getText().equals("") || txt_anticipoPedido.getText().equals("") || !(Double.parseDouble(txt_anticipoPedido.getText()) >= Double.parseDouble(cortarDecimal.format(porcentajeAnticipo)))){
-            }else{
-                producto.guardarCantidadExistente(cb_tiendaOrigenPedido, restaProductoExistenteyPedido, cb_codigoProductoPedido);
-                ps = acceso.prepareStatement(sql);
-                ps.setInt(1, Integer.parseInt(txt_codigoPedido.getText()));
-                ps.setString(2, comboBoxTiendaOrigenPedido);
-                ps.setString(3, txt_tiendaDestinoPedido.getText());
-                ps.setDate(4, Date.valueOf(txt_fechaPedido.getText()));
-                ps.setString(5, txt_nitClientePedido.getText());
-                ps.setString(6, comboBoxCodigoProductoPedido);
-                ps.setInt(7, Integer.parseInt(txt_cantArticulosPedido.getText()));
-                ps.setDouble(8, cantidadTotalPago);
-                ps.setDouble(9, Double.parseDouble(txt_anticipoPedido.getText()));
-            }
+            String sqlnombreTienda = "SELECT nombre FROM TIENDA WHERE codigo = ?";
             
-            int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
-            if(res > 0){
-                JOptionPane.showMessageDialog(null, "PEDIDO GUARDADO");
-                //Pasamos los valores a la caja de texto
-                Object[] fila = new Object[9];
-                fila[0] = txt_codigoPedido.getText();
-                fila[1] = comboBoxTiendaOrigenPedido;
-                fila[2] = txt_tiendaDestinoPedido.getText();
-                fila[3] = txt_fechaPedido.getText();
-                fila[4] = txt_nitClientePedido.getText();
-                fila[5] = comboBoxCodigoProductoPedido;
-                fila[6] = txt_cantArticulosPedido;
-                fila[7] = cantidadTotalPago;
-                fila[8] = txt_anticipoPedido.getText();
-                modelo.addRow(fila);
-            }else{
-                JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR PEDIDO");
+            ps = acceso.prepareStatement(sqlnombreTienda);
+            ps.setString(1, String.valueOf(cb_tiendaOrigenPedido.getSelectedItem()));
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                System.out.println(rs.getString("nombre"));
+                String nombreTienda = rs.getString("nombre");
+                try {
+                    String sqltiempo = "SELECT tiempo FROM TIEMPO" + nombreTienda + " WHERE tienda_codigo = ? AND tienda_destino = ?";
+
+                    ps = acceso.prepareStatement(sqltiempo);
+                    ps.setString(1, String.valueOf(cb_tiendaOrigenPedido.getSelectedItem()));
+                    ps.setString(2, txt_tiendaDestinoPedido.getText());
+                    rs = ps.executeQuery();
+                    
+                    while(rs.next()){
+                        tiempoEnvio = rs.getString(1);
+                        String comboBoxCodigoProductoPedido = String.valueOf(cb_codigoProductoPedido.getSelectedItem());
+                        String comboBoxTiendaOrigenPedido = String.valueOf(cb_tiendaOrigenPedido.getSelectedItem());
+                        String pedidoTienda = "PEDIDO" + String.valueOf(cb_tiendaSeleccion.getSelectedItem());
+                        try {
+                            DefaultTableModel modelo = new DefaultTableModel();
+                            String sql = "INSERT INTO " + pedidoTienda + " (codigo, tienda_origen, tienda_destino, fecha, "
+                                    + "cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                            //Se toma la cantidad en existencia de articulos de cierto producto y se resta con los productos que se solicitan en el pedido
+                            int restaProductoExistenteyPedido = cantidadArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) - Integer.parseInt(txt_cantArticulosPedido.getText());
+                            double cantidadTotalPago = Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText())));
+                            JOptionPane.showMessageDialog(null, cantidadTotalPago);
+                            //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
+                            if(comboBoxCodigoProductoPedido.equals("") || txt_fechaPedido.getText().equals("") || txt_nitClientePedido.getText().equals("")
+                                || cb_codigoProductoPedido.getSelectedItem().equals("") || txt_codigoPedido.getText().equals("") 
+                                || txt_cantArticulosPedido.getText().equals("") || txt_anticipoPedido.getText().equals("") || !(Double.parseDouble(txt_anticipoPedido.getText()) >= Double.parseDouble(cortarDecimal.format(porcentajeAnticipo)))
+                                || (tiempoEnvio.equals(""))){
+                            }else{
+                                producto.guardarCantidadExistente(cb_tiendaOrigenPedido, restaProductoExistenteyPedido, cb_codigoProductoPedido);
+                                ps = acceso.prepareStatement(sql);
+                                ps.setInt(1, Integer.parseInt(txt_codigoPedido.getText()));
+                                ps.setString(2, comboBoxTiendaOrigenPedido);
+                                ps.setString(3, txt_tiendaDestinoPedido.getText());
+                                ps.setDate(4, Date.valueOf(txt_fechaPedido.getText()));
+                                ps.setString(5, txt_nitClientePedido.getText());
+                                ps.setString(6, comboBoxCodigoProductoPedido);
+                                ps.setInt(7, Integer.parseInt(txt_cantArticulosPedido.getText()));
+                                ps.setDouble(8, cantidadTotalPago);
+                                ps.setDouble(9, Double.parseDouble(txt_anticipoPedido.getText()));
+                            }
+                            int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
+                            if(res > 0){
+                                JOptionPane.showMessageDialog(null, "PEDIDO GUARDADO");
+                                //Pasamos los valores a la caja de texto
+                                Object[] fila = new Object[9];
+                                fila[0] = txt_codigoPedido.getText();
+                                fila[1] = comboBoxTiendaOrigenPedido;
+                                fila[2] = txt_tiendaDestinoPedido.getText();
+                                fila[3] = txt_fechaPedido.getText();
+                                fila[4] = txt_nitClientePedido.getText();
+                                fila[5] = comboBoxCodigoProductoPedido;
+                                fila[6] = txt_cantArticulosPedido;
+                                fila[7] = cantidadTotalPago;
+                                fila[8] = txt_anticipoPedido.getText();
+                                modelo.addRow(fila);
+                            }else{
+                                JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR PEDIDO");
+                            }
+                        } catch (Exception e) {
+                            System.out.println(e.toString());
+                            JOptionPane.showMessageDialog(null, "                          EL CODIGO NO PUEDE REPETIRSE \n"
+                                    + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
+                        }
+                        
+                    }
+                    if(tiempoEnvio.equals("")){
+                        JOptionPane.showMessageDialog(null, "ERROR, NO TIENES REGISTRADO EL TIEMPO ENTRE LAS TIENDAS QUE QUIERES INGRESAR");
+                    }else{
+                        tiempoEnvio = "";
+                    }
+                } catch (Exception e) {
+                }
+                //System.out.println("HOLA MUNDO");
             }
-        } catch (Exception e) {
+            //System.out.println("HOLA MUNDO");
+        } catch (SQLException e) {
             System.out.println(e.toString());
-            JOptionPane.showMessageDialog(null, "                          EL CODIGO NO PUEDE REPETIRSE \n"
-                    + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
         }
     }
     
