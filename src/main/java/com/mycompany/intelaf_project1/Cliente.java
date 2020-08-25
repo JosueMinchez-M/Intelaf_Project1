@@ -174,7 +174,53 @@ public class Cliente {
         }
     }
     
-    public void ListadoPedidosEnCursoCliente(){
-        
+    public void ListadoPedidosEnCursoCliente(JTable reportesTable, JTextField txt_buscarReportes){
+        //String productoTienda = String.valueOf(cb_productoTienda.getSelectedItem());
+        String buscar = txt_buscarReportes.getText();
+        String where = "";
+         //Me permite buscar en la lista por medio del codigo del empleado al empleado
+        if(!"".equals(buscar)){
+            where = " cliente_nit = '" + buscar + "'";
+        }
+        //El try me permite capturar el error que me sale por conexion
+        //Tambien nos permite hacer la conexion con la DB para  mostrar los datos de la tabla empleados de
+        //la DB en la tabla empleadosTable que tenemos en nuestra interfaz grafica
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            reportesTable.setModel(modelo);
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            
+            String sql = "SELECT * FROM PEDIDO WHERE "+ where + " tiempo_envio <> '0' ORDER BY id ASC"; // aqui concatenar where
+            ps = acceso.prepareStatement(sql);
+            rs = ps.executeQuery();
+            ResultSetMetaData rsMd = rs.getMetaData();
+            int cantidadColumnas = rsMd.getColumnCount();
+            modelo.addColumn("No. PEDIDO");
+            modelo.addColumn("CODIGO PEDIDO");
+            modelo.addColumn("CODIGO TIENDA ORIGEN");
+            modelo.addColumn("CODIGO TIENDA ACTUAL");
+            modelo.addColumn("FECHA DE PEDIDO");
+            modelo.addColumn("NIT CLIENTE");
+            modelo.addColumn("CODIGO PRODUCTO");
+            modelo.addColumn("CANTIDAD DE ARTICULOS");
+            modelo.addColumn("TOTAL A PAGAR");
+            modelo.addColumn("ANTICIPO");
+            modelo.addColumn("TIEMPO ENVIO");
+            //Capturamos en las columnas que contiene nuestra tabla de interfaz los datos de nuestra DB
+            while(rs.next()){
+                Object[] filas = new Object[cantidadColumnas];
+                for (int i = 0; i < cantidadColumnas; i++) {
+//                    if(i == 10){
+//                        filas[i] = new JButton("Validar Entrega");
+//                    }
+                    filas[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(filas);//agregamos las filas al modelo que en este caso es la tabla Interfaz
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+                
+        }
     }
 }

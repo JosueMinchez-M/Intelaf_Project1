@@ -197,6 +197,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
         jLabel80 = new javax.swing.JLabel();
         jPanel43 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -1453,7 +1454,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         );
         jPanel42Layout.setVerticalGroup(
             jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 29, Short.MAX_VALUE)
+            .addGap(0, 27, Short.MAX_VALUE)
         );
 
         jtReportes.setModel(new javax.swing.table.DefaultTableModel(
@@ -1514,6 +1515,13 @@ public class IngresarDatos extends javax.swing.JFrame {
             }
         });
 
+        jButton12.setText("LISTADO DE TODOS LOS PEDIDOS EN CURSO DE UN CLIENTE");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout EMPLEADO7Layout = new javax.swing.GroupLayout(EMPLEADO7);
         EMPLEADO7.setLayout(EMPLEADO7Layout);
         EMPLEADO7Layout.setHorizontalGroup(
@@ -1531,14 +1539,17 @@ public class IngresarDatos extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO7Layout.createSequentialGroup()
                         .addComponent(jScrollPane9)
                         .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO7Layout.createSequentialGroup()
-                .addGap(292, 292, 292)
+            .addGroup(EMPLEADO7Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
                 .addGroup(EMPLEADO7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_pedidosLlegaranTienda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(295, 295, 295))
+                    .addComponent(btn_pedidosLlegaranTienda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(EMPLEADO7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
+                .addGap(8, 8, 8))
         );
         EMPLEADO7Layout.setVerticalGroup(
             EMPLEADO7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1550,15 +1561,19 @@ public class IngresarDatos extends javax.swing.JFrame {
                     .addComponent(txt_mostrarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(btn_pedidosLlegaranTienda)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton11)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(42, 42, 42)
+                .addGroup(EMPLEADO7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(EMPLEADO7Layout.createSequentialGroup()
+                        .addComponent(jButton11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton12))
+                    .addGroup(EMPLEADO7Layout.createSequentialGroup()
+                        .addComponent(btn_pedidosLlegaranTienda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton10)))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         jLabel80.setFont(new java.awt.Font("Dyuthi", 1, 14)); // NOI18N
@@ -2591,6 +2606,10 @@ public class IngresarDatos extends javax.swing.JFrame {
         v.mostrarListadoComprasClienteTabla(jtReportes, txt_buscarReportes);
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        c.ListadoPedidosEnCursoCliente(jtReportes, txt_buscarReportes);
+    }//GEN-LAST:event_jButton12ActionPerformed
+
     private void ocultarComponentesTiempo(){
         txt_tiempo.setEditable(false);
         cb_tiendaDestinoTiempo.setEnabled(false);
@@ -2882,6 +2901,7 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
