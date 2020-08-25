@@ -403,7 +403,7 @@ public class Pedido {
         }
     }
     
-    public void mostrarPedidoVerificarIngresoTabla(JTable pedidoTable, JTextField txt_buscarPedido, JComboBox cb_tiendaSeleccionada){
+    public void mostrarPedidoVerificarIngresoTabla(JTable pedidoTable, JComboBox cb_tiendaSeleccionada){
         String pedido = "PEDIDO" + String.valueOf(cb_tiendaSeleccionada.getSelectedItem());
         //El try me permite capturar el error que me sale por conexion
         //Tambien nos permite hacer la conexion con la DB para  mostrar los datos de la tabla empleados de

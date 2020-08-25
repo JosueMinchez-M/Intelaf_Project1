@@ -194,6 +194,8 @@ public class IngresarDatos extends javax.swing.JFrame {
         txt_buscarReportes = new javax.swing.JTextField();
         txt_mostrarReporte = new javax.swing.JTextField();
         btn_pedidosLlegaranTienda = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         jLabel80 = new javax.swing.JLabel();
         jPanel43 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -1483,33 +1485,46 @@ public class IngresarDatos extends javax.swing.JFrame {
         txt_mostrarReporte.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_mostrarReporte.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        btn_pedidosLlegaranTienda.setText("PEDIDOS QUE LLEGARAN A LA TIENDA");
+        btn_pedidosLlegaranTienda.setText("LISTADO DE TODOS LOS PEDIDOS QUE LLEGARAN A LA TIENDA");
         btn_pedidosLlegaranTienda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_pedidosLlegaranTiendaActionPerformed(evt);
             }
         });
 
+        jButton8.setText("LISTADO DE PEDIDOS QUE DEBE VERIFICARSE SU INGRESO");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton10.setText("LISTADO DE PEDIDOS QUE SALIERON DE LA TIENDA Y ESTAN EN TRANSITO");
+
         javax.swing.GroupLayout EMPLEADO7Layout = new javax.swing.GroupLayout(EMPLEADO7);
         EMPLEADO7.setLayout(EMPLEADO7Layout);
         EMPLEADO7Layout.setHorizontalGroup(
             EMPLEADO7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txt_mostrarReporte)
-                .addGap(18, 18, 18)
-                .addComponent(txt_buscarReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane9)
-                .addContainerGap())
             .addGroup(EMPLEADO7Layout.createSequentialGroup()
-                .addGap(410, 410, 410)
-                .addComponent(btn_pedidosLlegaranTienda)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(EMPLEADO7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO7Layout.createSequentialGroup()
+                        .addComponent(txt_mostrarReporte)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_buscarReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO7Layout.createSequentialGroup()
+                        .addComponent(jScrollPane9)
+                        .addContainerGap())))
+            .addGroup(EMPLEADO7Layout.createSequentialGroup()
+                .addGap(292, 292, 292)
+                .addGroup(EMPLEADO7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_pedidosLlegaranTienda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(295, 295, 295))
         );
         EMPLEADO7Layout.setVerticalGroup(
             EMPLEADO7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1521,9 +1536,13 @@ public class IngresarDatos extends javax.swing.JFrame {
                     .addComponent(txt_mostrarReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(29, 29, 29)
                 .addComponent(btn_pedidosLlegaranTienda)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton10)
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         jLabel80.setFont(new java.awt.Font("Dyuthi", 1, 14)); // NOI18N
@@ -1549,7 +1568,7 @@ public class IngresarDatos extends javax.swing.JFrame {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jPanel42, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 294, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel80, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jPanel41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2542,6 +2561,10 @@ public class IngresarDatos extends javax.swing.JFrame {
         pedido.mostrarDatosTabla(jtReportes, txt_buscarReportes, cb_tiendaSeleccion);
     }//GEN-LAST:event_btn_pedidosLlegaranTiendaActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        pedido.mostrarPedidoVerificarIngresoTabla(jtReportes, cb_tiendaSeleccion);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     private void ocultarComponentesTiempo(){
         txt_tiempo.setEditable(false);
         cb_tiendaDestinoTiempo.setEnabled(false);
@@ -2831,12 +2854,14 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cb_tiendaOrigenPedido;
     private javax.swing.JComboBox<String> cb_tiendaSeleccion;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel18;
