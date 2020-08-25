@@ -2282,7 +2282,7 @@ public class IngresarDatos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_guardarTiempoActionPerformed
 
     private void btn_modificarTiempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarTiempoActionPerformed
-        tiempoTras.modificarTiempo(cb_tiendaSeleccion, cb_tiendaDestinoTiempo, txt_tiempo);
+        tiempoTras.modificarTiempo(cb_tiendaSeleccion, cb_tiendaDestinoTiempo, txt_tiempo, txt_tiendaOrigenTiempo);
         ocultarComponentesTiempo();
     }//GEN-LAST:event_btn_modificarTiempoActionPerformed
 

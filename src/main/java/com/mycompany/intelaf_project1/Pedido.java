@@ -144,7 +144,7 @@ public class Pedido {
                         try {
                             DefaultTableModel modelo = new DefaultTableModel();
                             String sql = "INSERT INTO " + pedidoTienda + " (codigo, tienda_origen, tienda_destino, fecha, "
-                                    + "cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                    + "cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo, tiempo_envio) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                             //Se toma la cantidad en existencia de articulos de cierto producto y se resta con los productos que se solicitan en el pedido
                             int restaProductoExistenteyPedido = cantidadArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) - Integer.parseInt(txt_cantArticulosPedido.getText());
                             double cantidadTotalPago = Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText())));
@@ -166,6 +166,7 @@ public class Pedido {
                                 ps.setInt(7, Integer.parseInt(txt_cantArticulosPedido.getText()));
                                 ps.setDouble(8, cantidadTotalPago);
                                 ps.setDouble(9, Double.parseDouble(txt_anticipoPedido.getText()));
+                                ps.setInt(10, Integer.parseInt(tiempoEnvio));
                             }
                             int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
                             if(res > 0){
@@ -354,6 +355,51 @@ public class Pedido {
             double cantidadTotalPago = precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText());
             porcentajeAnticipo = cantidadTotalPago * 0.25;
             txt_anticipoPedido.setText(String.valueOf(cortarDecimal.format(porcentajeAnticipo)));
+        }
+    }
+    
+    public void cambioDeTiempoEnvio(JComboBox cb_tiendaDestinoTiempo, JTextField txt_tiendaOrigenTiempo, JTextField txt_tiempo){
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT nombre FROM TIENDA WHERE codigo = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, String.valueOf(cb_tiendaDestinoTiempo.getSelectedItem()));
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                System.out.println(rs.getString("nombre"));
+                String nombreTienda = rs.getString("nombre");
+                
+                try {
+                    DefaultTableModel modelo = new DefaultTableModel();
+                    String sql1 = "UPDATE PEDIDO" + nombreTienda +" SET tiempo_envio=? WHERE tienda_origen=? AND tienda_destino=?";
+                    //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
+
+                        ps = acceso.prepareStatement(sql1);
+                        ps.setInt(1, Integer.parseInt(txt_tiempo.getText()));
+                        ps.setString(2, txt_tiendaOrigenTiempo.getText());
+                        ps.setString(3, String.valueOf(cb_tiendaDestinoTiempo.getSelectedItem()));
+
+                    int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
+                    if(res > 0){
+                        JOptionPane.showMessageDialog(null, "TIEMPO ENVIO MODIFICADO");
+                        //Pasamos los valores a la caja de texto
+                        Object[] fila = new Object[1];
+                        fila[0] = txt_tiempo.getText();
+                        modelo.addRow(fila);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "ERROR AL MODIFICAR TIEMPO ENVIO");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                    JOptionPane.showMessageDialog(null, "                          EL CODIGO NO PUEDE REPETIRSE \n"
+                            + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
         }
     }
 }

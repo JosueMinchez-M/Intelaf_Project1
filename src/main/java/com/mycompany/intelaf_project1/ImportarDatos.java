@@ -242,7 +242,7 @@ public class ImportarDatos {
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
-        String sql = "INSERT INTO PEDIDO"+ nombreTienda +" (codigo, tienda_origen, tienda_destino, fecha, cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PEDIDO"+ nombreTienda +" (codigo, tienda_origen, tienda_destino, fecha, cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo, tiempo_envio) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             acceso = con.Conectar();
             ps = acceso.prepareStatement(sql);
@@ -255,6 +255,7 @@ public class ImportarDatos {
             ps.setInt(7, Integer.parseInt(lineaArray[7]));
             ps.setDouble(8, Double.parseDouble(lineaArray[8]));
             ps.setDouble(9, Double.parseDouble(lineaArray[9]));
+            ps.setInt(10, 0);
             
             int res = ps.executeUpdate();
             if(res > 0){

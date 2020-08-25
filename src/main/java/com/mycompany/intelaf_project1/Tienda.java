@@ -132,10 +132,11 @@ public class Tienda {
                     JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
                 }
                 
-                String sqlpedido = "CREATE TABLE PEDIDO" + txt_nombreTienda.getText() + " (codigo INT(10) NOT NULL, tienda_origen VARCHAR(15) NOT NULL,"
+                String sqlpedido = "CREATE TABLE PEDIDO" + txt_nombreTienda.getText() + " (id INT NOT NULL AUTO_INCREMENT, "
+                + "codigo INT(10) NOT NULL, tienda_origen VARCHAR(15) NOT NULL,"
                 + "tienda_destino VARCHAR(15) NOT NULL, fecha DATE NOT NULL, cliente_nit VARCHAR(15) NOT NULL, producto_codigo VARCHAR(10) NOT NULL,"
-                + "cantidad_articulos INT(10) NOT NULL, total_pagar DOUBLE NOT NULL, anticipo DOUBLE NOT NULL,"
-                + "FOREIGN KEY(cliente_nit) REFERENCES CLIENTE(nit))";
+                + "cantidad_articulos INT(10) NOT NULL, total_pagar DOUBLE NOT NULL, anticipo DOUBLE NOT NULL, tiempo_envio INT(10) NOT NULL,"
+                + "PRIMARY KEY(id), FOREIGN KEY(cliente_nit) REFERENCES CLIENTE(nit))";
         try {
             acceso = con.Conectar();
             ps = acceso.prepareStatement(sqlpedido);

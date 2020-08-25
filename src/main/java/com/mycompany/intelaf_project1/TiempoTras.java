@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TiempoTras {
     
+    Pedido pedido = new Pedido();
     PreparedStatement ps = null;
     ResultSet rs = null;
     
@@ -128,7 +129,7 @@ public class TiempoTras {
         }
     }
     
-    public void modificarTiempo( JComboBox cb_tiendaSeleccion, JComboBox cb_tiendaDestinoTiempo ,JTextField txt_tiempo){
+    public void modificarTiempo( JComboBox cb_tiendaSeleccion, JComboBox cb_tiendaDestinoTiempo ,JTextField txt_tiempo, JTextField txt_tiendaOrigenTiempo){
         String comboBoxTiendaDestino = String.valueOf(cb_tiendaDestinoTiempo.getSelectedItem());
         String tiempoTienda = "TIEMPO" + String.valueOf(cb_tiendaSeleccion.getSelectedItem());
         try {
@@ -142,6 +143,7 @@ public class TiempoTras {
             
             int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
             if(res > 0){
+                pedido.cambioDeTiempoEnvio(cb_tiendaDestinoTiempo, txt_tiendaOrigenTiempo, txt_tiempo);
                 JOptionPane.showMessageDialog(null, "TIEMPO MODIFICADO");
                 //Con esto podemos ver nuevamente en la tabla de la lista los datos actualizados
                 Object[] fila = new Object[1];
