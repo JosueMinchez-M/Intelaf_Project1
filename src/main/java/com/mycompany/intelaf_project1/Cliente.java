@@ -173,4 +173,8 @@ public class Cliente {
             JOptionPane.showMessageDialog(null, "CLIENTE NO MODIFICADO, INGRESASTE CARACTERES NO VALIDOS");
         }
     }
+    
+    public void ListadoPedidosEnCursoCliente(){
+        
+    }
 }

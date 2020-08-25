@@ -22,6 +22,7 @@ public class Venta {
     DecimalFormat cortarDecimal = new DecimalFormat("#.00");
     PreparedStatement ps = null;
     ResultSet rs = null;
+    double cantidadTotalPago = 0;
     
     public void mostrarDatosTabla(JTable ventaTable, JTextField txt_buscarVenta, JComboBox cb_tiendaSeleccionada){
         String venta = "VENTA" + String.valueOf(cb_tiendaSeleccionada.getSelectedItem());
@@ -47,6 +48,7 @@ public class Venta {
             ResultSetMetaData rsMd = rs.getMetaData();
             int cantidadColumnas = rsMd.getColumnCount();
             modelo.addColumn("ID");
+            modelo.addColumn("CODIGO TIENDA");
             modelo.addColumn("FECHA DE VENTA");
             modelo.addColumn("NIT CLIENTE");
             modelo.addColumn("CODIGO DE PRODUCTO");
@@ -75,24 +77,25 @@ public class Venta {
             DefaultTableModel modelo = new DefaultTableModel();
             Conexion con = new Conexion();
             Connection acceso = con.Conectar();
-            String sql = "INSERT INTO " + ventaTienda + " (fecha, cliente_nit, producto_codigo, cantidad_articulos, total_pagar) VALUES(?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO " + ventaTienda + " (fecha, codigo_tienda, cliente_nit, producto_codigo, cantidad_articulos, total_pagar) VALUES(?, ?, ?, ?, ?, ?)";
             //Se toma la cantidad en existencia de articulos de cierto producto y se resta con los productos que se solicitan en el pedido
             //int restaProductoExistenteyPedido = cantidadArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) - Integer.parseInt(txt_cantArticulosPedido.getText());
             //double cantidadTotalPago = Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText())));
             //JOptionPane.showMessageDialog(null, cantidadTotalPago);
             //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
             int restaProductoExistenteyPedido = articulosDisponibles(cb_tiendaSeleccion, cb_codigoProductoVenta) - Integer.parseInt(txt_cantArticulosVenta.getText());
-            double cantidadTotalPago = Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaSeleccion, cb_codigoProductoVenta) * Double.parseDouble(txt_cantArticulosVenta.getText())));
+            cantidadTotalPago = Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaSeleccion, cb_codigoProductoVenta) * Double.parseDouble(txt_cantArticulosVenta.getText())));
             if(comboBoxCodigoProductoPedido.equals("") || txt_fechaVenta.getText().equals("") || txt_nitClienteVenta.getText().equals("")
                 || cb_codigoProductoVenta.getSelectedItem().equals("") || txt_cantArticulosVenta.getText().equals("")){
             }else{
                 guardarCantidadExistenteArticulos(cb_tiendaSeleccion, restaProductoExistenteyPedido, cb_codigoProductoVenta);
                 ps = acceso.prepareStatement(sql);
                 ps.setDate(1, Date.valueOf(txt_fechaVenta.getText()));
-                ps.setString(2, txt_nitClienteVenta.getText());
-                ps.setString(3, String.valueOf(cb_codigoProductoVenta.getSelectedItem()));
-                ps.setInt(4, Integer.parseInt(txt_cantArticulosVenta.getText()));
-                ps.setDouble(5, cantidadTotalPago);
+                ps.setString(2, txt_codigoTiendaVenta.getText());
+                ps.setString(3, txt_nitClienteVenta.getText());
+                ps.setString(4, String.valueOf(cb_codigoProductoVenta.getSelectedItem()));
+                ps.setInt(5, Integer.parseInt(txt_cantArticulosVenta.getText()));
+                ps.setDouble(6, cantidadTotalPago);
             }
             
             int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
@@ -113,6 +116,7 @@ public class Venta {
             JOptionPane.showMessageDialog(null, "                          EL CODIGO NO PUEDE REPETIRSE \n"
                     + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
         }
+        insertarCompraCliente(txt_codigoTiendaVenta, txt_fechaVenta, txt_nitClienteVenta, cb_codigoProductoVenta, txt_cantArticulosVenta, txt_creditoClieteVenta, cb_tiendaSeleccion);
     }
     
     public void mostrarProductoTienda(JComboBox cb_tiendaSeleccion, JComboBox cb_codigoProductoVenta){
@@ -216,6 +220,95 @@ public class Venta {
             System.out.println(e.toString());
             JOptionPane.showMessageDialog(null, "                          EL CODIGO NO PUEDE REPETIRSE \n"
                             + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
+        }
+    }
+    
+    public void insertarCompraCliente(JTextField txt_codigoTiendaVenta, JTextField txt_fechaVenta, JTextField txt_nitClienteVenta,
+        JComboBox cb_codigoProductoVenta, JTextField txt_cantArticulosVenta, JTextField txt_creditoClieteVenta, JComboBox cb_tiendaSeleccion){
+        Conexion con = new Conexion();
+        Connection acceso = con.Conectar();
+        String sql = "INSERT INTO COMPRACLIENTE (codigo_tienda, fecha, cliente_nit, producto_codigo, cantidad_articulos, total_pagar) VALUES(?, ?, ?, ?, ?, ?)";
+        try {
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, txt_codigoTiendaVenta.getText());
+            ps.setDate(2, Date.valueOf(txt_fechaVenta.getText()));
+            ps.setString(3, txt_nitClienteVenta.getText());
+            ps.setString(4, String.valueOf(cb_codigoProductoVenta.getSelectedItem()));
+            ps.setInt(5, Integer.parseInt(txt_cantArticulosVenta.getText()));
+            ps.setDouble(6, cantidadTotalPago);
+            
+            int res = ps.executeUpdate();
+            if(res > 0){
+                //JOptionPane.showMessageDialog(null, "GUARDADO CON EXITO");
+                System.out.println("GUARDANDO DATOS");
+            }else{
+                //JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR");
+                System.out.println("ERROR AL GUARDAR");
+            }
+            //acceso.close();
+        } catch (Exception e) {
+            //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
+        }
+    }
+    
+    public void obtenerCodigoTienda(JComboBox cb_tiendaSeleccion, JTextField txt_codigoTiendaVenta){
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT codigo FROM TIENDA WHERE nombre = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, String.valueOf(cb_tiendaSeleccion.getSelectedItem()));
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                txt_codigoTiendaVenta.setText(rs.getString("codigo"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
+    //Listado de todas las compras realizadas por un cliente
+    public void mostrarListadoComprasClienteTabla(JTable reportesTable, JTextField txt_buscarReportes){
+        //String productoTienda = String.valueOf(cb_productoTienda.getSelectedItem());
+        String buscar = txt_buscarReportes.getText();
+        String where = "";
+         //Me permite buscar en la lista por medio del codigo del empleado al empleado
+        if(!"".equals(buscar)){
+            where = " WHERE codigo_tienda = '" + buscar + "' OR cliente_nit = '" + buscar + "'";
+        }
+        //El try me permite capturar el error que me sale por conexion
+        //Tambien nos permite hacer la conexion con la DB para  mostrar los datos de la tabla empleados de
+        //la DB en la tabla empleadosTable que tenemos en nuestra interfaz grafica
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            reportesTable.setModel(modelo);
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            
+            String sql = "SELECT * FROM COMPRACLIENTE" + where + " ORDER BY id ASC"; // aqui concatenar where
+            ps = acceso.prepareStatement(sql);
+            rs = ps.executeQuery();
+            ResultSetMetaData rsMd = rs.getMetaData();
+            int cantidadColumnas = rsMd.getColumnCount();
+            modelo.addColumn("ID");
+            modelo.addColumn("CODIGO TIENDA");
+            modelo.addColumn("FECHA DE VENTA");
+            modelo.addColumn("NIT CLIENTE");
+            modelo.addColumn("CODIGO DE PRODUCTO");
+            modelo.addColumn("CANTIDAD ARTICULOS");
+            modelo.addColumn("TOTAL A PAGAR");
+            //Capturamos en las columnas que contiene nuestra tabla de interfaz los datos de nuestra DB
+            while(rs.next()){
+                Object[] filas = new Object[cantidadColumnas];
+                for (int i = 0; i < cantidadColumnas; i++) {
+                    filas[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(filas);//agregamos las filas al modelo que en este caso es la tabla Interfaz
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+                
         }
     }
 }

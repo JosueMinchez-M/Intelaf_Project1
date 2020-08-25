@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -29,6 +28,8 @@ public class Pedido {
     DecimalFormat cortarDecimal = new DecimalFormat("#.00");
     double porcentajeAnticipo = 0;
     String tiempoEnvio = "";
+    double cantidadTotalPago = 0;
+    int restaProductoExistenteyPedido = 0;
     
     
     public void mostrarDatosTabla(JTable pedidoTable, JTextField txt_buscarPedido, JComboBox cb_tiendaSeleccionada){
@@ -146,8 +147,8 @@ public class Pedido {
                             String sql = "INSERT INTO " + pedidoTienda + " (codigo, tienda_origen, tienda_destino, fecha, "
                                     + "cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo, tiempo_envio) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                             //Se toma la cantidad en existencia de articulos de cierto producto y se resta con los productos que se solicitan en el pedido
-                            int restaProductoExistenteyPedido = cantidadArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) - Integer.parseInt(txt_cantArticulosPedido.getText());
-                            double cantidadTotalPago = Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText())));
+                            restaProductoExistenteyPedido = cantidadArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) - Integer.parseInt(txt_cantArticulosPedido.getText());
+                            cantidadTotalPago = Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText())));
                             JOptionPane.showMessageDialog(null, cantidadTotalPago);
                             //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
                             if(comboBoxCodigoProductoPedido.equals("") || txt_fechaPedido.getText().equals("") || txt_nitClientePedido.getText().equals("")
@@ -190,6 +191,32 @@ public class Pedido {
                             System.out.println(e.toString());
                             JOptionPane.showMessageDialog(null, "                          EL CODIGO NO PUEDE REPETIRSE \n"
                                     + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
+                        }
+                        String sql1 = "INSERT INTO PEDIDO (codigo, tienda_origen, tienda_destino, fecha, cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo, tiempo_envio) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        try {
+                            ps = acceso.prepareStatement(sql1);
+                            ps.setInt(1, Integer.parseInt(txt_codigoPedido.getText()));
+                            ps.setString(2, comboBoxTiendaOrigenPedido);
+                            ps.setString(3, txt_tiendaDestinoPedido.getText());
+                            ps.setDate(4, Date.valueOf(txt_fechaPedido.getText()));
+                            ps.setString(5, txt_nitClientePedido.getText());
+                            ps.setString(6, comboBoxCodigoProductoPedido);
+                            ps.setInt(7, Integer.parseInt(txt_cantArticulosPedido.getText()));
+                            ps.setDouble(8, cantidadTotalPago);
+                            ps.setDouble(9, Double.parseDouble(txt_anticipoPedido.getText()));
+                            ps.setInt(10, Integer.parseInt(tiempoEnvio));
+
+                            int res = ps.executeUpdate();
+                            if(res > 0){
+                                //JOptionPane.showMessageDialog(null, "GUARDADO CON EXITO");
+                                System.out.println("GUARDANDO DATOS");
+                            }else{
+                                //JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR");
+                                System.out.println("ERROR AL GUARDAR");
+                            }
+                            //acceso.close();
+                        } catch (Exception e) {
+                            //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
                         }
                         
                     }
@@ -437,6 +464,47 @@ public class Pedido {
 //                    if(i == 10){
 //                        filas[i] = new JButton("Validar Entrega");
 //                    }
+                    filas[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(filas);//agregamos las filas al modelo que en este caso es la tabla Interfaz
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+                
+        }
+    }
+    
+    public void mostrarPedidoQueSalieronDeLaTiendaTabla(JTable reportesTable, JTextField txt_tiendaDestinoPedido){
+        //El try me permite capturar el error que me sale por conexion
+        //Tambien nos permite hacer la conexion con la DB para  mostrar los datos de la tabla empleados de
+        //la DB en la tabla empleadosTable que tenemos en nuestra interfaz grafica
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            reportesTable.setModel(modelo);
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            
+            String sql = "SELECT * FROM PEDIDO WHERE tienda_origen = '" + txt_tiendaDestinoPedido.getText() + "' ORDER BY id ASC"; // aqui concatenar where
+            ps = acceso.prepareStatement(sql);
+            rs = ps.executeQuery();
+            ResultSetMetaData rsMd = rs.getMetaData();
+            int cantidadColumnas = rsMd.getColumnCount();
+            
+            modelo.addColumn("No. PEDIDO");
+            modelo.addColumn("CODIGO PEDIDO");
+            modelo.addColumn("CODIGO TIENDA ORIGEN");
+            modelo.addColumn("CODIGO TIENDA ACTUAL");
+            modelo.addColumn("FECHA DE PEDIDO");
+            modelo.addColumn("NIT CLIENTE");
+            modelo.addColumn("CODIGO PRODUCTO");
+            modelo.addColumn("CANTIDAD DE ARTICULOS");
+            modelo.addColumn("TOTAL A PAGAR");
+            modelo.addColumn("ANTICIPO");
+            modelo.addColumn("TIEMPO ENVIO");
+            //Capturamos en las columnas que contiene nuestra tabla de interfaz los datos de nuestra DB
+            while(rs.next()){
+                Object[] filas = new Object[cantidadColumnas];
+                for (int i = 0; i < cantidadColumnas; i++) {
                     filas[i] = rs.getObject(i + 1);
                 }
                 modelo.addRow(filas);//agregamos las filas al modelo que en este caso es la tabla Interfaz

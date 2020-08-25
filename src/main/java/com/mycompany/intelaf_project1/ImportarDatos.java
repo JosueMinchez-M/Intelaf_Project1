@@ -269,6 +269,34 @@ public class ImportarDatos {
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
         }
+        
+        String sql1 = "INSERT INTO PEDIDO (codigo, tienda_origen, tienda_destino, fecha, cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo, tiempo_envio) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            acceso = con.Conectar();
+            ps = acceso.prepareStatement(sql1);
+            ps.setInt(1, Integer.parseInt(lineaArray[1]));
+            ps.setString(2, lineaArray[2]);
+            ps.setString(3, lineaArray[3]);
+            ps.setString(4, lineaArray[4]);
+            ps.setString(5, lineaArray[5]);
+            ps.setString(6, lineaArray[6]);
+            ps.setInt(7, Integer.parseInt(lineaArray[7]));
+            ps.setDouble(8, Double.parseDouble(lineaArray[8]));
+            ps.setDouble(9, Double.parseDouble(lineaArray[9]));
+            ps.setInt(10, 0);
+            
+            int res = ps.executeUpdate();
+            if(res > 0){
+                //JOptionPane.showMessageDialog(null, "GUARDADO CON EXITO");
+                System.out.println("GUARDANDO DATOS");
+            }else{
+                //JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR");
+                System.out.println("ERROR AL GUARDAR");
+            }
+            //acceso.close();
+        } catch (Exception e) {
+            //JOptionPane.showMessageDialog(null, "Debes llenar los datos que se te piden");
+        }
     }
     public void errorIngresarDatos(JTextArea cuadroTexto){
         if(lineaArray[0].equals("EMPLEADO")){
@@ -375,7 +403,7 @@ public class ImportarDatos {
     }
     
     public void crearTablaVentaTienda(){
-        String sql = "CREATE TABLE VENTA" + lineaArray[1] + " (id INT NOT NULL AUTO_INCREMENT, fecha DATE NOT NULL,"
+        String sql = "CREATE TABLE VENTA" + lineaArray[1] + " (id INT NOT NULL AUTO_INCREMENT, codigo_tienda VARCHAR(15) NOT NULL, fecha DATE NOT NULL,"
                 + "cliente_nit VARCHAR(15) NOT NULL, producto_codigo VARCHAR(15) NOT NULL, cantidad_articulos INT(10) NOT NULL,"
                 + "total_pagar DOUBLE NOT NULL, PRIMARY KEY(id), FOREIGN KEY(cliente_nit) REFERENCES CLIENTE(nit))";
         try {

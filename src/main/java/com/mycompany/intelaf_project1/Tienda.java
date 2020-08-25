@@ -158,7 +158,7 @@ public class Tienda {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
         }
-        String sqlventa = "CREATE TABLE VENTA" + txt_nombreTienda.getText() + " (id INT NOT NULL AUTO_INCREMENT, fecha DATE NOT NULL,"
+        String sqlventa = "CREATE TABLE VENTA" + txt_nombreTienda.getText() + " (id INT NOT NULL AUTO_INCREMENT, codigo_tienda VARCHAR(15) NOT NULL, fecha DATE NOT NULL,"
                 + "cliente_nit VARCHAR(15) NOT NULL, producto_codigo VARCHAR(15) NOT NULL, cantidad_articulos INT(10) NOT NULL,"
                 + "total_pagar DOUBLE NOT NULL, PRIMARY KEY(id), FOREIGN KEY(cliente_nit) REFERENCES CLIENTE(nit))";
         try {

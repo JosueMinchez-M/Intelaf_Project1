@@ -196,6 +196,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         btn_pedidosLlegaranTienda = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
         jLabel80 = new javax.swing.JLabel();
         jPanel43 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -1500,6 +1501,18 @@ public class IngresarDatos extends javax.swing.JFrame {
         });
 
         jButton10.setText("LISTADO DE PEDIDOS QUE SALIERON DE LA TIENDA Y ESTAN EN TRANSITO");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        jButton11.setText("LISTADO DE TODAS LAS COMPRAS REALIZADAS POR UN CLIENTE");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout EMPLEADO7Layout = new javax.swing.GroupLayout(EMPLEADO7);
         EMPLEADO7.setLayout(EMPLEADO7Layout);
@@ -1518,12 +1531,13 @@ public class IngresarDatos extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO7Layout.createSequentialGroup()
                         .addComponent(jScrollPane9)
                         .addContainerGap())))
-            .addGroup(EMPLEADO7Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO7Layout.createSequentialGroup()
                 .addGap(292, 292, 292)
-                .addGroup(EMPLEADO7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_pedidosLlegaranTienda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(EMPLEADO7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_pedidosLlegaranTienda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(295, 295, 295))
         );
         EMPLEADO7Layout.setVerticalGroup(
@@ -1542,7 +1556,9 @@ public class IngresarDatos extends javax.swing.JFrame {
                 .addComponent(jButton8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton10)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton11)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jLabel80.setFont(new java.awt.Font("Dyuthi", 1, 14)); // NOI18N
@@ -2459,6 +2475,8 @@ public class IngresarDatos extends javax.swing.JFrame {
         pedido.cargarTiendasBD(cb_tiendaOrigenPedido, txt_tiendaDestinoPedido);
         v.mostrarProductoTienda(cb_tiendaSeleccion, cb_codigoProductoVenta);
         v.mostrarDatosTabla(jtVenta, txt_buscarVenta, cb_tiendaSeleccion);
+        v.obtenerCodigoTienda(cb_tiendaSeleccion, txt_codigoTiendaVenta);
+        //txt_codigoTiendaVenta.setText(String.valueOf(cb_tiendaSeleccion.getSelectedItem()));
         limpiarTabla(jtReportes);
     }//GEN-LAST:event_txt_ingresarTiendaActionPerformed
     public void limpiarTabla(JTable nombreTabla){
@@ -2564,6 +2582,14 @@ public class IngresarDatos extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         pedido.mostrarPedidoVerificarIngresoTabla(jtReportes, cb_tiendaSeleccion);
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        pedido.mostrarPedidoQueSalieronDeLaTiendaTabla(jtReportes, txt_tiendaDestinoPedido);
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        v.mostrarListadoComprasClienteTabla(jtReportes, txt_buscarReportes);
+    }//GEN-LAST:event_jButton11ActionPerformed
 
     private void ocultarComponentesTiempo(){
         txt_tiempo.setEditable(false);
@@ -2855,6 +2881,7 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cb_tiendaSeleccion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
