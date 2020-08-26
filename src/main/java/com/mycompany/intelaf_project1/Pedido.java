@@ -527,6 +527,7 @@ public class Pedido {
             while(rs.next()){//rs.getString(1)
                 if(rs.getDouble(1) <= 0){
                     JOptionPane.showMessageDialog(null, "¡NO TIENES CREDITO DISPONIBLE!");
+                    creditoIngresado = 0;
                 }else{
                     JOptionPane.showMessageDialog(null, "TU CRÉDITO DISPONIBLE ES = " + rs.getInt(1));
                     try {
@@ -540,6 +541,7 @@ public class Pedido {
                         guardarNuevoCreditoCliente(txt_nitClientePedido, restaCredito);
                     }else{
                         JOptionPane.showMessageDialog(null, "SOLO TIENES DE CRÉDITO DISPONIBLE: " + rs.getInt(1));
+                        creditoIngresado = 0;
                     }
                 }
             }

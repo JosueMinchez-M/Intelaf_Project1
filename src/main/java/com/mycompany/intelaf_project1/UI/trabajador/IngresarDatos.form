@@ -802,33 +802,34 @@
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="cb_codigoProductoVenta" alignment="0" pref="185" max="32767" attributes="0"/>
-                                      <Component id="txt_codigoTiendaVenta" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txt_fechaVenta" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txt_nitClienteVenta" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="jLabel69" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jLabel2" max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="cb_codigoProductoVenta" alignment="0" pref="185" max="32767" attributes="0"/>
+                                              <Component id="txt_codigoTiendaVenta" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="txt_fechaVenta" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="txt_nitClienteVenta" alignment="0" max="32767" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="jLabel69" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                                                  <Component id="txt_cantArticulosVenta" min="-2" pref="155" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="jButton7" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="txt_totalPagarVenta" min="-2" pref="155" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jButton7" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="txt_creditoClieteVenta" min="-2" pref="155" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txt_cantArticulosVenta" min="-2" pref="155" max="-2" attributes="0"/>
-                                      <Component id="txt_creditoClieteVenta" min="-2" pref="155" max="-2" attributes="0"/>
-                                      <Component id="txt_totalPagarVenta" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="cb_Venta" alignment="0" max="32767" attributes="0"/>
                                       <Component id="btn_registrarVenta" alignment="0" max="32767" attributes="0"/>
@@ -864,43 +865,46 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="btn_activarVenta" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txt_creditoClieteVenta" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="btn_activarVenta" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="txt_fechaVenta" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel67" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                                      <Component id="jButton7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txt_totalPagarVenta" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="btn_registrarVenta" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txt_totalPagarVenta" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jButton7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel68" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                          <Component id="txt_nitClienteVenta" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="cb_codigoProductoVenta" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel73" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <EmptySpace pref="42" max="32767" attributes="0"/>
+                                          <Component id="txt_creditoClieteVenta" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
+                                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="btn_registrarVenta" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btn_modificarVenta" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jLabel68" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                  <Component id="txt_nitClienteVenta" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="cb_codigoProductoVenta" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel73" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
                           </Group>
-                          <EmptySpace pref="37" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1087,12 +1091,10 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel2">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="INGRESA EL CR&#xc9;DITO:"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JTextField" name="txt_creditoClieteVenta">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton7">
                   <Properties>

@@ -1,5 +1,6 @@
 package com.mycompany.intelaf_project1;
 
+import com.mycompany.intelaf_project1.UI.trabajador.IngresarDatos;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -7,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -20,9 +23,11 @@ import javax.swing.table.DefaultTableModel;
 public class Venta {
     
     DecimalFormat cortarDecimal = new DecimalFormat("#.00");
+    Pedido pedido = new Pedido();
     PreparedStatement ps = null;
     ResultSet rs = null;
     double cantidadTotalPago = 0;
+    double creditoIngresado = 0;
     
     public void mostrarDatosTabla(JTable ventaTable, JTextField txt_buscarVenta, JComboBox cb_tiendaSeleccionada){
         String venta = "VENTA" + String.valueOf(cb_tiendaSeleccionada.getSelectedItem());
@@ -84,7 +89,7 @@ public class Venta {
             //JOptionPane.showMessageDialog(null, cantidadTotalPago);
             //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
             int restaProductoExistenteyPedido = articulosDisponibles(cb_tiendaSeleccion, cb_codigoProductoVenta) - Integer.parseInt(txt_cantArticulosVenta.getText());
-            cantidadTotalPago = Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaSeleccion, cb_codigoProductoVenta) * Double.parseDouble(txt_cantArticulosVenta.getText())));
+            cantidadTotalPago = Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaSeleccion, cb_codigoProductoVenta) * Double.parseDouble(txt_cantArticulosVenta.getText()))) - creditoIngresado;
             if(comboBoxCodigoProductoPedido.equals("") || txt_fechaVenta.getText().equals("") || txt_nitClienteVenta.getText().equals("")
                 || cb_codigoProductoVenta.getSelectedItem().equals("") || txt_cantArticulosVenta.getText().equals("")){
             }else{
@@ -309,6 +314,40 @@ public class Venta {
         } catch (SQLException e) {
             System.out.println(e.toString());
                 
+        }
+    }
+    
+    public void usoCreditoCliente(JTextField txt_nitClientePedido){
+        Conexion con = new Conexion();
+        Connection acceso = con.Conectar();
+        String query = "SELECT credito_compra FROM CLIENTE WHERE nit = '" + txt_nitClientePedido.getText() + "'";
+        try {
+            ps = acceso.prepareStatement(query);
+            rs = ps.executeQuery();
+            //cb_codigoTiendaOrigenPedido.removeAllItems();
+            while(rs.next()){//rs.getString(1)
+                if(rs.getDouble(1) <= 0){
+                    JOptionPane.showMessageDialog(null, "¡NO TIENES CREDITO DISPONIBLE!");
+                    creditoIngresado = 0;
+                }else{
+                    JOptionPane.showMessageDialog(null, "TU CRÉDITO DISPONIBLE ES = " + rs.getInt(1));
+                    try {
+                        creditoIngresado = Double.parseDouble(JOptionPane.showInputDialog(null, "|||INGRESA EL CRÉDITO QUE USARÁS|||"));
+
+                    } catch (Exception e) {
+                        creditoIngresado = 0;
+                    }
+                    if(creditoIngresado >= 0 && creditoIngresado <= rs.getInt(1)){
+                        double restaCredito = rs.getDouble(1) - creditoIngresado;
+                        pedido.guardarNuevoCreditoCliente(txt_nitClientePedido, restaCredito);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "SOLO TIENES DE CRÉDITO DISPONIBLE: " + rs.getInt(1));
+                        creditoIngresado = 0;
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
