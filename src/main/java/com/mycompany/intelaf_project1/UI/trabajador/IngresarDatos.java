@@ -2746,42 +2746,6 @@ public class IngresarDatos extends javax.swing.JFrame {
         txt_telefonoCliente.setEditable(true);
         btn_modificarCliente.setEnabled(true);
     }
-//        private void validarCodigosTiendas(){
-//        Conexion con = new Conexion();
-//        Connection acceso = con.Conectar();
-//        String query = "SELECT codigo FROM TIENDA";
-//        try {
-//            ps = acceso.prepareStatement(query);
-//            rs = ps.executeQuery();
-//            while(rs.next()){
-//                if(rs.getString(1).equals(txt_tiendaDestinoTiempo.getText())){
-//                    
-//                }
-//                //cb_productoTienda.addItem(rs.getString(1));
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-    //Guarda las tablas de productos de cada tienda en el comboBox para seleccionar a conveniencia
-//    public void cargarTablasBD(){
-//        Conexion con = new Conexion();
-//        Connection acceso = con.Conectar();
-//        String query = "SHOW TABLES";
-//        try {
-//            ps = acceso.prepareStatement(query);
-//            rs = ps.executeQuery();
-//            cb_productoTienda.removeAllItems();
-//            while(rs.next()){
-//                if(rs.getString(1).matches("PRODUCTO.*")){
-//                    cb_productoTienda.addItem(rs.getString(1));
-//                }
-//                //cb_productoTienda.addItem(rs.getString(1));
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
     public void cargarTiendasBD(){
         Conexion con = new Conexion();
         Connection acceso = con.Conectar();
