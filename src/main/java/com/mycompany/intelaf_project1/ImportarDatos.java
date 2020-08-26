@@ -354,63 +354,30 @@ public class ImportarDatos {
     }
     public void errorIngresarDatos(JTextArea cuadroTexto){
         if(lineaArray[0].equals("EMPLEADO")){
-            //---------
-            if(!(lineaArray[2].matches("[0-9]+"))){//++++++++++++++++++++++
-                cuadroTexto.append("--> El EMPLEADO con el DPI No. " + lineaArray[4] + ""
-                    + "\nfue ignorado debido a ERROR en el CODIGO: \n"
-                    + ""+ lineaArray[2]+" por no seguir el patron del codigo.\n\n");
-            }else{
-                insertarEmpleado();
-            }if(!(lineaArray[3].matches("[0-9]+"))){
-                cuadroTexto.append("--> El EMPLEADO con el DPI No. " + lineaArray[4] + ""
-                    + "\nfue ignorado debido a ERROR en el TELEFONO: \n"
-                    + ""+ lineaArray[3]+" por no contener solo numeros.\n\n");
-            }else{
-                insertarEmpleado();
-            }if(!(lineaArray[4].matches("[0-9]+"))){
-                cuadroTexto.append("--> El EMPLEADO con el DPI No. " + lineaArray[4] + ""
-                + "\nfue ignorado debido a ERROR en el DPI: \n"
-                + ""+ lineaArray[4]+" por no contener solo numeros.\n\n");
-            }else{
-                insertarEmpleado();
-            }
+            //Se inseta la informacion de empleados del archivo plano    
+            insertarEmpleado();
         }else if(lineaArray[0].equals("TIENDA")){
-            if(!(lineaArray[3].matches(".*ABC-*." + "[0-9]+")) || !(lineaArray[4].matches("[0-9]+"))){//lineaArray[3].matches("ABC-" + "[0-9]+")
-                cuadroTexto.append("--> La TIENDA con el NOMBRE: " + lineaArray[1] + ""
-                + "\nfue ignorada debido a INCOPATIBILIDAD en sus datos.\n\n");
-            }else{
-                //Se necesita para comparar el codigo de tienda entre tienda y producto
-                insertarTienda();
-                crearTablaProductoTienda();
-                crearTablaTiempoTienda();
-                crearTablaPedidoTienda();
-                crearTablaVentaTienda();
-            }
+            //Se inseta la informacion de tiendas del archivo plano 
+            insertarTienda();
+            crearTablaProductoTienda();
+            crearTablaTiempoTienda();
+            crearTablaPedidoTienda();
+            crearTablaVentaTienda();
         }else if(lineaArray[0].equals("PRODUCTO")){
-            Pattern patP3 = Pattern.compile("[A-Z]{3,3}"+"-"+"[0-9]{3,4}");
-            Matcher matP3 = patP3.matcher(lineaArray[3]);
-            if(!(matP3.matches())){
-                cuadroTexto.append("--> El PRODUCTO con el CODIGO: " + lineaArray[3] + "\n"
-                + "para la TIENDA: " + lineaArray[6] + " fue ignorado debido a"
-                + "\nINCOPATIBILIDAD en sus datos.\n\n");
-            }else{
-                insertarProducto();
-            }
+            //Se inseta la informacion de productos del archivo plano 
+            insertarProducto();
         }else if(lineaArray[0].equals("CLIENTE")){
-            Pattern patC3 = Pattern.compile("[A-Z]{1,1}"+"-"+"[0-9]{4,4}");
-            Matcher matC3 = patC3.matcher(lineaArray[2]);
-            if(!(matC3.matches()) || !(lineaArray[3].matches("[0-9]+"))){
-                cuadroTexto.append("--> El CLIENTE con el NIT: " + lineaArray[2] + " fue ignorado\n"
-                + "debido a INCOPATIBILIDAD en sus datos.\n\n");
-            }else{
-                insertarCliente();
-            }
+            //Se inseta la informacion de cliente del archivo plano 
+            insertarCliente();
         }else if(lineaArray[0].equals("PEDIDO")){
+            //Se inseta la informacion de pedido del archivo plano 
             insertarPedido();
         }else if(lineaArray[0].equals("TIEMPO")){
+            //Se inseta la informacion de tiempo del archivo plano 
             insertarTiempo();
         }
     }
+    //Se crea la tabla productos al momento de leer el archivo plano
     public void crearTablaProductoTienda(){
         String sql = "CREATE TABLE PRODUCTO" + lineaArray[1] + " (codigo VARCHAR(10) NOT NULL, nombre VARCHAR(30) NOT NULL, fabricante VARCHAR(30) NOT NULL,"
                 + "cantidad_disponible INT(6) NOT NULL, precio DOUBLE NOT NULL, descripcion VARCHAR(200), garantia VARCHAR(3), Tienda_codigo VARCHAR(10) NOT NULL,"
@@ -425,6 +392,7 @@ public class ImportarDatos {
             JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
         }
     }
+    //Se crea la tabla tiempo al momento de leer el archivo plano
     public void crearTablaTiempoTienda(){
         String sql = "CREATE TABLE TIEMPO" + lineaArray[1] + " (Tienda_codigo VARCHAR(30), tienda_destino VARCHAR(30) NOT NULL,"
                 + "tiempo INT(10) NOT NULL, PRIMARY KEY(tienda_destino), FOREIGN KEY(Tienda_codigo) REFERENCES TIENDA(codigo))";
@@ -438,7 +406,7 @@ public class ImportarDatos {
             JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
         }
     }
-    
+    //Se crea la tabla pedido al momento de leer el archivo plano
     public void crearTablaPedidoTienda(){
         String sql = "CREATE TABLE PEDIDO" + lineaArray[1] + " (id INT NOT NULL AUTO_INCREMENT, "
                 + "codigo INT(10) NOT NULL, tienda_origen VARCHAR(15) NOT NULL,"
@@ -455,7 +423,7 @@ public class ImportarDatos {
             JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
         }
     }
-    
+    //Se crea la tabla Ventas al momento de leer el archivo plano
     public void crearTablaVentaTienda(){
         String sql = "CREATE TABLE VENTA" + lineaArray[1] + " (id INT NOT NULL AUTO_INCREMENT, codigo_tienda VARCHAR(15) NOT NULL, fecha DATE NOT NULL,"
                 + "cliente_nit VARCHAR(15) NOT NULL, producto_codigo VARCHAR(15) NOT NULL, cantidad_articulos INT(10) NOT NULL,"
