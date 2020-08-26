@@ -254,15 +254,11 @@ public class ImportarDatos {
                 ps = acceso.prepareStatement(query);
                 rs = ps.executeQuery();
                 while(rs.next()){
-                        //cb_tiendaCatalogo.addItem(rs.getString(1));
                     if(rs.getInt(1) >= 0){
                         diaEnvio = rs.getInt(1);
-                        JOptionPane.showMessageDialog(null, diaEnvio);
                     }else{
                         diaEnvio = 0;
-                        JOptionPane.showMessageDialog(null, diaEnvio);
                     }
-                    //cb_productoTienda.addItem(rs.getString(1));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
@@ -273,9 +269,7 @@ public class ImportarDatos {
             ps = acceso.prepareStatement(query1);
             rs = ps.executeQuery();
             while(rs.next()){
-                   // cb_tiendaCatalogo.addItem(rs.getString(1));
                    fechaModificada = rs.getDate(1);
-                //cb_productoTienda.addItem(rs.getString(1));
             }
         } catch (SQLException ex) {
             Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
@@ -296,10 +290,10 @@ public class ImportarDatos {
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
-        String sql = "INSERT INTO PEDIDO"+ nombreTienda +" (codigo, tienda_origen, tienda_destino, fecha, cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo, tiempo_envio) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql3 = "INSERT INTO PEDIDO"+ nombreTienda +" (codigo, tienda_origen, tienda_destino, fecha, cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo, tiempo_envio) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             acceso = con.Conectar();
-            ps = acceso.prepareStatement(sql);
+            ps = acceso.prepareStatement(sql3);
             ps.setInt(1, Integer.parseInt(lineaArray[1]));
             ps.setString(2, lineaArray[2]);
             ps.setString(3, lineaArray[3]);

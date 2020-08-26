@@ -178,12 +178,11 @@ public class Cliente {
     }
     
     public void ListadoPedidosEnCursoCliente(JTable reportesTable, JTextField txt_buscarReportes){
-        //String productoTienda = String.valueOf(cb_productoTienda.getSelectedItem());
         String buscar = txt_buscarReportes.getText();
         String where = "";
          //Me permite buscar en la lista por medio del codigo del empleado al empleado
         if(!"".equals(buscar)){
-            where = " cliente_nit = '" + buscar + "'";
+            where = "WHERE codigo = '" + buscar + "' OR cliente_nit = '" + buscar + "'";
         }
         //El try me permite capturar el error que me sale por conexion
         //Tambien nos permite hacer la conexion con la DB para  mostrar los datos de la tabla empleados de
@@ -194,7 +193,7 @@ public class Cliente {
             Conexion con = new Conexion();
             Connection acceso = con.Conectar();
             
-            String sql = "SELECT * FROM PEDIDO WHERE "+ where + " tiempo_envio <> '0' ORDER BY id ASC"; // aqui concatenar where
+            String sql = "SELECT * FROM PEDIDO " + where + " ORDER BY id ASC";
             ps = acceso.prepareStatement(sql);
             rs = ps.executeQuery();
             ResultSetMetaData rsMd = rs.getMetaData();
