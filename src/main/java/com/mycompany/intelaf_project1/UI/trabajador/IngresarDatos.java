@@ -19,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -51,6 +52,7 @@ public class IngresarDatos extends javax.swing.JFrame {
          txt_tiendaCodigo.setVisible(false);
          txt_tiendaOrigenTiempo.setVisible(false);
          txt_idTiempo.setVisible(false);
+         btn_guardarPedido.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -147,22 +149,17 @@ public class IngresarDatos extends javax.swing.JFrame {
         txt_fechaPedido = new javax.swing.JTextField();
         txt_tiendaDestinoPedido = new javax.swing.JTextField();
         btn_guardarPedido = new javax.swing.JButton();
-        btn_modificarPedido = new javax.swing.JButton();
         jLabel61 = new javax.swing.JLabel();
         txt_codigoPedido = new javax.swing.JTextField();
         txt_cantArticulosPedido = new javax.swing.JTextField();
-        cb_Pedido = new javax.swing.JComboBox<>();
-        btn_activarPedido = new javax.swing.JButton();
         jLabel63 = new javax.swing.JLabel();
-        jLabel64 = new javax.swing.JLabel();
         jLabel65 = new javax.swing.JLabel();
-        txt_creditoDisponiblePedido = new javax.swing.JTextField();
         txt_anticipoPedido = new javax.swing.JTextField();
         txt_mostrarTiendaPedido = new javax.swing.JTextField();
         cb_tiendaOrigenPedido = new javax.swing.JComboBox<>();
         cb_codigoProductoPedido = new javax.swing.JComboBox<>();
         btn_mostrarProductos = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btn_anticipoPedido = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
         jPanel30 = new javax.swing.JPanel();
@@ -936,7 +933,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         );
         jPanel34Layout.setVerticalGroup(
             jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 25, Short.MAX_VALUE)
+            .addGap(0, 26, Short.MAX_VALUE)
         );
 
         jLabel54.setFont(new java.awt.Font("Dyuthi", 1, 14)); // NOI18N
@@ -1008,27 +1005,9 @@ public class IngresarDatos extends javax.swing.JFrame {
             }
         });
 
-        btn_modificarPedido.setText("MODIFICAR");
-        btn_modificarPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_modificarPedidoActionPerformed(evt);
-            }
-        });
-
         jLabel61.setText("CODIGO PEDIDO: ");
 
-        cb_Pedido.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONAR", "GUARDAR", "MODIFICAR" }));
-
-        btn_activarPedido.setText("ACTIVAR");
-        btn_activarPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_activarPedidoActionPerformed(evt);
-            }
-        });
-
         jLabel63.setText("ANTICIPO:");
-
-        jLabel64.setText("TOTAL A PAGAR:");
 
         jLabel65.setText("CODIGO PRODUCTO EXISTENCIA:");
 
@@ -1048,10 +1027,10 @@ public class IngresarDatos extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("25% Anticipo o Más");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btn_anticipoPedido.setText("25% Anticipo o Más");
+        btn_anticipoPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btn_anticipoPedidoActionPerformed(evt);
             }
         });
 
@@ -1070,7 +1049,7 @@ public class IngresarDatos extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(EMPLEADO4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(EMPLEADO4Layout.createSequentialGroup()
                                 .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel58)
@@ -1088,31 +1067,24 @@ public class IngresarDatos extends javax.swing.JFrame {
                                     .addComponent(txt_tiendaDestinoPedido, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txt_fechaPedido, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txt_nitClientePedido, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(47, 47, 47)
                                 .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(EMPLEADO4Layout.createSequentialGroup()
-                                        .addGap(47, 47, 47)
-                                        .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel60)
-                                            .addComponent(jLabel64)
-                                            .addComponent(jLabel63)
-                                            .addComponent(jLabel61))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txt_codigoPedido)
-                                            .addComponent(txt_anticipoPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                            .addComponent(txt_creditoDisponiblePedido, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                            .addComponent(txt_cantArticulosPedido)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO4Layout.createSequentialGroup()
-                                        .addGap(198, 198, 198)
-                                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jLabel59))
-                        .addGap(32, 32, 32)
-                        .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cb_Pedido, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_guardarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_modificarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_activarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(97, 97, 97)))
+                                    .addComponent(jLabel60)
+                                    .addComponent(jLabel63)
+                                    .addComponent(jLabel61))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_codigoPedido)
+                                    .addComponent(txt_anticipoPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                                    .addComponent(txt_cantArticulosPedido)))
+                            .addGroup(EMPLEADO4Layout.createSequentialGroup()
+                                .addComponent(jLabel59)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_anticipoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)))
+                        .addGap(37, 37, 37)
+                        .addComponent(btn_guardarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92)))
                 .addGap(17, 17, 17))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO4Layout.createSequentialGroup()
                 .addContainerGap()
@@ -1134,7 +1106,6 @@ public class IngresarDatos extends javax.swing.JFrame {
                     .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel61, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txt_codigoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cb_Pedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cb_tiendaOrigenPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_mostrarProductos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1142,42 +1113,34 @@ public class IngresarDatos extends javax.swing.JFrame {
                     .addGroup(EMPLEADO4Layout.createSequentialGroup()
                         .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_tiendaDestinoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_activarPedido))
-                        .addGap(8, 8, 8))
+                            .addComponent(txt_tiendaDestinoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO4Layout.createSequentialGroup()
                         .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_cantArticulosPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_cantArticulosPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_guardarPedido))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, EMPLEADO4Layout.createSequentialGroup()
-                        .addComponent(btn_guardarPedido)
+                .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(EMPLEADO4Layout.createSequentialGroup()
+                        .addComponent(txt_anticipoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_modificarPedido)
-                            .addComponent(txt_anticipoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, EMPLEADO4Layout.createSequentialGroup()
-                        .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_fechaPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btn_anticipoPedido))
+                    .addGroup(EMPLEADO4Layout.createSequentialGroup()
+                        .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_fechaPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel63, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel59, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_nitClientePedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel65, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cb_codigoProductoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, EMPLEADO4Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel64, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_creditoDisponiblePedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel63, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(8, Short.MAX_VALUE))
+                            .addComponent(txt_nitClientePedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, 0)
+                .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel65, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_codigoProductoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -2530,7 +2493,6 @@ public class IngresarDatos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_activarTiempoActionPerformed
 
     private void jtPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPedidoMouseClicked
-        pedido.pasarDatosComponentes(jtPedido, cb_tiendaOrigenPedido, txt_fechaPedido, txt_nitClientePedido, cb_codigoProductoPedido, txt_codigoPedido, txt_cantArticulosPedido, txt_creditoDisponiblePedido, txt_anticipoPedido, cb_tiendaSeleccion);
     }//GEN-LAST:event_jtPedidoMouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -2539,25 +2501,29 @@ public class IngresarDatos extends javax.swing.JFrame {
 
     private void btn_guardarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarPedidoActionPerformed
         pedido.guardarNuevosPedido(jtPedido, cb_tiendaOrigenPedido, txt_fechaPedido, txt_nitClientePedido, cb_codigoProductoPedido, txt_codigoPedido, txt_cantArticulosPedido, txt_anticipoPedido, cb_tiendaSeleccion, txt_tiendaDestinoPedido);
+        btn_anticipoPedido.setEnabled(true);
+        btn_guardarPedido.setEnabled(false);
     }//GEN-LAST:event_btn_guardarPedidoActionPerformed
-
-    private void btn_modificarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarPedidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_modificarPedidoActionPerformed
-
-    private void btn_activarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_activarPedidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_activarPedidoActionPerformed
 
     private void btn_mostrarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_mostrarProductosActionPerformed
         pedido.obtenerProductoTienda(cb_tiendaOrigenPedido, cb_codigoProductoPedido);
         tiempoTras.saberTiempoEnvioDias(cb_tiendaOrigenPedido, txt_tiendaDestinoPedido);
     }//GEN-LAST:event_btn_mostrarProductosActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        pedido.porcentajeAnticipo(txt_anticipoPedido, cb_tiendaOrigenPedido, cb_codigoProductoPedido, txt_cantArticulosPedido);
-        pedido.usoCreditoCliente(txt_nitClientePedido);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void btn_anticipoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anticipoPedidoActionPerformed
+
+        String comboBoxCodigoProductoPedido = String.valueOf(cb_codigoProductoPedido.getSelectedItem());
+        if(comboBoxCodigoProductoPedido.equals("") || txt_fechaPedido.getText().equals("") || txt_nitClientePedido.getText().equals("")
+            || cb_codigoProductoPedido.getSelectedItem().equals("") || txt_codigoPedido.getText().equals("") 
+            || txt_cantArticulosPedido.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "LOS COMPONENTES NO PUEDEN ESTAR VACIOS");
+        }else{
+            pedido.porcentajeAnticipo(txt_anticipoPedido, cb_tiendaOrigenPedido, cb_codigoProductoPedido, txt_cantArticulosPedido);
+            pedido.usoCreditoCliente(txt_nitClientePedido);
+            btn_guardarPedido.setEnabled(true);
+            btn_anticipoPedido.setEnabled(false);
+        }
+    }//GEN-LAST:event_btn_anticipoPedidoActionPerformed
 
     private void jtVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtVentaMouseClicked
         // TODO add your handling code here:
@@ -2866,10 +2832,10 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JPanel TIENDA;
     private javax.swing.JButton btn_activarCliente;
     private javax.swing.JButton btn_activarEmpleado;
-    private javax.swing.JButton btn_activarPedido;
     private javax.swing.JButton btn_activarProducto;
     private javax.swing.JButton btn_activarTiempo;
     private javax.swing.JButton btn_activarVenta;
+    private javax.swing.JButton btn_anticipoPedido;
     private javax.swing.JButton btn_cargarCliente;
     private javax.swing.JButton btn_cargarDatosTienda;
     private javax.swing.JButton btn_guardarCliente;
@@ -2880,7 +2846,6 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JButton btn_guardarTienda;
     private javax.swing.JButton btn_modificarCliente;
     private javax.swing.JButton btn_modificarEmpleado;
-    private javax.swing.JButton btn_modificarPedido;
     private javax.swing.JButton btn_modificarProducto;
     private javax.swing.JButton btn_modificarTiempo;
     private javax.swing.JButton btn_modificarTienda;
@@ -2889,7 +2854,6 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JButton btn_pedidosLlegaranTienda;
     private javax.swing.JButton btn_registrarVenta;
     private javax.swing.JComboBox<String> cb_Empleado;
-    private javax.swing.JComboBox<String> cb_Pedido;
     private javax.swing.JComboBox<String> cb_Producto;
     private javax.swing.JComboBox<String> cb_Tiempo;
     private javax.swing.JComboBox<String> cb_Venta;
@@ -2906,7 +2870,6 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
@@ -2958,7 +2921,6 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel63;
-    private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel67;
@@ -3043,7 +3005,6 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JTextField txt_correoTienda;
     private javax.swing.JTextField txt_creditoCliente;
     private javax.swing.JTextField txt_creditoClieteVenta;
-    private javax.swing.JTextField txt_creditoDisponiblePedido;
     private javax.swing.JTextField txt_descripcionProducto;
     private javax.swing.JTextField txt_direccionCliente;
     private javax.swing.JTextField txt_direccionEmpleado;

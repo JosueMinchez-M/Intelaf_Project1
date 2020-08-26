@@ -529,7 +529,12 @@ public class Pedido {
                     JOptionPane.showMessageDialog(null, "¡NO TIENES CREDITO DISPONIBLE!");
                 }else{
                     JOptionPane.showMessageDialog(null, "TU CRÉDITO DISPONIBLE ES = " + rs.getInt(1));
-                    creditoIngresado = Double.parseDouble(JOptionPane.showInputDialog(null, "|||INGRESA EL CRÉDITO QUE USARÁS|||"));
+                    try {
+                        creditoIngresado = Double.parseDouble(JOptionPane.showInputDialog(null, "|||INGRESA EL CRÉDITO QUE USARÁS|||"));
+
+                    } catch (Exception e) {
+                        creditoIngresado = 0;
+                    }
                     if(creditoIngresado >= 0 && creditoIngresado <= rs.getInt(1)){
                         double restaCredito = rs.getDouble(1) - creditoIngresado;
                         guardarNuevoCreditoCliente(txt_nitClientePedido, restaCredito);

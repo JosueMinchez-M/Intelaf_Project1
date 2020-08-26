@@ -1213,7 +1213,7 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="25" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -1258,8 +1258,8 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel58" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel56" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -1279,39 +1279,29 @@
                                               <Component id="txt_fechaPedido" alignment="0" max="32767" attributes="0"/>
                                               <Component id="txt_nitClientePedido" alignment="0" max="32767" attributes="0"/>
                                           </Group>
+                                          <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jLabel60" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel64" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel63" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel61" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="txt_codigoPedido" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="txt_anticipoPedido" pref="155" max="32767" attributes="0"/>
-                                                      <Component id="txt_creditoDisponiblePedido" pref="155" max="32767" attributes="0"/>
-                                                      <Component id="txt_cantArticulosPedido" max="32767" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <EmptySpace min="-2" pref="198" max="-2" attributes="0"/>
-                                                  <Component id="jButton5" min="-2" pref="165" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jLabel60" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel63" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel61" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="txt_codigoPedido" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="txt_anticipoPedido" pref="155" max="32767" attributes="0"/>
+                                              <Component id="txt_cantArticulosPedido" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="btn_anticipoPedido" min="-2" pref="197" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="cb_Pedido" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="btn_guardarPedido" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="btn_modificarPedido" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="btn_activarPedido" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                                  <Component id="btn_guardarPedido" min="-2" pref="124" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
@@ -1339,7 +1329,6 @@
                               <Component id="jLabel55" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                               <Component id="jLabel61" alignment="3" max="32767" attributes="0"/>
                               <Component id="txt_codigoPedido" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cb_Pedido" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cb_tiendaOrigenPedido" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btn_mostrarProductos" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -1349,55 +1338,45 @@
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel56" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                                       <Component id="txt_tiendaDestinoPedido" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="btn_activarPedido" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel60" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                                       <Component id="txt_cantArticulosPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btn_guardarPedido" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="btn_guardarPedido" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txt_anticipoPedido" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="btn_modificarPedido" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txt_anticipoPedido" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="btn_anticipoPedido" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel58" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
-                                      <Component id="txt_fechaPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel58" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                                          <Component id="txt_fechaPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jLabel63" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel59" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                                       <Component id="txt_nitClientePedido" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel65" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
-                                      <Component id="cb_codigoProductoPedido" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel64" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
-                                      <Component id="txt_creditoDisponiblePedido" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel63" min="-2" pref="27" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="8" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel65" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="cb_codigoProductoPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="19" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1536,14 +1515,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_guardarPedidoActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_modificarPedido">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="MODIFICAR"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_modificarPedidoActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel61">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="CODIGO PEDIDO: "/>
@@ -1553,44 +1524,15 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="txt_cantArticulosPedido">
                 </Component>
-                <Component class="javax.swing.JComboBox" name="cb_Pedido">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="3">
-                        <StringItem index="0" value="SELECCIONAR"/>
-                        <StringItem index="1" value="GUARDAR"/>
-                        <StringItem index="2" value="MODIFICAR"/>
-                      </StringArray>
-                    </Property>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="btn_activarPedido">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="ACTIVAR"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_activarPedidoActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel63">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="ANTICIPO:"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel64">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="TOTAL A PAGAR:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel65">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="CODIGO PRODUCTO EXISTENCIA:"/>
                   </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="txt_creditoDisponiblePedido">
                 </Component>
                 <Component class="javax.swing.JTextField" name="txt_anticipoPedido">
                 </Component>
@@ -1640,12 +1582,12 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_mostrarProductosActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton5">
+                <Component class="javax.swing.JButton" name="btn_anticipoPedido">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="25% Anticipo o M&#xe1;s"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_anticipoPedidoActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
