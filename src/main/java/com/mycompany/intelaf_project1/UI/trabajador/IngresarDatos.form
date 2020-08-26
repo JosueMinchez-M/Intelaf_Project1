@@ -1292,7 +1292,7 @@
                                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                       <Component id="txt_codigoPedido" alignment="0" max="32767" attributes="0"/>
                                                       <Component id="txt_anticipoPedido" pref="155" max="32767" attributes="0"/>
-                                                      <Component id="txt_totalPagarPedido" pref="155" max="32767" attributes="0"/>
+                                                      <Component id="txt_creditoDisponiblePedido" pref="155" max="32767" attributes="0"/>
                                                       <Component id="txt_cantArticulosPedido" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
@@ -1391,7 +1391,7 @@
                                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel64" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
-                                      <Component id="txt_totalPagarPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txt_creditoDisponiblePedido" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel63" min="-2" pref="27" max="-2" attributes="0"/>
@@ -1590,7 +1590,7 @@
                     <Property name="text" type="java.lang.String" value="CODIGO PRODUCTO EXISTENCIA:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_totalPagarPedido">
+                <Component class="javax.swing.JTextField" name="txt_creditoDisponiblePedido">
                 </Component>
                 <Component class="javax.swing.JTextField" name="txt_anticipoPedido">
                 </Component>

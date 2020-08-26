@@ -156,7 +156,7 @@ public class IngresarDatos extends javax.swing.JFrame {
         jLabel63 = new javax.swing.JLabel();
         jLabel64 = new javax.swing.JLabel();
         jLabel65 = new javax.swing.JLabel();
-        txt_totalPagarPedido = new javax.swing.JTextField();
+        txt_creditoDisponiblePedido = new javax.swing.JTextField();
         txt_anticipoPedido = new javax.swing.JTextField();
         txt_mostrarTiendaPedido = new javax.swing.JTextField();
         cb_tiendaOrigenPedido = new javax.swing.JComboBox<>();
@@ -1100,7 +1100,7 @@ public class IngresarDatos extends javax.swing.JFrame {
                                         .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(txt_codigoPedido)
                                             .addComponent(txt_anticipoPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                            .addComponent(txt_totalPagarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                                            .addComponent(txt_creditoDisponiblePedido, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                                             .addComponent(txt_cantArticulosPedido)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EMPLEADO4Layout.createSequentialGroup()
                                         .addGap(198, 198, 198)
@@ -1174,7 +1174,7 @@ public class IngresarDatos extends javax.swing.JFrame {
                         .addGap(4, 4, 4)
                         .addGroup(EMPLEADO4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel64, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_totalPagarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_creditoDisponiblePedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel63, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(8, Short.MAX_VALUE))
@@ -2530,7 +2530,7 @@ public class IngresarDatos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_activarTiempoActionPerformed
 
     private void jtPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPedidoMouseClicked
-        pedido.pasarDatosComponentes(jtPedido, cb_tiendaOrigenPedido, txt_fechaPedido, txt_nitClientePedido, cb_codigoProductoPedido, txt_codigoPedido, txt_cantArticulosPedido, txt_totalPagarPedido, txt_anticipoPedido, cb_tiendaSeleccion);
+        pedido.pasarDatosComponentes(jtPedido, cb_tiendaOrigenPedido, txt_fechaPedido, txt_nitClientePedido, cb_codigoProductoPedido, txt_codigoPedido, txt_cantArticulosPedido, txt_creditoDisponiblePedido, txt_anticipoPedido, cb_tiendaSeleccion);
     }//GEN-LAST:event_jtPedidoMouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -2556,6 +2556,7 @@ public class IngresarDatos extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         pedido.porcentajeAnticipo(txt_anticipoPedido, cb_tiendaOrigenPedido, cb_codigoProductoPedido, txt_cantArticulosPedido);
+        pedido.usoCreditoCliente(txt_nitClientePedido);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jtVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtVentaMouseClicked
@@ -3042,6 +3043,7 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JTextField txt_correoTienda;
     private javax.swing.JTextField txt_creditoCliente;
     private javax.swing.JTextField txt_creditoClieteVenta;
+    private javax.swing.JTextField txt_creditoDisponiblePedido;
     private javax.swing.JTextField txt_descripcionProducto;
     private javax.swing.JTextField txt_direccionCliente;
     private javax.swing.JTextField txt_direccionEmpleado;
@@ -3079,7 +3081,6 @@ public class IngresarDatos extends javax.swing.JFrame {
     private javax.swing.JTextField txt_tiendaCodigo;
     private javax.swing.JTextField txt_tiendaDestinoPedido;
     private javax.swing.JTextField txt_tiendaOrigenTiempo;
-    private javax.swing.JTextField txt_totalPagarPedido;
     private javax.swing.JTextField txt_totalPagarVenta;
     // End of variables declaration//GEN-END:variables
 }

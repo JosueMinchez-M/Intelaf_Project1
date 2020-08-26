@@ -30,6 +30,7 @@ public class Pedido {
     String tiempoEnvio = "";
     double cantidadTotalPago = 0;
     int restaProductoExistenteyPedido = 0;
+    double creditoIngresado = 0;
     
     
     public void mostrarDatosTabla(JTable pedidoTable, JTextField txt_buscarPedido, JComboBox cb_tiendaSeleccionada){
@@ -148,7 +149,7 @@ public class Pedido {
                                     + "cliente_nit, producto_codigo, cantidad_articulos, total_pagar, anticipo, tiempo_envio) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                             //Se toma la cantidad en existencia de articulos de cierto producto y se resta con los productos que se solicitan en el pedido
                             restaProductoExistenteyPedido = cantidadArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) - Integer.parseInt(txt_cantArticulosPedido.getText());
-                            cantidadTotalPago = Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText())));
+                            cantidadTotalPago = (Double.parseDouble(cortarDecimal.format(precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido) * Double.parseDouble(txt_cantArticulosPedido.getText())))) - Double.parseDouble(txt_anticipoPedido.getText()) - creditoIngresado;
                             JOptionPane.showMessageDialog(null, cantidadTotalPago);
                             //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
                             if(comboBoxCodigoProductoPedido.equals("") || txt_fechaPedido.getText().equals("") || txt_nitClientePedido.getText().equals("")
@@ -513,5 +514,62 @@ public class Pedido {
             System.out.println(e.toString());
                 
         }
+    }
+    //NUEVOS METODOS CLIENTE
+    public void usoCreditoCliente(JTextField txt_nitClientePedido){
+        Conexion con = new Conexion();
+        Connection acceso = con.Conectar();
+        String query = "SELECT credito_compra FROM CLIENTE WHERE nit = '" + txt_nitClientePedido.getText() + "'";
+        try {
+            ps = acceso.prepareStatement(query);
+            rs = ps.executeQuery();
+            //cb_codigoTiendaOrigenPedido.removeAllItems();
+            while(rs.next()){//rs.getString(1)
+                if(rs.getDouble(1) <= 0){
+                    JOptionPane.showMessageDialog(null, "¡NO TIENES CREDITO DISPONIBLE!");
+                }else{
+                    JOptionPane.showMessageDialog(null, "TU CRÉDITO DISPONIBLE ES = " + rs.getInt(1));
+                    creditoIngresado = Double.parseDouble(JOptionPane.showInputDialog(null, "|||INGRESA EL CRÉDITO QUE USARÁS|||"));
+                    if(creditoIngresado >= 0 && creditoIngresado <= rs.getInt(1)){
+                        double restaCredito = rs.getDouble(1) - creditoIngresado;
+                        guardarNuevoCreditoCliente(txt_nitClientePedido, restaCredito);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "SOLO TIENES DE CRÉDITO DISPONIBLE: " + rs.getInt(1));
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void guardarNuevoCreditoCliente(JTextField txt_nitClientePedido, double creditoIngresado){
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+                
+                try {
+                    DefaultTableModel modelo = new DefaultTableModel();
+                    String sql1 = "UPDATE CLIENTE SET credito_compra=? WHERE nit=?";
+                    //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
+
+                        ps = acceso.prepareStatement(sql1);
+                        ps.setDouble(1, creditoIngresado);
+                        ps.setString(2, txt_nitClientePedido.getText());
+
+                    int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
+                    if(res > 0){
+                        JOptionPane.showMessageDialog(null, "PRODUCTO GUARDADO");
+                        //Pasamos los valores a la caja de texto
+                        Object[] fila = new Object[1];
+                        fila[0] = creditoIngresado;
+                        modelo.addRow(fila);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR PRODUCTO");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.toString());
+                    JOptionPane.showMessageDialog(null, "                          EL CODIGO NO PUEDE REPETIRSE \n"
+                            + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
+                }
     }
 }
