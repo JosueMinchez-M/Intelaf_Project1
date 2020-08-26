@@ -4,9 +4,13 @@ import com.mycompany.intelaf_project1.UI.trabajador.IngresarDatos;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -227,6 +231,56 @@ public class ImportarDatos {
     }
     public void insertarPedido(){
         String nombreTienda = null;
+        String otroNombreTienda = null;
+        int diaEnvio = 0;
+        Date fechaModificada = null;
+        try {
+            Conexion con = new Conexion();
+            Connection acceso = con.Conectar();
+            String sql = "SELECT nombre FROM TIENDA WHERE codigo = ?";
+            
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, lineaArray[2]);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                otroNombreTienda = rs.getString("nombre");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        String query = "SELECT tiempo FROM TIEMPO" + otroNombreTienda + " WHERE Tienda_codigo = '" + lineaArray[2] + "' AND tienda_destino = '" + lineaArray[3] + "'";
+            try {
+                ps = acceso.prepareStatement(query);
+                rs = ps.executeQuery();
+                while(rs.next()){
+                        //cb_tiendaCatalogo.addItem(rs.getString(1));
+                    if(rs.getInt(1) >= 0){
+                        diaEnvio = rs.getInt(1);
+                        JOptionPane.showMessageDialog(null, diaEnvio);
+                    }else{
+                        diaEnvio = 0;
+                        JOptionPane.showMessageDialog(null, diaEnvio);
+                    }
+                    //cb_productoTienda.addItem(rs.getString(1));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            String query1 = "SELECT date_add(DATE('" + lineaArray[4] + "'), INTERVAL "+ diaEnvio +" DAY);";
+        try {
+            ps = acceso.prepareStatement(query1);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                   // cb_tiendaCatalogo.addItem(rs.getString(1));
+                   fechaModificada = rs.getDate(1);
+                //cb_productoTienda.addItem(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
         try {
             Conexion con = new Conexion();
             Connection acceso = con.Conectar();
@@ -255,7 +309,7 @@ public class ImportarDatos {
             ps.setInt(7, Integer.parseInt(lineaArray[7]));
             ps.setDouble(8, Double.parseDouble(lineaArray[8]));
             ps.setDouble(9, Double.parseDouble(lineaArray[9]));
-            ps.setInt(10, 0);
+            ps.setDate(10, fechaModificada);
             
             int res = ps.executeUpdate();
             if(res > 0){
@@ -283,7 +337,7 @@ public class ImportarDatos {
             ps.setInt(7, Integer.parseInt(lineaArray[7]));
             ps.setDouble(8, Double.parseDouble(lineaArray[8]));
             ps.setDouble(9, Double.parseDouble(lineaArray[9]));
-            ps.setInt(10, 0);
+            ps.setDate(10, fechaModificada);
             
             int res = ps.executeUpdate();
             if(res > 0){
@@ -366,7 +420,7 @@ public class ImportarDatos {
             ps = acceso.prepareStatement(sql);
             ps.execute();
             acceso.close();
-            JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
+            //JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
         }
@@ -379,7 +433,7 @@ public class ImportarDatos {
             ps = acceso.prepareStatement(sql);
             ps.execute();
             acceso.close();
-            JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
+            //JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
         }
@@ -389,14 +443,14 @@ public class ImportarDatos {
         String sql = "CREATE TABLE PEDIDO" + lineaArray[1] + " (id INT NOT NULL AUTO_INCREMENT, "
                 + "codigo INT(10) NOT NULL, tienda_origen VARCHAR(15) NOT NULL,"
                 + "tienda_destino VARCHAR(15) NOT NULL, fecha DATE NOT NULL, cliente_nit VARCHAR(15) NOT NULL, producto_codigo VARCHAR(10) NOT NULL,"
-                + "cantidad_articulos INT(10) NOT NULL, total_pagar DOUBLE NOT NULL, anticipo DOUBLE NOT NULL, tiempo_envio INT(10) NOT NULL,"
+                + "cantidad_articulos INT(10) NOT NULL, total_pagar DOUBLE NOT NULL, anticipo DOUBLE NOT NULL, tiempo_envio DATE NOT NULL,"
                 + "PRIMARY KEY(id), FOREIGN KEY(cliente_nit) REFERENCES CLIENTE(nit))";
         try {
             acceso = con.Conectar();
             ps = acceso.prepareStatement(sql);
             ps.execute();
             acceso.close();
-            JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
+            //JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
         }
@@ -411,7 +465,7 @@ public class ImportarDatos {
             ps = acceso.prepareStatement(sql);
             ps.execute();
             acceso.close();
-            JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
+            //JOptionPane.showMessageDialog(null, "TABLA CREADA CON EXITO");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR AL CREAR TABLA");
         }

@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -66,7 +67,7 @@ public class Pedido {
             modelo.addColumn("CANTIDAD DE ARTICULOS");
             modelo.addColumn("TOTAL A PAGAR");
             modelo.addColumn("ANTICIPO");
-            modelo.addColumn("TIEMPO ENVIO");
+            modelo.addColumn("FECHA ENTREGA");
             //Capturamos en las columnas que contiene nuestra tabla de interfaz los datos de nuestra DB
             while(rs.next()){
                 Object[] filas = new Object[cantidadColumnas];
@@ -117,7 +118,7 @@ public class Pedido {
     public void guardarNuevosPedido(JTable pedidoTable, JComboBox cb_tiendaOrigenPedido, JTextField txt_fechaPedido, JTextField txt_nitClientePedido,
         JComboBox cb_codigoProductoPedido, JTextField txt_codigoPedido, JTextField txt_cantArticulosPedido,
         JTextField txt_anticipoPedido, JComboBox cb_tiendaSeleccion, JTextField txt_tiendaDestinoPedido){
-        
+        Date fechaModificada = null;
         try {
             Conexion con = new Conexion();
             Connection acceso = con.Conectar();
@@ -158,6 +159,16 @@ public class Pedido {
                                 || (tiempoEnvio.equals(""))){
                             }else{
                                 producto.guardarCantidadExistente(cb_tiendaOrigenPedido, restaProductoExistenteyPedido, cb_codigoProductoPedido);
+                                String query1 = "SELECT date_add(DATE('" + txt_fechaPedido.getText() +"'), INTERVAL "+ tiempoEnvio +" DAY);";
+                                try {
+                                    ps = acceso.prepareStatement(query1);
+                                    rs = ps.executeQuery();
+                                    while(rs.next()){
+                                           fechaModificada = rs.getDate(1);
+                                    }
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                                 ps = acceso.prepareStatement(sql);
                                 ps.setInt(1, Integer.parseInt(txt_codigoPedido.getText()));
                                 ps.setString(2, comboBoxTiendaOrigenPedido);
@@ -168,7 +179,7 @@ public class Pedido {
                                 ps.setInt(7, Integer.parseInt(txt_cantArticulosPedido.getText()));
                                 ps.setDouble(8, cantidadTotalPago);
                                 ps.setDouble(9, Double.parseDouble(txt_anticipoPedido.getText()));
-                                ps.setInt(10, Integer.parseInt(tiempoEnvio));
+                                ps.setDate(10, fechaModificada);
                             }
                             int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
                             if(res > 0){
@@ -205,7 +216,7 @@ public class Pedido {
                             ps.setInt(7, Integer.parseInt(txt_cantArticulosPedido.getText()));
                             ps.setDouble(8, cantidadTotalPago);
                             ps.setDouble(9, Double.parseDouble(txt_anticipoPedido.getText()));
-                            ps.setInt(10, Integer.parseInt(tiempoEnvio));
+                            ps.setDate(10, fechaModificada);
 
                             int res = ps.executeUpdate();
                             if(res > 0){
@@ -363,7 +374,6 @@ public class Pedido {
                     //cb_codigoProductoPedido.removeAllItems();
                     while (rs.next()) { 
                         System.out.println(rs.getString(1));
-                        JOptionPane.showMessageDialog(null, rs.getString(1));
                         precioArticulos = Double.parseDouble(rs.getString(1));
                     }
                 } catch (Exception e) {
@@ -375,8 +385,7 @@ public class Pedido {
         return precioArticulos;
     }
     
-    public void porcentajeAnticipo(JTextField txt_anticipoPedido, JComboBox cb_tiendaOrigenPedido, JComboBox cb_codigoProductoPedido, JTextField txt_cantArticulosPedido){
-        JOptionPane.showMessageDialog(null, precioDeArticulosDisponibles(cb_tiendaOrigenPedido, cb_codigoProductoPedido));
+    public void porcentajeAnticipo(JTextField txt_anticipoPedido, JComboBox cb_tiendaOrigenPedido, JComboBox cb_codigoProductoPedido, JTextField txt_cantArticulosPedido){ 
         if(txt_cantArticulosPedido.equals("")|| cb_codigoProductoPedido.getSelectedItem().equals("CODIGO PRODUCTO")){
             
         }else{
@@ -385,8 +394,13 @@ public class Pedido {
             txt_anticipoPedido.setText(String.valueOf(cortarDecimal.format(porcentajeAnticipo)));
         }
     }
-    
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public void cambioDeTiempoEnvio(JComboBox cb_tiendaDestinoTiempo, JTextField txt_tiendaOrigenTiempo, JTextField txt_tiempo){
+        Date fechaModificada = null;
+        Date fechaEntrega = null;
+        //Date fechaPedido = null;
+        int numeroDias = 0;
+        Date fechaActual = null;
         try {
             Conexion con = new Conexion();
             Connection acceso = con.Conectar();
@@ -398,15 +412,106 @@ public class Pedido {
             
             while(rs.next()){
                 System.out.println(rs.getString("nombre"));
-                String nombreTienda = rs.getString("nombre");
+                String nombreTienda = rs.getString("nombre");//"SELECT fecha FROM PEDIDO" + nombreTienda + " WHERE tienda_origen = ? AND tienda_destino = ?";
+                
+                String query1 = "SELECT CURDATE()";
+                        try {
+                            ps = acceso.prepareStatement(query1);
+                            rs = ps.executeQuery();
+                            while(rs.next()){
+                                fechaActual = rs.getDate(1);
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                
+                try {
+                    String sql3 = "SELECT tiempo_envio FROM PEDIDO" + nombreTienda + " WHERE fecha = '" + fechaActual + "'";
+                    
+                    ps = acceso.prepareStatement(sql3);
+                    //ps.setString(1, txt_tiendaOrigenTiempo.getText());
+                    //ps.setString(2, String.valueOf(cb_tiendaDestinoTiempo.getSelectedItem()));
+                    rs = ps.executeQuery();
+                    //cb_codigoProductoPedido.removeAllItems();
+                    while (rs.next()) { 
+//                        if(!rs.getDate(1).equals(fechaActual)){
+//                            fechaPedido = rs.getDate(1);
+//                            JOptionPane.showMessageDialog(null, fechaPedido);
+                        //}else{
+                            fechaEntrega = rs.getDate(1);
+                            JOptionPane.showMessageDialog(null, fechaEntrega);
+                       // }
+//                        fechaPedido = rs.getDate(1);
+//                        JOptionPane.showMessageDialog(null, fechaPedido);
+//                        fechaPedido = rs.getDate(1);
+//                        JOptionPane.showMessageDialog(null, fechaPedido);
+                    }
+                } catch (Exception e) {
+                }
+                
+                String query7 = "SELECT DATEDIFF('"+ fechaEntrega +"','" + fechaActual + "')";
+                        try {
+                            ps = acceso.prepareStatement(query7);
+                            rs = ps.executeQuery();
+                            while(rs.next()){
+                                // cb_tiendaCatalogo.addItem(rs.getString(1));
+//                                if(rs.getDate(1).equals(fechaActual)){
+//                                    fechaModificada = rs.getDate(1);
+                                //}else{
+                                    numeroDias = rs.getInt(1);
+                                    JOptionPane.showMessageDialog(null, numeroDias);
+                                //}
+                                //fechaModificada = rs.getDate(1);
+                                //cb_productoTienda.addItem(rs.getString(1));
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                
+                        String query2 = "SELECT DATE_SUB(DATE('" + fechaEntrega + "'), INTERVAL "+ numeroDias +" DAY);";
+                        try {
+                            ps = acceso.prepareStatement(query2);
+                            rs = ps.executeQuery();
+                            while(rs.next()){
+                                // cb_tiendaCatalogo.addItem(rs.getString(1));
+//                                if(rs.getDate(1).equals(fechaActual)){
+                                    fechaModificada = rs.getDate(1);
+//                                }else{
+//                                    fechaPedido = rs.getDate(1);
+//                                    JOptionPane.showMessageDialog(null, fechaPedido);
+                               // }
+                                //fechaModificada = rs.getDate(1);
+                                //cb_productoTienda.addItem(rs.getString(1));
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+//                        String query2 = "SELECT date_add(DATE('" + fechaPedido + "'), INTERVAL "+ txt_tiempo.getText() +" DAY);";
+//                        try {
+//                            ps = acceso.prepareStatement(query2);
+//                            rs = ps.executeQuery();
+//                            while(rs.next()){
+//                                // cb_tiendaCatalogo.addItem(rs.getString(1));
+//                                if(rs.getDate(1).equals(fechaActual)){
+//                                    fechaModificada = rs.getDate(1);
+//                                }else{
+//                                    fechaPedido = rs.getDate(1);
+//                                    JOptionPane.showMessageDialog(null, fechaPedido);
+//                                }
+//                                //fechaModificada = rs.getDate(1);
+//                                //cb_productoTienda.addItem(rs.getString(1));
+//                            }
+//                        } catch (SQLException ex) {
+//                            Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
                 
                 try {
                     DefaultTableModel modelo = new DefaultTableModel();
                     String sql1 = "UPDATE PEDIDO" + nombreTienda +" SET tiempo_envio=? WHERE tienda_origen=? AND tienda_destino=?";
                     //Con esta condicion determinamos que si un campo obligatorio es vacio no acepta el registro de la persona
-
                         ps = acceso.prepareStatement(sql1);
-                        ps.setInt(1, Integer.parseInt(txt_tiempo.getText()));
+                        ps.setDate(1, fechaModificada);
                         ps.setString(2, txt_tiendaOrigenTiempo.getText());
                         ps.setString(3, String.valueOf(cb_tiendaDestinoTiempo.getSelectedItem()));
 
@@ -415,7 +520,7 @@ public class Pedido {
                         JOptionPane.showMessageDialog(null, "TIEMPO ENVIO MODIFICADO");
                         //Pasamos los valores a la caja de texto
                         Object[] fila = new Object[1];
-                        fila[0] = txt_tiempo.getText();
+                        fila[0] = fechaModificada;
                         modelo.addRow(fila);
                     }else{
                         JOptionPane.showMessageDialog(null, "ERROR AL MODIFICAR TIEMPO ENVIO");
@@ -432,6 +537,7 @@ public class Pedido {
     }
     
     public void mostrarPedidoVerificarIngresoTabla(JTable pedidoTable, JComboBox cb_tiendaSeleccionada){
+        Date fechaActual = null;
         String pedido = "PEDIDO" + String.valueOf(cb_tiendaSeleccionada.getSelectedItem());
         //El try me permite capturar el error que me sale por conexion
         //Tambien nos permite hacer la conexion con la DB para  mostrar los datos de la tabla empleados de
@@ -442,7 +548,20 @@ public class Pedido {
             Conexion con = new Conexion();
             Connection acceso = con.Conectar();
             
-            String sql = "SELECT * FROM " + pedido + " WHERE tiempo_envio = '0' ORDER BY codigo ASC"; // aqui concatenar where
+            String query = "SELECT CURDATE()";
+            try {
+                ps = acceso.prepareStatement(query);
+                rs = ps.executeQuery();
+                while(rs.next()){
+                       // cb_tiendaCatalogo.addItem(rs.getString(1));
+                       fechaActual = rs.getDate(1);
+                    //cb_productoTienda.addItem(rs.getString(1));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(IngresarDatos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            String sql = "SELECT * FROM " + pedido + " WHERE tiempo_envio = '" + fechaActual + "' ORDER BY codigo ASC"; // aqui concatenar where
             ps = acceso.prepareStatement(sql);
             rs = ps.executeQuery();
             ResultSetMetaData rsMd = rs.getMetaData();
@@ -457,7 +576,7 @@ public class Pedido {
             modelo.addColumn("CANTIDAD DE ARTICULOS");
             modelo.addColumn("TOTAL A PAGAR");
             modelo.addColumn("ANTICIPO");
-            modelo.addColumn("TIEMPO ENVIO");
+            modelo.addColumn("FECHA ENTREGA");
             //Capturamos en las columnas que contiene nuestra tabla de interfaz los datos de nuestra DB
             while(rs.next()){
                 Object[] filas = new Object[cantidadColumnas];
@@ -565,18 +684,17 @@ public class Pedido {
 
                     int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
                     if(res > 0){
-                        JOptionPane.showMessageDialog(null, "PRODUCTO GUARDADO");
+                        //JOptionPane.showMessageDialog(null, "PRODUCTO GUARDADO");
                         //Pasamos los valores a la caja de texto
                         Object[] fila = new Object[1];
                         fila[0] = creditoIngresado;
                         modelo.addRow(fila);
                     }else{
-                        JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR PRODUCTO");
+                        JOptionPane.showMessageDialog(null, "ERROR AL GUARDAR CREDITO");
                     }
                 } catch (Exception e) {
                     System.out.println(e.toString());
-                    JOptionPane.showMessageDialog(null, "                          EL CODIGO NO PUEDE REPETIRSE \n"
-                            + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
+                    JOptionPane.showMessageDialog(null, "OBLIGATORIO LLENAR TODOS LOS DATOS");
                 }
     }
 }

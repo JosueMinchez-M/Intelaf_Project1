@@ -118,8 +118,7 @@ public class Venta {
             }
         } catch (Exception e) {
             System.out.println(e.toString());
-            JOptionPane.showMessageDialog(null, "                          EL CODIGO NO PUEDE REPETIRSE \n"
-                    + "ES OBLIGATORIO LLENAR NOMBRE, FABRICANTE, CODIGO, CANTIDAD, PRECIO");
+            JOptionPane.showMessageDialog(null, "INGRESASTE CARACTERES NO ACEPTABLES O NO LLENASTE TODAS LAS COMPONENTES");
         }
         insertarCompraCliente(txt_codigoTiendaVenta, txt_fechaVenta, txt_nitClienteVenta, cb_codigoProductoVenta, txt_cantArticulosVenta, txt_creditoClieteVenta, cb_tiendaSeleccion);
     }
@@ -179,7 +178,6 @@ public class Venta {
             //cb_codigoProductoPedido.removeAllItems();
             while (rs.next()) { 
                 System.out.println(rs.getString(1));
-                JOptionPane.showMessageDialog(null, rs.getString(1));
                 precioArticulos = Double.parseDouble(rs.getString(1));
             }
         } catch (Exception e) {
@@ -188,7 +186,6 @@ public class Venta {
     }
     
     public void previstaTotalPagarVentas(JTextField txt_totalPagarVenta, JComboBox cb_tiendaSeleccion, JComboBox cb_codigoProductoVenta, JTextField txt_cantArticulosVenta){
-        JOptionPane.showMessageDialog(null, precioDeArticulosDisponibles(cb_tiendaSeleccion, cb_codigoProductoVenta));
         if(txt_cantArticulosVenta.getText().equals("")|| cb_codigoProductoVenta.getSelectedItem().equals("CODIGO PRODUCTO")){
             
         }else{
@@ -213,7 +210,7 @@ public class Venta {
 
             int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
             if(res > 0){
-                JOptionPane.showMessageDialog(null, "PRODUCTO GUARDADO");
+                //JOptionPane.showMessageDialog(null, "PRODUCTO GUARDADO");
                 //Pasamos los valores a la caja de texto
                 Object[] fila = new Object[1];
                 fila[0] = cantidadDisponibleProducto;
@@ -316,7 +313,7 @@ public class Venta {
                 
         }
     }
-    
+    //Verifica el credito que tiene cada cliente
     public void usoCreditoCliente(JTextField txt_nitClientePedido){
         Conexion con = new Conexion();
         Connection acceso = con.Conectar();

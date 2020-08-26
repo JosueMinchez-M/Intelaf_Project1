@@ -6,6 +6,7 @@
 package com.mycompany.intelaf_project1.UI;
 
 import com.mycompany.intelaf_project1.UI.cliente.LoginCliente;
+import com.mycompany.intelaf_project1.UI.trabajador.InterfazCliente;
 import com.mycompany.intelaf_project1.UI.trabajador.LoginTrabajador;
 import javax.swing.JOptionPane;
 
@@ -255,8 +256,10 @@ public class VentanaInicial extends javax.swing.JFrame {
     private void btn_IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_IngresarActionPerformed
         String persona = (String) cb_Persona.getSelectedItem();
         if(persona.equalsIgnoreCase("cliente")){
-            LoginCliente lc = new LoginCliente();
-            lc.setVisible(true);
+//            LoginCliente lc = new LoginCliente();
+//            lc.setVisible(true);
+            InterfazCliente interfazCliente = new InterfazCliente();
+            interfazCliente.setVisible(true);
             //dispose();
         }else if(persona.equalsIgnoreCase("trabajador")){
             LoginTrabajador lt = new LoginTrabajador();

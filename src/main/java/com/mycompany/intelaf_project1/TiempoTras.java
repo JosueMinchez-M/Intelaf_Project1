@@ -143,6 +143,7 @@ public class TiempoTras {
             
             int res = ps.executeUpdate(); //Pasamos los valores a la Base de Datos
             if(res > 0){
+                
                 pedido.cambioDeTiempoEnvio(cb_tiendaDestinoTiempo, txt_tiendaOrigenTiempo, txt_tiempo);
                 JOptionPane.showMessageDialog(null, "TIEMPO MODIFICADO");
                 //Con esto podemos ver nuevamente en la tabla de la lista los datos actualizados
